@@ -1,4 +1,4 @@
-# APFS for MAPF
+# CGA-MAPF Algorithm (version 2)
 
 ## MAPF
 
