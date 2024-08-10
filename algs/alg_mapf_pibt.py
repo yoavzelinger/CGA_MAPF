@@ -1,6 +1,7 @@
 from algs.alg_functions_pibt import *
 from run_single_MAPF_func import run_mapf_alg
 
+
 def run_pibt(
         start_nodes: List[Node],
         goal_nodes: List[Node],

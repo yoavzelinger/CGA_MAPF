@@ -113,6 +113,7 @@ class AgentAlg:
         self.curr_node_name: str = self.curr_node.xy_name
         self.goal_node: Node = goal_node
         self.goal_node_name: str = self.goal_node.xy_name
+        self.alt_goal_node: Node | None = None
         self.path: List[Node] | None = [self.start_node]
         self.k_path: List[Node] | None = [self.start_node]
         self.init_priority: float = random.random()
@@ -127,6 +128,11 @@ class AgentAlg:
             self.curr_node = self.path[-1]
             return
         self.curr_node = self.path[i_time]
+
+    def get_goal_node(self) -> Node:
+        if self.alt_goal_node is not None:
+            return self.alt_goal_node
+        return self.goal_node
 
     def __str__(self):
         return self.name

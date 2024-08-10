@@ -97,6 +97,14 @@ def exctract_h_dict(img_dir, path) -> Dict[str, np.ndarray]:
     raise RuntimeError('nu nu')
 
 
+def get_blocked_sv_map(img_dir: str, folder_dir: str = 'logs_for_freedom_maps'):
+    possible_dir = f'{folder_dir}/blocked_{img_dir[:-4]}.npy'
+    assert os.path.exists(possible_dir)
+    with open(possible_dir, 'rb') as f:
+        blocked_sv_map = np.load(f)
+        return blocked_sv_map
+
+
 def create_constraints(
         paths: List[List[Node]], map_dim: Tuple[int, int], max_path_len: int
 ) -> Tuple[np.ndarray | None, np.ndarray | None, np.ndarray | None]:

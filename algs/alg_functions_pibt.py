@@ -25,7 +25,7 @@ def get_sorted_nei_nodes(
         # nodes_dict: Dict[str, Node],
         h_dict: Dict[str, np.ndarray],
 ):
-    h_goal_np: np.ndarray = h_dict[agent.goal_node.xy_name]
+    h_goal_np: np.ndarray = h_dict[agent.get_goal_node().xy_name]
     # sort C in ascending order of dist(u, gi) where u ∈ C
     # nei_nodes: List[Node] = [nodes_dict[n_name] for n_name in config_from[agent.name].neighbours]
     nei_nodes: List[Node] = config_from[agent.name].neighbours_nodes[:]
@@ -119,10 +119,10 @@ def check_if_swap_required(
         if len(next_node_j.neighbours) > 3:
             return False
 
-        if next_node_i == agent_i.goal_node:
+        if next_node_i == agent_i.get_goal_node():
             nei_nodes_j = get_sorted_nei_nodes(agent_j, config_from, h_dict)
             nearest_nei_to_goal_j = nei_nodes_j[0]
-            if nearest_nei_to_goal_j == agent_i.goal_node:
+            if nearest_nei_to_goal_j == agent_i.get_goal_node():
                 return True
 
         prev_node_i = next_node_i
