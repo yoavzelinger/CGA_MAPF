@@ -25,7 +25,7 @@ def run_prp_sipps(
     # create agents
     agents = []
     for num, (s_node, g_node) in enumerate(zip(start_nodes, goal_nodes)):
-        new_agent = AgentPrP(num, s_node, g_node)
+        new_agent = AgentAlg(num, s_node, g_node)
         agents.append(new_agent)
 
     longest_len = 1
@@ -46,7 +46,7 @@ def run_prp_sipps(
         si_table: Dict[str, List[Tuple[int, int, str]]] = init_si_table(nodes)
 
         # calc paths
-        h_priority_agents: List[AgentPrP] = []
+        h_priority_agents: List[AgentAlg] = []
         for agent in agents:
             new_path, alg_info = run_sipps(
                 agent.start_node, agent.goal_node, nodes, nodes_dict, h_dict,
@@ -136,13 +136,13 @@ def run_prp_a_star(
     # create agents
     agents = []
     for num, (s_node, g_node) in enumerate(zip(start_nodes, goal_nodes)):
-        new_agent = AgentPrP(num, s_node, g_node)
+        new_agent = AgentAlg(num, s_node, g_node)
         agents.append(new_agent)
 
     r_iter = 0
     while time.time() - start_time < max_time:
         # calc paths
-        h_priority_agents: List[AgentPrP] = []
+        h_priority_agents: List[AgentAlg] = []
         longest_len = 1
         vc_soft_np, ec_soft_np, pc_soft_np = init_constraints(map_dim, longest_len)
         vc_hard_np, ec_hard_np, pc_hard_np = init_constraints(map_dim, longest_len)
@@ -232,9 +232,9 @@ def run_k_prp(
     start_time = time.time()
 
     # create agents
-    agents: List[AgentPrP] = []
+    agents: List[AgentAlg] = []
     for num, (s_node, g_node) in enumerate(zip(start_nodes, goal_nodes)):
-        new_agent = AgentPrP(num, s_node, g_node)
+        new_agent = AgentAlg(num, s_node, g_node)
         agents.append(new_agent)
 
 
@@ -249,7 +249,7 @@ def run_k_prp(
 
         # calc k paths
         all_good: bool = True
-        h_priority_agents: List[AgentPrP] = []
+        h_priority_agents: List[AgentAlg] = []
 
         for agent in agents:
             new_path, alg_info = pf_alg(
@@ -308,7 +308,7 @@ def run_k_prp(
 
         # print
         runtime = time.time() - start_time
-        finished: List[AgentPrP] = [a for a in agents if len(a.path) > 0 and a.path[-1] == a.goal_node]
+        finished: List[AgentAlg] = [a for a in agents if len(a.path) > 0 and a.path[-1] == a.goal_node]
         print(f'\r[{alg_name}] {k_iter=: <3} | agents: {len(finished): <3} / {len(agents)} | {runtime=: .2f} s.')  # , end=''
 
         # return check

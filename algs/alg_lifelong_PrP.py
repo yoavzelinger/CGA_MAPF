@@ -6,7 +6,7 @@ from run_single_MAPF_func import run_mapf_alg
 
 
 def solve_k_prp(
-        agents: List[AgentPrP],
+        agents: List[AgentAlg],
         nodes: List[Node],
         nodes_dict: Dict[str, Node],
         h_dict: Dict[str, np.ndarray],
@@ -38,7 +38,7 @@ def solve_k_prp(
 
         # calc k paths
         all_good: bool = True
-        h_priority_agents: List[AgentPrP] = []
+        h_priority_agents: List[AgentAlg] = []
 
         for agent in agents:
             new_path, alg_info = pf_alg(
