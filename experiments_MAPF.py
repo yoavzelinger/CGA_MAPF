@@ -9,6 +9,7 @@ from algs.alg_mapf_LNS2 import run_lns2, run_k_lns2
 from algs.alg_mapf_pibt import run_pibt
 from algs.alg_mapf_lacam import run_lacam
 from algs.alg_mapf_lacam_star import run_lacam_star
+from experiments_MAPF_lists import *
 
 
 @use_profiler(save_dir='stats/experiments_mapf.pstat')
@@ -31,9 +32,9 @@ def run_mapf_experiments():
     # img_dir = '15-15-eight-rooms.map'
 
     # img_dir = 'empty-32-32.map'
-    img_dir = 'random-32-32-10.map'
+    # img_dir = 'random-32-32-10.map'
     # img_dir = 'random-32-32-20.map'
-    # img_dir = 'maze-32-32-4.map'
+    img_dir = 'maze-32-32-4.map'
     # img_dir = 'maze-32-32-2.map'
     # img_dir = 'room-32-32-4.map'
 
@@ -56,8 +57,8 @@ def run_mapf_experiments():
 
     # limits
     # max_time = 1e7  # seconds
-    max_time = 60  # seconds
-    # max_time = 30  # seconds
+    # max_time = 60  # seconds
+    max_time = 30  # seconds
     # max_time = 10  # seconds
     # debug
     # to_assert = True
@@ -68,107 +69,22 @@ def run_mapf_experiments():
 
     # ------------------------------------------------- #
 
-    alg_list = [
-        # ------------------------------------------------ #
-        # PrP Family
-        # ------------------------------------------------ #
-        (run_prp_sipps, {
-            'alg_name': f'PrP-SIPPS',
-            'constr_type': 'hard',
-            'pf_alg_name': 'sipps',
-            'pf_alg': run_sipps,
-            'final_render': False,
-        }),
-        (run_prp_a_star, {
-            'alg_name': f'PrP-A*',
-            'constr_type': 'hard',
-            'pf_alg_name': 'a_star',
-            'pf_alg': run_temporal_a_star,
-            'final_render': False,
-        }),
-        (run_k_prp, {
-            'alg_name': f'15-PrP-A*',
-            'constr_type': 'hard',
-            'k_limit': 15,
-            'pf_alg_name': 'a_star',
-            'pf_alg': run_temporal_a_star,
-            'final_render': False,
-        }),
-        (run_k_prp, {
-            'alg_name': f'15-PrP-SIPPS',
-            'constr_type': 'hard',
-            'k_limit': 15,
-            'pf_alg_name': 'sipps',
-            'pf_alg': run_sipps,
-            'final_render': False,
-        }),
-        # ------------------------------------------------ #
+    # ------------------------------------------------- #
 
-        # ------------------------------------------------ #
-        # LNS2 Family
-        # ------------------------------------------------ #
-        # (run_lns2, {
-        #     'alg_name': f'LNS2(3)',
-        #     'constr_type': 'soft',
-        #     'n_neighbourhood': 3,
-        #     'final_render': False,
-        # }),
-        (run_lns2, {
-            'alg_name': f'LNS2(5)',
-            'constr_type': 'soft',
-            'n_neighbourhood': 5,
-            'final_render': False,
-        }),
-        # (run_lns2, {
-        #     'alg_name': f'LNS2(10)',
-        #     'constr_type': 'soft',
-        #     'n_neighbourhood': 10,
-        #     'final_render': False,
-        # }),
-        # (run_lns2, {
-        #     'alg_name': f'LNS2(15)',
-        #     'constr_type': 'soft',
-        #     'n_neighbourhood': 15,
-        #     'final_render': False,
-        # }),
-        (run_k_lns2, {
-            'k_limit': (k_limit := 15),
-            'alg_name': f'{k_limit}-LNS2({k_limit})-A*',
-            'pf_alg_name': 'a_star',
-            'pf_alg': run_temporal_a_star,
-            'n_neighbourhood': k_limit,
-            'final_render': False,
-        }),
-        (run_k_lns2, {
-            'k_limit': (k_limit := 15),
-            'alg_name': f'{k_limit}-LNS2({k_limit})-SIPPS',
-            'pf_alg_name': 'sipps',
-            'pf_alg': run_sipps,
-            'n_neighbourhood': k_limit,
-            'final_render': False,
-        }),
-
-        # ------------------------------------------------ #
-        # PIBT, LaCAM Family
-        # ------------------------------------------------ #
-        # (run_pibt, {
-        #     'alg_name': f'PIBT',
-        #     'final_render': False,
-        # }),
-        (run_lacam, {
-            'alg_name': f'LaCAM',
-            'final_render': False,
-        }),
-        (run_lacam_star, {
-            'alg_name': f'LaCAM*',
-            'flag_star': False,
-            'final_render': False,
-        }),
-    ]
+    # alg_list = alg_list_general
+    # alg_list = alg_list_a_star
+    # alg_list = alg_list_sipps
+    alg_list = alg_list_pibt
+    # alg_list = alg_list_full_algs_general
+    # alg_list = [*alg_list_a_star, *alg_list_sipps]
+    # alg_list = [*alg_list_a_star, *alg_list_sipps, *alg_list_pibt]
+    # alg_list = [*alg_list_sipps, *alg_list_pibt]
 
     # ------------------------------------------------- #
 
-    logs_dict = {
+    # ------------------------------------------------- #
+
+    logs_dict: Dict[str, Any] = {
         params['alg_name']: {
             f'{n_agents}': {
                 'soc': [],
@@ -193,11 +109,14 @@ def run_mapf_experiments():
 
     path_to_maps: str = 'maps'
     path_to_heuristics: str = 'logs_for_heuristics'
+    path_to_sv_maps: str = 'logs_for_freedom_maps'
 
     img_np, (height, width) = get_np_from_dot_map(img_dir, path_to_maps)
     map_dim = (height, width)
     nodes, nodes_dict = build_graph_from_np(img_np, show_map=False)
     h_dict = exctract_h_dict(img_dir, path_to_heuristics)
+    blocked_sv_map: np.ndarray = get_blocked_sv_map(img_dir, folder_dir=path_to_sv_maps)
+
 
     for n_agents in n_agents_list:
 
@@ -210,6 +129,7 @@ def run_mapf_experiments():
 
                 # preps
                 params['img_np'] = img_np
+                params['blocked_sv_map'] = blocked_sv_map
                 params['max_time'] = max_time
                 alg_name = params['alg_name']
 

@@ -17,7 +17,7 @@ def run_lacam_star(
     max_time: int = params['max_time']
     alg_name: str = params['alg_name']
     flag_star: bool = params['flag_star']
-    to_render: bool = params['final_render']
+    to_render: bool = params['to_render']
     img_np: np.ndarray = params['img_np']
 
     if to_render:

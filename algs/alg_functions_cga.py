@@ -339,6 +339,7 @@ def calc_cga_step(
         h_dict: Dict[str, np.ndarray],
         non_sv_nodes_np: np.ndarray,
         blocked_nodes_names: List[str],
+        params: dict
 ) -> List[AgentAlg]:
     """
     v - Build corridor
@@ -392,12 +393,20 @@ def calc_cga_step(
             occupied_from, config_to, occupied_to
         )
         if ev_path is None:
-            # if not blocked_is_involved and main_agent.name == agents[0].name:
-            if not blocked_is_involved:
-                print(f'\n{main_agent} (order: {agents.index(main_agent)}) got alt goal')
-                main_agent.alt_goal_node = get_alt_goal_node(
-                    config_from[main_agent.name], occupied_from, non_sv_nodes_np, agents,
-                )
+            if params['alt_goal_flag'] == 'first':
+                if not blocked_is_involved and main_agent.name == agents[0].name:
+                    print(f'\n{main_agent} (order: {agents.index(main_agent)}) got alt goal')
+                    main_agent.alt_goal_node = get_alt_goal_node(
+                        config_from[main_agent.name], occupied_from, non_sv_nodes_np, agents,
+                    )
+            elif params['alt_goal_flag'] == 'all':
+                if not blocked_is_involved:
+                    print(f'\n{main_agent} (order: {agents.index(main_agent)}) got alt goal')
+                    main_agent.alt_goal_node = get_alt_goal_node(
+                        config_from[main_agent.name], occupied_from, non_sv_nodes_np, agents,
+                    )
+            else:
+                raise RuntimeError('nope!')
             return []
 
         heapq.heappush(captured_free_nodes_names, captured_free_node.xy_name)

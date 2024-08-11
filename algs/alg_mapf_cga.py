@@ -65,7 +65,8 @@ def run_cga_mapf(
                 moved_agents = calc_cga_step(
                     agent, iteration,
                     config_from, occupied_from, config_to, occupied_to,
-                    agents, agents_dict, nodes, nodes_dict, last_visit_dict, h_dict, non_sv_nodes_np, blocked_nodes_names)
+                    agents, agents_dict, nodes, nodes_dict, last_visit_dict, h_dict, non_sv_nodes_np, blocked_nodes_names,
+                    params)
                 for m_a in moved_agents:
                     heapq.heappush(cga_step_agents_names, m_a.name)
                 cga_curr_step_lists.append(moved_agents)
@@ -82,6 +83,7 @@ def run_cga_mapf(
                 next_node = config_from[agent.name]
                 config_to[agent.name] = next_node
             if agent.name not in cga_step_agents_names:
+                # from PIBT
                 agent.path.append(next_node)
             agent.prev_node = agent.curr_node
             agent.curr_node = next_node
@@ -137,6 +139,7 @@ def main():
     params = {
         'max_time': 1000,
         'alg_name': 'CGA-MAPF',
+        'alt_goal_flag': 'first',
         'to_render': to_render,
     }
     # run_mapf_alg(alg=run_cga_mapf, params=params, final_render=False)
