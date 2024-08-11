@@ -197,10 +197,10 @@ def run_procedure_pibt(
         blocked_nodes_names: List[str],
         iteration: int = 0,
         with_message: str = '',
-        with_swap: bool = True
-        # with_swap: bool = False
+        # with_swap: bool = True
+        with_swap: bool = False
 ) -> bool:  # valid or invalid
-    agent_i.message += f'| [{iteration} {with_message}] pibt |'
+    agent_i.message += f'| [{iteration}-{with_message}] pibt |'
 
     # nei_nodes = get_sorted_nei_nodes(main_agent, config_from, nodes_dict, h_dict)
     nei_nodes = get_sorted_nei_nodes(agent_i, config_from, h_dict)
@@ -232,14 +232,15 @@ def run_procedure_pibt(
                 agent_k,
                 config_from, occupied_from,
                 config_to, occupied_to,
-                agents_dict, nodes_dict, h_dict, blocked_nodes_names, iteration
+                agents_dict, nodes_dict, h_dict, blocked_nodes_names, iteration, with_message
             )
             if not valid:
                 continue
         if with_swap and nei_node == nei_nodes[0] and agent_j is not None and agent_j.name not in config_to:
             i_node_from = config_from[agent_i.name]
-            config_to[agent_j.name] = i_node_from
-            occupied_to[i_node_from.xy_name] = agent_j
+            if i_node_from.xy_name not in occupied_to:
+                config_to[agent_j.name] = i_node_from
+                occupied_to[i_node_from.xy_name] = agent_j
         return True
     node_from = config_from[agent_i.name]
     config_to[agent_i.name] = node_from

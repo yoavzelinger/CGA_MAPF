@@ -215,9 +215,10 @@ def main():
         'max_time': 60,
         'alg_name': 'LaCAM*',
         'flag_star': flag_star,
-        'final_render': to_render
+        'to_render': to_render
     }
-    run_mapf_alg(alg=run_lacam_star, params=params)
+    # run_mapf_alg(alg=run_lacam_star, params=params, final_render=False)
+    run_mapf_alg(alg=run_lacam_star, params=params, final_render=True)
 
 
 if __name__ == '__main__':

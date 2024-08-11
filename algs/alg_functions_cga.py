@@ -61,14 +61,9 @@ def update_blocked_nodes_names_after_pibt(
 def update_blocked_nodes_names_after_cga(
         blocked_nodes_names: List[str],
         agents: List[AgentAlg],
-        config_from: Dict[str, Node],
-        config_to: Dict[str, Node],
         iteration: int
 ) -> List[str]:
     for agent in agents:
-        if agent.name in config_to and config_to[agent.name].xy_name not in blocked_nodes_names:
-            heapq.heappush(blocked_nodes_names, config_from[agent.name].xy_name)
-            heapq.heappush(blocked_nodes_names, config_to[agent.name].xy_name)
         if len(agent.path) - 1 >= iteration + 2:
             for n in agent.path[iteration + 2:]:
                 if n.xy_name not in blocked_nodes_names:
@@ -257,10 +252,6 @@ def push_ev_agents(
 
         # path change
         a.path.extend(new_path)
-        next_step: Node = a.path[iteration + 1]
-        config_to[a.name] = next_step
-        occupied_to[next_step.xy_name] = a
-        a.message += f'| [{iteration}] under: {main_agent.name} |'
 
         update_last_visit_dict(last_visit_dict, [a])
     max_len = max([len(a.path) for a in agents_to_assign])
@@ -436,6 +427,10 @@ def calc_cga_step(
                                                   main_agent, last_visit_dict)
         # assert main_agent not in assigned_agents
         for a in assigned_agents:
+            next_step: Node = a.path[iteration + 1]
+            config_to[a.name] = next_step
+            occupied_to[next_step.xy_name] = a
+            a.message += f'| [{iteration}] under: {main_agent.name} |'
             del ev_occupied_from[ev_config_from[a.name].xy_name]
             ev_config_from[a.name] = a.path[-1]
             ev_occupied_from[a.path[-1].xy_name] = a
@@ -466,3 +461,21 @@ def calc_cga_step(
 # occupied_to[main_from_node.xy_name] = main_agent
 # main_agent.path.append(main_from_node)
 # moved_agents.append(main_agent)
+
+
+# def update_blocked_nodes_names_after_cga(
+#         blocked_nodes_names: List[str],
+#         agents: List[AgentAlg],
+#         config_from: Dict[str, Node],
+#         config_to: Dict[str, Node],
+#         iteration: int
+# ) -> List[str]:
+#     for agent in agents:
+#         if agent.name in config_to and config_to[agent.name].xy_name not in blocked_nodes_names:
+#             heapq.heappush(blocked_nodes_names, config_from[agent.name].xy_name)
+#             heapq.heappush(blocked_nodes_names, config_to[agent.name].xy_name)
+#         if len(agent.path) - 1 >= iteration + 2:
+#             for n in agent.path[iteration + 2:]:
+#                 if n.xy_name not in blocked_nodes_names:
+#                     heapq.heappush(blocked_nodes_names, n.xy_name)
+#     return blocked_nodes_names

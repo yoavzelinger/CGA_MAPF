@@ -59,7 +59,7 @@ def run_cga_mapf(
                 run_procedure_pibt(
                     agent,
                     config_from, occupied_from, config_to, occupied_to,
-                    agents_dict, nodes_dict, h_dict, blocked_nodes_names, iteration, 'first')
+                    agents_dict, nodes_dict, h_dict, blocked_nodes_names, iteration, f'{agent}')
                 continue
             else:
                 moved_agents = calc_cga_step(
@@ -70,7 +70,7 @@ def run_cga_mapf(
                 for m_a in moved_agents:
                     heapq.heappush(cga_step_agents_names, m_a.name)
                 cga_curr_step_lists.append(moved_agents)
-                update_blocked_nodes_names_after_cga(blocked_nodes_names, moved_agents, config_from, config_to, iteration)
+                update_blocked_nodes_names_after_cga(blocked_nodes_names, moved_agents, iteration)
                 continue
 
         # execute the step + check the termination condition
@@ -82,6 +82,8 @@ def run_cga_mapf(
             else:
                 next_node = config_from[agent.name]
                 config_to[agent.name] = next_node
+                occupied_to[next_node.xy_name] = agent
+                agent.message += f'| [{iteration}] stay |'
             if agent.name not in cga_step_agents_names:
                 # from PIBT
                 agent.path.append(next_node)
@@ -117,8 +119,8 @@ def run_cga_mapf(
             plt.pause(0.001)
             # plt.pause(0.5)
             # plt.pause(1)
-
-        # check_vc_ec_neic_iter(agents, iteration)
+        # if iteration >= 0:
+        #     check_vc_ec_neic_iter(agents, iteration + 1)
         iteration += 1
         if runtime > max_time:
             return None, {}
@@ -139,10 +141,11 @@ def main():
     params = {
         'max_time': 1000,
         'alg_name': 'CGA-MAPF',
-        # 'alt_goal_flag': 'first',
+        'alt_goal_flag': 'first',
+        'alt_goal_num': 1,
+        # 'alt_goal_flag': 'num',
+        # 'alt_goal_num': 3,
         # 'alt_goal_flag': 'all',
-        'alt_goal_flag': 'num',
-        'alt_goal_num': 3,
         'to_render': to_render,
     }
     # run_mapf_alg(alg=run_cga_mapf, params=params, final_render=False)
