@@ -130,7 +130,7 @@ def run_lacam_star(
         runtime = time.time() - start_time
         print(
             f'\r{'*' * 10} | '
-            f'[{alg_name}{'*' if flag_star else '-'}] {iteration=: <3} | '
+            f'[{alg_name}] {iteration=: <3} | '
             f'finished: {N.finished}/{n_agents: <3} | '
             f'runtime: {runtime: .2f} seconds | '
             f'{len(open_list)=} | '

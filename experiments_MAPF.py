@@ -17,7 +17,7 @@ def run_mapf_experiments():
     # ------------------------------------------------------------------------------------------------------------ #
     # General params
     # ------------------------------------------------------------------------------------------------------------ #
-    set_seed(random_seed_bool=False, seed=117)
+    set_seed(random_seed_bool=False, seed=118)
     # set_seed(random_seed_bool=False, seed=9256)  # 500 - room
     # set_seed(random_seed_bool=False, seed=1112)
     # set_seed(random_seed_bool=True)
@@ -33,9 +33,9 @@ def run_mapf_experiments():
 
     # img_dir = 'empty-32-32.map'
     # img_dir = 'random-32-32-10.map'
-    # img_dir = 'random-32-32-20.map'
+    img_dir = 'random-32-32-20.map'
     # img_dir = 'maze-32-32-4.map'
-    img_dir = 'maze-32-32-2.map'
+    # img_dir = 'maze-32-32-2.map'
     # img_dir = 'room-32-32-4.map'
 
     # ------------------------------------------------- #
@@ -44,9 +44,9 @@ def run_mapf_experiments():
     # n_agents_list = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     # n_agents_list = [50, 100, 150, 200, 250, 300, 350]
     # n_agents_list = [150, 200, 250, 300, 350]
-    n_agents_list = [50, 100, 150, 200, 250, 300, 350, 400]
+    # n_agents_list = [50, 100, 150, 200, 250, 300, 350, 400]
     # n_agents_list = [200, 250, 300, 350, 400, 450, 500, 550, 600]
-    # n_agents_list = [100, 200, 300, 400, 500]
+    n_agents_list = [100, 200, 300, 400, 500, 600]
     # n_agents_list = [200, 300, 400, 500, 600]
     # n_agents_list = [300, 400, 500, 600, 700]
 
@@ -58,8 +58,8 @@ def run_mapf_experiments():
 
     # limits
     # max_time = 1e7  # seconds
-    max_time = 60  # seconds
-    # max_time = 30  # seconds
+    # max_time = 60  # seconds
+    max_time = 30  # seconds
     # max_time = 10  # seconds
     # debug
     # to_assert = True

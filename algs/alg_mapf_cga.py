@@ -57,16 +57,16 @@ def run_cga_mapf(
 
             if non_sv_nodes_np[next_node.x, next_node.y]:
                 run_procedure_pibt(
-                    agent,
-                    config_from, occupied_from, config_to, occupied_to,
-                    agents_dict, nodes_dict, h_dict, blocked_nodes_names, iteration, f'{agent}')
+                    agent, config_from, occupied_from, config_to, occupied_to,
+                    agents_dict, nodes_dict, h_dict, blocked_nodes_names,
+                    iteration, f'{agent}', with_swap=False)
                 continue
             else:
                 moved_agents = calc_cga_step(
                     agent, iteration,
                     config_from, occupied_from, config_to, occupied_to,
-                    agents, agents_dict, nodes, nodes_dict, last_visit_dict, h_dict, non_sv_nodes_np, blocked_nodes_names,
-                    params, start_time, max_time)
+                    agents, agents_dict, nodes, nodes_dict, last_visit_dict, h_dict, non_sv_nodes_np,
+                    blocked_nodes_names, params, start_time, max_time)
                 for m_a in moved_agents:
                     heapq.heappush(cga_step_agents_names, m_a.name)
                 cga_curr_step_lists.append(moved_agents)

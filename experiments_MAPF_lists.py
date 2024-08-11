@@ -311,36 +311,6 @@ alg_list_pibt = [
     # ------------------------------------------------ #
     # PIBT, LaCAM Family
     # ------------------------------------------------ #
-    (run_cga_mapf, {
-        'alg_name': f'CGA-MAPF (n=1)',
-        'alt_goal_flag': 'first',
-        'alt_goal_num': 1,
-        'to_render': False,
-    }),
-    (run_cga_mapf, {
-        'alg_name': f'CGA-MAPF (n=3)',
-        'alt_goal_flag': 'num',
-        'alt_goal_num': 3,
-        'to_render': False,
-    }),
-    (run_cga_mapf, {
-        'alg_name': f'CGA-MAPF (n=5)',
-        'alt_goal_flag': 'num',
-        'alt_goal_num': 5,
-        'to_render': False,
-    }),
-    (run_cga_mapf, {
-        'alg_name': f'CGA-MAPF (n=10)',
-        'alt_goal_flag': 'num',
-        'alt_goal_num': 10,
-        'to_render': False,
-    }),
-    # (run_cga_mapf, {
-    #     'alg_name': f'CGA-MAPF (all)',
-    #     'alt_goal_flag': 'all',
-    #     'alt_goal_num': None,
-    #     'to_render': False,
-    # }),
     # (run_pibt, {
     #     'alg_name': f'PIBT',
     #     'to_render': False,
@@ -349,10 +319,40 @@ alg_list_pibt = [
     #     'alg_name': f'LaCAM',
     #     'to_render': False,
     # }),
-    # (run_lacam_star, {
-    #     'alg_name': f'LaCAM*',
-    #     'flag_star': False,
-    #     # 'flag_star': True,
+    (run_lacam_star, {
+        'alg_name': f'LaCAM*',
+        'flag_star': False,
+        # 'flag_star': True,
+        'to_render': False,
+    }),
+    (run_cga_mapf, {
+        'alg_name': f'CGA-MAPF',
+        'alt_goal_flag': 'first',
+        'alt_goal_num': 1,
+        'to_render': False,
+    }),
+    # (run_cga_mapf, {
+    #     'alg_name': f'CGA-MAPF (n=3)',
+    #     'alt_goal_flag': 'num',
+    #     'alt_goal_num': 3,
+    #     'to_render': False,
+    # }),
+    # (run_cga_mapf, {
+    #     'alg_name': f'CGA-MAPF (n=5)',
+    #     'alt_goal_flag': 'num',
+    #     'alt_goal_num': 5,
+    #     'to_render': False,
+    # }),
+    # (run_cga_mapf, {
+    #     'alg_name': f'CGA-MAPF (n=10)',
+    #     'alt_goal_flag': 'num',
+    #     'alt_goal_num': 10,
+    #     'to_render': False,
+    # }),
+    # (run_cga_mapf, {
+    #     'alg_name': f'CGA-MAPF (all)',
+    #     'alt_goal_flag': 'all',
+    #     'alt_goal_num': None,
     #     'to_render': False,
     # }),
 
