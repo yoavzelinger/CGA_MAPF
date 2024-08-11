@@ -67,7 +67,7 @@ def run_mapf_experiments():
             'pf_alg': run_sipps,
             'pf_alg_name': 'sipps',
             'k_limit': 5,
-            'to_render': False,
+            'final_render': False,
         }),
         (run_lifelong_prp, {
             'alg_name': f'L-PrP-A*',
@@ -75,7 +75,7 @@ def run_mapf_experiments():
             'pf_alg': run_temporal_a_star,
             'pf_alg_name': 'a_star',
             'k_limit': 5,
-            'to_render': False,
+            'final_render': False,
         }),
         (run_lifelong_LNS2, {
             'alg_name': f'L-LNS2-SIPPS',
@@ -84,7 +84,7 @@ def run_mapf_experiments():
             'n_neighbourhood': 5,
             'pf_alg_name': 'sipps',
             'pf_alg': run_sipps,
-            'to_render': False,
+            'final_render': False,
         }),
         (run_lifelong_LNS2, {
             'alg_name': f'L-LNS2-A*',
@@ -93,11 +93,11 @@ def run_mapf_experiments():
             'n_neighbourhood': 5,
             'pf_alg_name': 'a_star',
             'pf_alg': run_temporal_a_star,
-            'to_render': False,
+            'final_render': False,
         }),
         (run_lifelong_pibt, {
             'alg_name': f'L-PIBT',
-            'to_render': False,
+            'final_render': False,
         }),
     ]
 
@@ -109,7 +109,7 @@ def run_mapf_experiments():
 
     # rendering
     to_render = True
-    # to_render = False
+    # final_render = False
 
     logs_dict: Dict[str, Any] = {
         params['alg_name']: {
@@ -169,7 +169,7 @@ def run_mapf_experiments():
     print('\n[INFO]: finished BIG Lifelong MAPF experiments')
     plt.show()
 
-# if to_render:
+# if final_render:
 #     fig, ax = plt.subplots(1, 2, figsize=(14, 7))
 
 

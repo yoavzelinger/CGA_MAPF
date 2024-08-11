@@ -20,7 +20,7 @@ def run_lifelong_pibt(
     max_iter_time: int | float = params['max_iter_time']
     n_steps: int = params['n_steps']
     alg_name: bool = params['alg_name']
-    to_render: bool = params['to_render']
+    to_render: bool = params['final_render']
 
     start_time = time.time()
     throughput: int = 0
@@ -77,14 +77,14 @@ def run_lifelong_pibt(
 @use_profiler(save_dir='../stats/alg_lifelong_pibt.pstat')
 def main():
 
-    # to_render = True
+    # final_render = True
     to_render = False
 
     params = {
         'max_iter_time': 5,  # seconds
         'n_steps': 50,
         'alg_name': f'Lifelong-PIBT',
-        'to_render': to_render,
+        'final_render': to_render,
     }
     run_mapf_alg(alg=run_lifelong_pibt, params=params)
 

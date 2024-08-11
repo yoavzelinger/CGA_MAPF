@@ -3,31 +3,31 @@ from functions_general import *
 from functions_plotting import *
 
 
-def run_mapf_alg(alg, params):
+def run_mapf_alg(alg, params, final_render: bool = True):
     set_seed(random_seed_bool=False, seed=5)
     # set_seed(random_seed_bool=False, seed=123)
     # set_seed(random_seed_bool=True)
 
-    img_dir = '10_10_my_rand.map'
+    # img_dir = '10_10_my_rand.map'
+    # img_dir = '15-15-eight-rooms.map'
     # img_dir = 'empty-32-32.map'
     # img_dir = '10_10_my_corridor.map'
     # img_dir = 'random-32-32-10.map'
     # img_dir = 'random-32-32-20.map'
     # img_dir = 'room-32-32-4.map'
-    # img_dir = 'maze-32-32-2.map'
+    img_dir = 'maze-32-32-2.map'
     # img_dir = 'maze-32-32-4.map'
 
     # n_agents = 500
+    # n_agents = 400
+    n_agents = 350
     # n_agents = 300
     # n_agents = 250
     # n_agents = 200
     # n_agents = 150
     # n_agents = 100
-    # n_agents = 50
-    n_agents = 40
-
-    to_render: bool = True
-    # to_render: bool = False
+    # n_agents = 70
+    # n_agents = 40
 
     path_to_maps: str = '../maps'
     path_to_heuristics: str = '../logs_for_heuristics'
@@ -56,12 +56,12 @@ def run_mapf_alg(alg, params):
     )
 
     # plot
-    if to_render and paths_dict is not None:
+    if final_render and paths_dict is not None:
         agents: List = info['agents']
         plt.close()
         fig, ax = plt.subplots(1, 2, figsize=(14, 7))
-        # plot_rate = 0.001
-        plot_rate = 0.5
+        plot_rate = 0.001
+        # plot_rate = 0.5
         # plot_rate = 1
         max_path_len = max([len(a.path) for a in agents])
 

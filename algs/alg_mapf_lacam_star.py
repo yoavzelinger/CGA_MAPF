@@ -17,7 +17,7 @@ def run_lacam_star(
     max_time: int = params['max_time']
     alg_name: str = params['alg_name']
     flag_star: bool = params['flag_star']
-    to_render: bool = params['to_render']
+    to_render: bool = params['final_render']
     img_np: np.ndarray = params['img_np']
 
     if to_render:
@@ -208,14 +208,14 @@ def main():
     # flag_star: bool = True
     flag_star: bool = False
 
-    # to_render = True
+    # final_render = True
     to_render = False
 
     params = {
         'max_time': 60,
-        'alg_name': 'LaCAM',
+        'alg_name': 'LaCAM*',
         'flag_star': flag_star,
-        'to_render': to_render
+        'final_render': to_render
     }
     run_mapf_alg(alg=run_lacam_star, params=params)
 

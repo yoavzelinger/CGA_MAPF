@@ -88,7 +88,7 @@ def run_lifelong_LNS2(
     n_steps: int = params['n_steps']
     k_limit: int = params['k_limit']
     alg_name: bool = params['alg_name']
-    to_render: bool = params['to_render']
+    to_render: bool = params['final_render']
     img_np: np.ndarray = params['img_np']
 
     # stats
@@ -151,7 +151,7 @@ def run_lifelong_LNS2(
 
 @use_profiler(save_dir='../stats/alg_lifelong_LNS2.pstat')
 def main():
-    # to_render = True
+    # final_render = True
     to_render = False
 
     n_neighbourhood: int = 5
@@ -172,7 +172,7 @@ def main():
     #     'n_neighbourhood': n_neighbourhood,
     #     'pf_alg_name': 'a_star',
     #     'pf_alg': run_temporal_a_star,
-    #     'to_render': to_render,
+    #     'final_render': final_render,
     # }
     # run_mapf_alg(alg=run_lifelong_LNS2, params=params_lifelong_lns_a_star)
     # --------------------------------------------------------------------- #
@@ -189,7 +189,7 @@ def main():
         'n_neighbourhood': n_neighbourhood,
         'pf_alg_name': 'sipps',
         'pf_alg': run_sipps,
-        'to_render': to_render,
+        'final_render': to_render,
     }
     run_mapf_alg(alg=run_lifelong_LNS2, params=params_lifelong_lns_sipps)
     # --------------------------------------------------------------------- #

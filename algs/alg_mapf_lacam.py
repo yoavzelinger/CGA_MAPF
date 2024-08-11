@@ -14,7 +14,7 @@ def run_lacam(
 
     max_time = params['max_time']
     alg_name = params['alg_name']
-    to_render: bool = params['to_render']
+    to_render: bool = params['final_render']
     img_np: np.ndarray = params['img_np']
 
     if to_render:
@@ -157,13 +157,13 @@ def run_lifelong_lacam():
 @use_profiler(save_dir='../stats/alg_lacam.pstat')
 def main():
 
-    # to_render = True
+    # final_render = True
     to_render = False
 
     params = {
         'max_time': 1000,
         'alg_name': 'LaCAM',
-        'to_render': to_render
+        'final_render': to_render
     }
     run_mapf_alg(alg=run_lacam, params=params)
 

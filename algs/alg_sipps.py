@@ -156,7 +156,7 @@ def main():
     # img_dir = 'maze-32-32-4.map'
 
     to_render: bool = True
-    # to_render: bool = False
+    # final_render: bool = False
 
     path_to_maps: str = '../maps'
     path_to_heuristics: str = '../logs_for_heuristics'

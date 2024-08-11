@@ -17,7 +17,7 @@ def run_prp_sipps(
 
     constr_type: str = params['constr_type']
     alg_name: bool = params['alg_name']
-    to_render: bool = params['to_render']
+    to_render: bool = params['final_render']
     max_time: bool = params['max_time']
 
     start_time = time.time()
@@ -128,7 +128,7 @@ def run_prp_a_star(
 ) -> Tuple[Dict[str, List[Node]] | None, dict]:
 
     alg_name: bool = params['alg_name']
-    to_render: bool = params['to_render']
+    to_render: bool = params['final_render']
     max_time: bool = params['max_time']
 
     start_time = time.time()
@@ -222,7 +222,7 @@ def run_k_prp(
     alg_name: bool = params['alg_name']
     pf_alg = params['pf_alg']
     pf_alg_name = params['pf_alg_name']
-    to_render: bool = params['to_render']
+    to_render: bool = params['final_render']
     max_time: bool = params['max_time']
     img_np: np.ndarray = params['img_np']
 
@@ -329,7 +329,7 @@ def run_k_prp(
 
 @use_profiler(save_dir='../stats/alg_prp.pstat')
 def main():
-    # to_render = True
+    # final_render = True
     to_render = False
 
     # --------------------------------------------------------------------- #
@@ -340,7 +340,7 @@ def main():
     #     'alg_name': f'PrP-A*',
     #     'constr_type': 'hard',
     #     'pf_alg': run_temporal_a_star,
-    #     'to_render': to_render,
+    #     'final_render': final_render,
     # }
     # run_mapf_alg(alg=run_prp_a_star, params=params_prp_a_star)
     # --------------------------------------------------------------------- #
@@ -354,7 +354,7 @@ def main():
     #     # 'constr_type': 'soft',
     #     'constr_type': 'hard',
     #     'pf_alg': run_sipps,
-    #     'to_render': to_render,
+    #     'final_render': final_render,
     # }
     # run_mapf_alg(alg=run_prp_sipps, params=params_prp_sipps)
     # --------------------------------------------------------------------- #
@@ -369,7 +369,7 @@ def main():
     #     'k_limit': 5,
     #     'pf_alg_name': 'a_star',
     #     'pf_alg': run_temporal_a_star,
-    #     'to_render': to_render,
+    #     'final_render': final_render,
     # }
     # run_mapf_alg(alg=run_k_prp, params=params_k_prp_a_star)
     # --------------------------------------------------------------------- #
@@ -384,7 +384,7 @@ def main():
         'k_limit': 5,
         'pf_alg_name': 'sipps',
         'pf_alg': run_sipps,
-        'to_render': to_render,
+        'final_render': to_render,
     }
     run_mapf_alg(alg=run_k_prp, params=params_k_prp_sipps)
     # --------------------------------------------------------------------- #

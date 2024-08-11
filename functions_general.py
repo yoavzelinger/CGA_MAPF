@@ -98,7 +98,8 @@ def exctract_h_dict(img_dir, path) -> Dict[str, np.ndarray]:
 
 
 def get_blocked_sv_map(img_dir: str, folder_dir: str = 'logs_for_freedom_maps'):
-    possible_dir = f'{folder_dir}/blocked_{img_dir[:-4]}.npy'
+    # possible_dir = f'{folder_dir}/blocked_{img_dir[:-4]}.npy'
+    possible_dir = f'{folder_dir}/blocked_v2_{img_dir[:-4]}.npy'
     assert os.path.exists(possible_dir)
     with open(possible_dir, 'rb') as f:
         blocked_sv_map = np.load(f)

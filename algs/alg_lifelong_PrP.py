@@ -106,7 +106,7 @@ def run_lifelong_prp(
     n_steps: int = params['n_steps']
     k_limit: int = params['k_limit']
     alg_name: bool = params['alg_name']
-    to_render: bool = params['to_render']
+    to_render: bool = params['final_render']
     img_np: np.ndarray = params['img_np']
 
     # stats
@@ -169,7 +169,7 @@ def run_lifelong_prp(
 
 @use_profiler(save_dir='../stats/alg_lifelong_prp.pstat')
 def main():
-    # to_render = True
+    # final_render = True
     to_render = False
 
     # --------------------------------------------------------------------- #
@@ -186,7 +186,7 @@ def main():
     #     'k_limit': 5,
     #     'pf_alg': run_temporal_a_star,
     #     'pf_alg_name': 'a_star',
-    #     'to_render': to_render,
+    #     'final_render': final_render,
     # }
     # run_mapf_alg(alg=run_lifelong_prp, params=params_lifelong_prp_a_star)
     # --------------------------------------------------------------------- #
@@ -202,7 +202,7 @@ def main():
         'k_limit': 5,
         'pf_alg': run_sipps,
         'pf_alg_name': 'sipps',
-        'to_render': to_render,
+        'final_render': to_render,
     }
     run_mapf_alg(alg=run_lifelong_prp, params=params_lifelong_prp_sipps)
     # --------------------------------------------------------------------- #

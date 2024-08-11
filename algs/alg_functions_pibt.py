@@ -194,12 +194,15 @@ def run_procedure_pibt(
         agents_dict: Dict[str, AgentAlg],
         nodes_dict: Dict[str, Node],
         h_dict: Dict[str, np.ndarray],
-        blocked_nodes: List[Node],
+        blocked_nodes_names: List[str],
+        iteration: int = 0,
+        with_message: str = '',
         with_swap: bool = True
         # with_swap: bool = False
 ) -> bool:  # valid or invalid
+    agent_i.message += f'| [{iteration} {with_message}] pibt |'
 
-    # nei_nodes = get_sorted_nei_nodes(agent_i, config_from, nodes_dict, h_dict)
+    # nei_nodes = get_sorted_nei_nodes(main_agent, config_from, nodes_dict, h_dict)
     nei_nodes = get_sorted_nei_nodes(agent_i, config_from, h_dict)
 
     #  j ← swap_required_and_possible
@@ -218,7 +221,7 @@ def run_procedure_pibt(
             if other_agent != agent_i and config_from[other_agent.name] == nei_node:
                 continue
 
-        if nei_node in blocked_nodes:
+        if nei_node.xy_name in blocked_nodes_names:
             continue
 
         config_to[agent_i.name] = nei_node
@@ -229,7 +232,7 @@ def run_procedure_pibt(
                 agent_k,
                 config_from, occupied_from,
                 config_to, occupied_to,
-                agents_dict, nodes_dict, h_dict, blocked_nodes
+                agents_dict, nodes_dict, h_dict, blocked_nodes_names, iteration
             )
             if not valid:
                 continue

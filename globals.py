@@ -110,10 +110,11 @@ class AgentAlg:
         self.start_node: Node = start_node
         self.start_node_name: str = self.start_node.xy_name
         self.curr_node: Node = start_node
-        self.curr_node_name: str = self.curr_node.xy_name
+        # self.curr_node_name: str = self.curr_node.xy_name
         self.goal_node: Node = goal_node
         self.goal_node_name: str = self.goal_node.xy_name
         self.alt_goal_node: Node | None = None
+        self.message: str = ''
         self.path: List[Node] | None = [self.start_node]
         self.k_path: List[Node] | None = [self.start_node]
         self.init_priority: float = random.random()

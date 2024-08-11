@@ -36,7 +36,7 @@ def run_lns2(
     alg_name: str = params['alg_name']
     constr_type: str = params['constr_type']
     n_neighbourhood: bool = params['n_neighbourhood']
-    to_render: bool = params['to_render']
+    to_render: bool = params['final_render']
     max_time: bool = params['max_time']
 
     start_time = time.time()
@@ -111,7 +111,7 @@ def run_k_lns2(
     pf_alg: str = params['pf_alg']
     k_limit: bool = params['k_limit']
     n_neighbourhood: bool = params['n_neighbourhood']
-    to_render: bool = params['to_render']
+    to_render: bool = params['final_render']
     img_np: np.ndarray = params['img_np']
     max_time: bool = params['max_time']
 
@@ -222,7 +222,7 @@ def run_k_lns2(
 @use_profiler(save_dir='../stats/alg_lns2.pstat')
 def main():
     to_render = True
-    # to_render = False
+    # final_render = False
 
     n_neighbourhood: int = 10
 
@@ -234,7 +234,7 @@ def main():
     #     'alg_name': 'LNS2',
     #     'constr_type': 'soft',
     #     'n_neighbourhood': n_neighbourhood,
-    #     'to_render': to_render,
+    #     'final_render': final_render,
     # }
     # run_mapf_alg(alg=run_lns2, params=params_lns2)
 
@@ -245,7 +245,7 @@ def main():
     #     'pf_alg': run_sipps,
     #     'k_limit': k_limit,
     #     'n_neighbourhood': n_neighbourhood,
-    #     'to_render': to_render,
+    #     'final_render': final_render,
     # }
     # run_mapf_alg(alg=run_k_lns2, params=params_k_lns2_sipps)
 
@@ -256,7 +256,7 @@ def main():
         'pf_alg': run_temporal_a_star,
         'k_limit': k_limit,
         'n_neighbourhood': n_neighbourhood,
-        'to_render': to_render,
+        'final_render': to_render,
     }
     run_mapf_alg(alg=run_k_lns2, params=params_k_lns2_a_star)
 

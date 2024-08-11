@@ -223,7 +223,7 @@ def main():
     img_dir = 'maze-32-32-4.map'
 
     to_render: bool = True
-    # to_render: bool = False
+    # final_render: bool = False
 
     # for the map
     path_to_maps = '../maps'

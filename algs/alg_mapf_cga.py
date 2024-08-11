@@ -35,30 +35,18 @@ def run_cga_mapf(
     finished = False
     while not finished:
 
-        config_from: Dict[str, Node] = {a.name: a.path[iteration] for a in agents}
-        occupied_from: Dict[str, AgentAlg] = {a.path[iteration].xy_name: a for a in agents}
-        config_to: Dict[str, Node] = {}
-        occupied_to: Dict[str, AgentAlg] = {}
-        blocked_nodes: List[Node] = []
-
-        # Update config_to with agents that have planned future steps
-        for agent in agents:
-            if len(agent.path) - 1 >= iteration + 1:
-                next_node: Node = agent.path[iteration + 1]
-                config_to[agent.name] = next_node
-                occupied_to[next_node.xy_name] = agent
-                for n in agent.path[iteration + 1:]:
-                    if n not in blocked_nodes:
-                        heapq.heappush(blocked_nodes, n)
+        # PREPARATIONS
+        # config_from: Dict[str, Node] = {a.name: a.path[iteration] for a in agents}
+        # occupied_from: Dict[str, AgentAlg] = {a.path[iteration].xy_name: a for a in agents}
+        (config_from, occupied_from, config_to, occupied_to,
+         cga_step_agents_names, cga_curr_step_lists, blocked_nodes_names) = get_preparations(agents, iteration)
+        last_visit_dict: Dict[str, int] = {n.xy_name: 0 for n in nodes}
+        # blocked_nodes_names: List[str] = get_blocked_nodes_names(agents, config_from, config_to, iteration)
 
         # calc the step
         for agent in agents:
             # if planned, continue
             if agent.name in config_to:
-                continue
-            # if at its original goal, continue
-            if config_from[agent.name] == agent.goal_node:
-                stay(agent, config_from[agent.name], config_to, occupied_to)
                 continue
             # if at its alt goal, switch to the original goal
             if agent.alt_goal_node is not None and config_from[agent.name] == agent.alt_goal_node:
@@ -66,30 +54,35 @@ def run_cga_mapf(
             goal_node = agent.get_goal_node()
             next_node = get_min_h_nei_node(config_from[agent.name], goal_node, h_dict)
             non_sv_nodes_np = blocked_sv_map[goal_node.x, goal_node.y]
+
             if non_sv_nodes_np[next_node.x, next_node.y]:
                 run_procedure_pibt(
                     agent,
-                    config_from, occupied_from,
-                    config_to, occupied_to,
-                    agents_dict, nodes_dict, h_dict, blocked_nodes)
+                    config_from, occupied_from, config_to, occupied_to,
+                    agents_dict, nodes_dict, h_dict, blocked_nodes_names, iteration, 'first')
                 continue
             else:
-                calc_cga_step(
+                moved_agents = calc_cga_step(
                     agent, iteration,
-                    config_from, occupied_from,
-                    config_to, occupied_to,
-                    agents, agents_dict, nodes, nodes_dict, h_dict, non_sv_nodes_np, blocked_nodes)
+                    config_from, occupied_from, config_to, occupied_to,
+                    agents, agents_dict, nodes, nodes_dict, last_visit_dict, h_dict, non_sv_nodes_np, blocked_nodes_names)
+                for m_a in moved_agents:
+                    heapq.heappush(cga_step_agents_names, m_a.name)
+                cga_curr_step_lists.append(moved_agents)
+                update_blocked_nodes_names_after_cga(blocked_nodes_names, moved_agents, config_from, config_to, iteration)
                 continue
 
         # execute the step + check the termination condition
         finished = True
         agents_finished = []
         for agent in agents:
-            if len(agent.path) - 1 == iteration:
+            if agent.name in config_to:
                 next_node = config_to[agent.name]
-                agent.path.append(next_node)
             else:
-                next_node = agent.path[iteration + 1]
+                next_node = config_from[agent.name]
+                config_to[agent.name] = next_node
+            if agent.name not in cga_step_agents_names:
+                agent.path.append(next_node)
             agent.prev_node = agent.curr_node
             agent.curr_node = next_node
             if agent.curr_node != agent.goal_node:
@@ -104,15 +97,14 @@ def run_cga_mapf(
 
         # print + render
         runtime = time.time() - start_time
-        print(
-            f'\r{'*' * 10} | [{alg_name}] {iteration=: <3} | finished: {len(agents_finished)}/{n_agents: <3} | runtime: {runtime: .2f} seconds | {'*' * 10}',
-            end='')
+        print(f'\r{'*' * 10} | [{alg_name}] {iteration=: <3} | finished: {len(agents_finished)}/{n_agents: <3} | runtime: {runtime: .2f} seconds | {'*' * 10}', end='')
         if to_render and iteration >= 0:
             # update curr nodes
             for a in agents:
                 a.curr_node = config_to[a.name]
             # plot the iteration
             # i_agent = agents_dict['agent_0']
+            # i_agent = agents_dict['agent_174']
             i_agent = agents[0]
             plot_info = {
                 'img_np': img_np,
@@ -121,15 +113,17 @@ def run_cga_mapf(
             }
             plot_step_in_env(ax[0], plot_info)
             plt.pause(0.001)
+            # plt.pause(0.5)
             # plt.pause(1)
-        iteration += 1
 
+        # check_vc_ec_neic_iter(agents, iteration)
+        iteration += 1
         if runtime > max_time:
             return None, {}
 
     # checks
     # for i in range(len(agents[0].path)):
-    #     check_vc_ec_neic_iter(agents, i, to_count=False)
+    #     check_vc_ec_neic_iter(agents, i)
     runtime = time.time() - start_time
     return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': iteration}
 
@@ -137,17 +131,22 @@ def run_cga_mapf(
 @use_profiler(save_dir='../stats/alg_cga_mapf.pstat')
 def main():
 
-    to_render = True
-    # to_render = False
+    # to_render = True
+    to_render = False
 
     params = {
-        'max_time': 100,
+        'max_time': 1000,
         'alg_name': 'CGA-MAPF',
         'to_render': to_render,
     }
-    run_mapf_alg(alg=run_cga_mapf, params=params)
+    # run_mapf_alg(alg=run_cga_mapf, params=params, final_render=False)
+    run_mapf_alg(alg=run_cga_mapf, params=params, final_render=True)
 
 
 if __name__ == '__main__':
     main()
 
+# if at its original goal, continue
+# if config_from[agent.name] == agent.goal_node:
+#     stay(agent, config_from[agent.name], config_to, occupied_to)
+#     continue

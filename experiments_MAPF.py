@@ -64,7 +64,7 @@ def run_mapf_experiments():
     to_assert = False
     # rendering
     to_render = True
-    # to_render = False
+    # final_render = False
 
     # ------------------------------------------------- #
 
@@ -77,14 +77,14 @@ def run_mapf_experiments():
             'constr_type': 'hard',
             'pf_alg_name': 'sipps',
             'pf_alg': run_sipps,
-            'to_render': False,
+            'final_render': False,
         }),
         (run_prp_a_star, {
             'alg_name': f'PrP-A*',
             'constr_type': 'hard',
             'pf_alg_name': 'a_star',
             'pf_alg': run_temporal_a_star,
-            'to_render': False,
+            'final_render': False,
         }),
         (run_k_prp, {
             'alg_name': f'15-PrP-A*',
@@ -92,7 +92,7 @@ def run_mapf_experiments():
             'k_limit': 15,
             'pf_alg_name': 'a_star',
             'pf_alg': run_temporal_a_star,
-            'to_render': False,
+            'final_render': False,
         }),
         (run_k_prp, {
             'alg_name': f'15-PrP-SIPPS',
@@ -100,7 +100,7 @@ def run_mapf_experiments():
             'k_limit': 15,
             'pf_alg_name': 'sipps',
             'pf_alg': run_sipps,
-            'to_render': False,
+            'final_render': False,
         }),
         # ------------------------------------------------ #
 
@@ -111,25 +111,25 @@ def run_mapf_experiments():
         #     'alg_name': f'LNS2(3)',
         #     'constr_type': 'soft',
         #     'n_neighbourhood': 3,
-        #     'to_render': False,
+        #     'final_render': False,
         # }),
         (run_lns2, {
             'alg_name': f'LNS2(5)',
             'constr_type': 'soft',
             'n_neighbourhood': 5,
-            'to_render': False,
+            'final_render': False,
         }),
         # (run_lns2, {
         #     'alg_name': f'LNS2(10)',
         #     'constr_type': 'soft',
         #     'n_neighbourhood': 10,
-        #     'to_render': False,
+        #     'final_render': False,
         # }),
         # (run_lns2, {
         #     'alg_name': f'LNS2(15)',
         #     'constr_type': 'soft',
         #     'n_neighbourhood': 15,
-        #     'to_render': False,
+        #     'final_render': False,
         # }),
         (run_k_lns2, {
             'k_limit': (k_limit := 15),
@@ -137,7 +137,7 @@ def run_mapf_experiments():
             'pf_alg_name': 'a_star',
             'pf_alg': run_temporal_a_star,
             'n_neighbourhood': k_limit,
-            'to_render': False,
+            'final_render': False,
         }),
         (run_k_lns2, {
             'k_limit': (k_limit := 15),
@@ -145,7 +145,7 @@ def run_mapf_experiments():
             'pf_alg_name': 'sipps',
             'pf_alg': run_sipps,
             'n_neighbourhood': k_limit,
-            'to_render': False,
+            'final_render': False,
         }),
 
         # ------------------------------------------------ #
@@ -153,16 +153,16 @@ def run_mapf_experiments():
         # ------------------------------------------------ #
         # (run_pibt, {
         #     'alg_name': f'PIBT',
-        #     'to_render': False,
+        #     'final_render': False,
         # }),
         (run_lacam, {
             'alg_name': f'LaCAM',
-            'to_render': False,
+            'final_render': False,
         }),
         (run_lacam_star, {
             'alg_name': f'LaCAM*',
             'flag_star': False,
-            'to_render': False,
+            'final_render': False,
         }),
     ]
 
@@ -244,7 +244,7 @@ def run_mapf_experiments():
     plt.show()
 
 
-# if to_render:
+# if final_render:
 #     fig, ax = plt.subplots(1, 2, figsize=(14, 7))
 
 
