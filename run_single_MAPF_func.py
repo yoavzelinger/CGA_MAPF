@@ -13,11 +13,13 @@ def run_mapf_alg(alg, params, final_render: bool = True):
     # img_dir = 'empty-32-32.map'
     # img_dir = '10_10_my_corridor.map'
     # img_dir = 'random-32-32-10.map'
-    img_dir = 'random-32-32-20.map'
-    # img_dir = 'room-32-32-4.map'
+    # img_dir = 'random-32-32-20.map'
+    img_dir = 'room-32-32-4.map'
     # img_dir = 'maze-32-32-2.map'
     # img_dir = 'maze-32-32-4.map'
 
+    # n_agents = 700
+    # n_agents = 600
     # n_agents = 500
     n_agents = 400
     # n_agents = 350

@@ -52,10 +52,12 @@ def run_cga_mapf(
             if agent.alt_goal_node is not None and config_from[agent.name] == agent.alt_goal_node:
                 agent.alt_goal_node = None
             goal_node = agent.get_goal_node()
-            next_node = get_min_h_nei_node(config_from[agent.name], goal_node, h_dict)
+            curr_node: Node = config_from[agent.name]
+            next_node: Node = get_min_h_nei_node(curr_node, goal_node, h_dict)
             non_sv_nodes_np = blocked_sv_map[goal_node.x, goal_node.y]
 
-            if non_sv_nodes_np[next_node.x, next_node.y]:
+            # if non_sv_nodes_np[next_node.x, next_node.y]:
+            if non_sv_nodes_np[next_node.x, next_node.y] and not next_is_blocked(next_node, agent, config_from):
                 run_procedure_pibt(
                     agent, config_from, occupied_from, config_to, occupied_to,
                     agents_dict, nodes_dict, h_dict, blocked_nodes_names,
@@ -148,8 +150,8 @@ def main():
         # 'alt_goal_flag': 'all',
         'to_render': to_render,
     }
-    # run_mapf_alg(alg=run_cga_mapf, params=params, final_render=False)
-    run_mapf_alg(alg=run_cga_mapf, params=params, final_render=True)
+    run_mapf_alg(alg=run_cga_mapf, params=params, final_render=False)
+    # run_mapf_alg(alg=run_cga_mapf, params=params, final_render=True)
 
 
 if __name__ == '__main__':

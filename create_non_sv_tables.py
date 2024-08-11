@@ -95,12 +95,18 @@ def main():
     # img_dir = '15-15-six-rooms.map'
     # img_dir = '15-15-eight-rooms.map'
 
-    img_dir = 'empty-32-32.map'  # v
+    # img_dir = 'empty-32-32.map'  # v
     # img_dir = 'random-32-32-10.map'  # v
     # img_dir = 'random-32-32-20.map'  # v
     # img_dir = 'maze-32-32-4.map'  # v
     # img_dir = 'maze-32-32-2.map'  # v
     # img_dir = 'room-32-32-4.map'  # v
+
+    img_dir = 'random-64-64-10.map'
+    # img_dir = 'random-64-64-20.map'
+    # img_dir = 'room-64-64-8.map'
+    # img_dir = 'den312d.map'
+
 
     path_to_maps: str = 'maps'
     img_np, (height, width) = get_np_from_dot_map(img_dir, path_to_maps)

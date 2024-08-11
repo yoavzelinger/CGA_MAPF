@@ -23,6 +23,16 @@ from functions_plotting import *
 # -------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------------------------------------------------------------------- #
 
+
+def next_is_blocked(next_node: Node, agent: AgentAlg, config_from: Dict[str, Node]) -> bool:
+    curr_node: Node = config_from[agent.name]
+    nei_nodes_names = next_node.neighbours[:]
+    nei_nodes_names.remove(next_node.xy_name)  # self
+    if curr_node != next_node:
+        nei_nodes_names.remove(curr_node.xy_name)  # blocked
+    return len(nei_nodes_names) == 0
+
+
 def sort_agents(agents: List[AgentAlg]):
     agents.sort(key=lambda a: a.priority, reverse=True)
 
