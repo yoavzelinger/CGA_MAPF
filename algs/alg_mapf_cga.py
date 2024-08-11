@@ -66,7 +66,7 @@ def run_cga_mapf(
                     agent, iteration,
                     config_from, occupied_from, config_to, occupied_to,
                     agents, agents_dict, nodes, nodes_dict, last_visit_dict, h_dict, non_sv_nodes_np, blocked_nodes_names,
-                    params)
+                    params, start_time, max_time)
                 for m_a in moved_agents:
                     heapq.heappush(cga_step_agents_names, m_a.name)
                 cga_curr_step_lists.append(moved_agents)
@@ -139,7 +139,10 @@ def main():
     params = {
         'max_time': 1000,
         'alg_name': 'CGA-MAPF',
-        'alt_goal_flag': 'first',
+        # 'alt_goal_flag': 'first',
+        # 'alt_goal_flag': 'all',
+        'alt_goal_flag': 'num',
+        'alt_goal_num': 3,
         'to_render': to_render,
     }
     # run_mapf_alg(alg=run_cga_mapf, params=params, final_render=False)

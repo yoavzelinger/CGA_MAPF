@@ -9,6 +9,7 @@ import pstats
 import cProfile
 import itertools
 from itertools import combinations, permutations, tee, pairwise
+from datetime import datetime
 from typing import *
 from collections import deque, defaultdict
 
@@ -25,8 +26,8 @@ import matplotlib.pyplot as plt
 
 color_names = [
     # 'b', 'g', 'r', 'c', 'm', 'y', 'k', 'w',  # Single-letter abbreviations
-    'blue', 'green', 'red', 'cyan', 'magenta', 'yellow', 'black', 'white',  # Full names
-    'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige', 'bisque', 'black',
+    'blue', 'green', 'red', 'cyan', 'magenta', 'yellow', 'black',  # Full names
+    'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure', 'beige', 'black',
     'blanchedalmond', 'blue', 'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse', 'chocolate',
     'coral', 'cornflowerblue', 'cornsilk', 'crimson', 'cyan', 'darkblue', 'darkcyan', 'darkgoldenrod',
     'darkgray', 'darkgreen', 'darkgrey', 'darkkhaki', 'darkmagenta', 'darkolivegreen', 'darkorange', 'darkorchid',
@@ -46,10 +47,40 @@ color_names = [
     'wheat', 'white', 'whitesmoke', 'yellow', 'yellowgreen'
 ]
 
+markers = [
+    ".",    # point marker
+    ",",    # pixel marker
+    "o",    # circle marker
+    "v",    # triangle_down marker
+    "^",    # triangle_up marker
+    "<",    # triangle_left marker
+    ">",    # triangle_right marker
+    "1",    # tri_down marker
+    "2",    # tri_up marker
+    "3",    # tri_left marker
+    "4",    # tri_right marker
+    "s",    # square marker
+    "p",    # pentagon marker
+    "*",    # star marker
+    "h",    # hexagon1 marker
+    "H",    # hexagon2 marker
+    "+",    # plus marker
+    "x",    # x marker
+    "D",    # diamond marker
+    "d",    # thin_diamond marker
+    "P",    # plus (filled) marker
+    "X",    # x (filled) marker
+]
+lines = [
+    "-",  # solid line
+    "--", # dashed line
+    "-.", # dash-dot line
+    ":",  # dotted line
+]
 
-markers = ['-^', '-1', '-2', '-X', '-d', '-v', '-o']
 markers_iter = iter(markers)
-markers_lines_dict = defaultdict(lambda: random.choice(markers))
+# markers_lines_dict = defaultdict(lambda: random.choice(markers))
+markers_lines_dict = {}
 colors_dict: DefaultDict[str, str | None] = defaultdict(lambda: None)
 
 

@@ -178,6 +178,7 @@ def get_alt_goal_node(
     other_goals: List[Node] = [agent.get_goal_node() for agent in agents]
     open_list: Deque[Node] = deque([node])
     closed_names_list_heap = []
+    possible_nodes: List[Node] = []
     iteration: int = 0
     while len(open_list) > 0:
         iteration += 1
@@ -185,10 +186,12 @@ def get_alt_goal_node(
         is_non_sv = non_sv_nodes_np[next_node.x, next_node.y] == 1
         is_not_in_other_goals = next_node not in other_goals
         is_not_occupied = next_node.xy_name not in occupied_from
-        is_rand_positive = random.random() > 0.9
-        # if is_non_sv and is_not_in_other_goals and is_not_occupied:
-        if is_non_sv and is_not_in_other_goals and is_not_occupied and is_rand_positive:
-            return next_node
+        is_rand_positive = random.random() > 0.8
+        if is_non_sv and is_not_in_other_goals and is_not_occupied:
+            # return next_node
+            possible_nodes.append(next_node)
+            if is_rand_positive:
+                return random.choice(possible_nodes)
         for nei_node in next_node.neighbours_nodes:
             # self ref
             if nei_node == next_node:
@@ -339,7 +342,8 @@ def calc_cga_step(
         h_dict: Dict[str, np.ndarray],
         non_sv_nodes_np: np.ndarray,
         blocked_nodes_names: List[str],
-        params: dict
+        params: dict,
+        start_time: float, max_time: int | float
 ) -> List[AgentAlg]:
     """
     v - Build corridor
@@ -395,13 +399,19 @@ def calc_cga_step(
         if ev_path is None:
             if params['alt_goal_flag'] == 'first':
                 if not blocked_is_involved and main_agent.name == agents[0].name:
-                    print(f'\n{main_agent} (order: {agents.index(main_agent)}) got alt goal')
+                    # print(f'\n{main_agent} (order: {agents.index(main_agent)}) got alt goal')
+                    main_agent.alt_goal_node = get_alt_goal_node(
+                        config_from[main_agent.name], occupied_from, non_sv_nodes_np, agents,
+                    )
+            elif params['alt_goal_flag'] == 'num':
+                if not blocked_is_involved and main_agent in agents[:params['alt_goal_num']]:
+                    # print(f'\n{main_agent} (order: {agents.index(main_agent)}) got alt goal')
                     main_agent.alt_goal_node = get_alt_goal_node(
                         config_from[main_agent.name], occupied_from, non_sv_nodes_np, agents,
                     )
             elif params['alt_goal_flag'] == 'all':
                 if not blocked_is_involved:
-                    print(f'\n{main_agent} (order: {agents.index(main_agent)}) got alt goal')
+                    # print(f'\n{main_agent} (order: {agents.index(main_agent)}) got alt goal')
                     main_agent.alt_goal_node = get_alt_goal_node(
                         config_from[main_agent.name], occupied_from, non_sv_nodes_np, agents,
                     )
