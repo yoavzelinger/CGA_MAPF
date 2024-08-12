@@ -156,7 +156,8 @@ def plot_sr(ax, info):
                 x_list.append(n_a)
         ax.plot(x_list, sr_list, get_marker_line(alg_name), color=get_alg_color(alg_name),
                 alpha=0.5, label=f'{alg_name}', linewidth=5, markersize=20)
-    ax.set_xlim([min(n_agents_list) - 20, max(n_agents_list) + 20])
+    # ax.set_xlim([min(n_agents_list) - 20, max(n_agents_list) + 20])
+    ax.set_xlim([min(n_agents_list), max(n_agents_list)])
     ax.set_ylim([0, 1 + 0.1])
     ax.set_xticks(n_agents_list)
     ax.set_xlabel('N agents', fontsize=15)

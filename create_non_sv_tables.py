@@ -5,8 +5,8 @@ from functions_plotting import *
 
 def get_blocked_non_sv_nodes(img_dir: str, folder_dir: str = 'logs_for_freedom_maps'):
     possible_dir = f'{folder_dir}/blocked_{img_dir[:-4]}.npy'
-    assert os.path.exists(possible_dir)
-    with open(possible_dir, 'rb') as f:
+    # assert os.path.exists(possible_dir)
+    with open(possible_dir, 'a') as f:
         non_sv_nodes_with_blocked_np = np.load(f)
         return non_sv_nodes_with_blocked_np
 
@@ -89,6 +89,8 @@ def create_non_sv_nodes_with_blocked_np(nodes: List[Node], nodes_dict: Dict[str,
 
 
 def main():
+
+    img_dir = '10_10_my_corridor.map'
     # img_dir = '10_10_my_rand.map'
     # img_dir = '15-15-two-rooms.map'
     # img_dir = '15-15-four-rooms.map'
@@ -105,7 +107,7 @@ def main():
     # img_dir = 'random-64-64-10.map'
     # img_dir = 'random-64-64-20.map'
     # img_dir = 'room-64-64-8.map'
-    img_dir = 'den312d.map'
+    # img_dir = 'den312d.map'
 
 
     path_to_maps: str = 'maps'

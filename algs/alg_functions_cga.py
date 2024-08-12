@@ -205,7 +205,8 @@ def get_alt_goal_node(
                 continue
             open_list.append(nei_node)
         heapq.heappush(closed_names_list_heap, next_node.xy_name)
-
+    if len(possible_nodes) > 0:
+        return random.choice(possible_nodes)
     raise RuntimeError('nope')
 
 
