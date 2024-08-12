@@ -137,8 +137,8 @@ def run_cga_mapf(
 @use_profiler(save_dir='../stats/alg_cga_mapf.pstat')
 def main():
 
-    to_render = True
-    # to_render = False
+    # to_render = True
+    to_render = False
 
     params = {
         'max_time': 1000,

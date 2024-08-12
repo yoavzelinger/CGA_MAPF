@@ -319,12 +319,12 @@ alg_list_pibt = [
     #     'alg_name': f'LaCAM',
     #     'to_render': False,
     # }),
-    (run_lacam_star, {
-        'alg_name': f'LaCAM*',
-        'flag_star': False,
-        # 'flag_star': True,
-        'to_render': False,
-    }),
+    # (run_lacam_star, {
+    #     'alg_name': f'LaCAM*',
+    #     'flag_star': False,
+    #     # 'flag_star': True,
+    #     'to_render': False,
+    # }),
     (run_cga_mapf, {
         'alg_name': f'CGA-MAPF',
         'alt_goal_flag': 'first',
