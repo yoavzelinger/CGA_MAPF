@@ -143,7 +143,7 @@ def run_lacam_star(
             for a in N.order:
                 a.curr_node = N.config[a.name]
             # plot the iteration
-            i_agent = agents[0]
+            i_agent = N.order[0]
             plot_info = {
                 'img_np': img_np,
                 'agents': agents,
@@ -208,8 +208,8 @@ def main():
     # flag_star: bool = True
     flag_star: bool = False
 
-    # final_render = True
-    to_render = False
+    to_render = True
+    # to_render = False
 
     params = {
         'max_time': 60,

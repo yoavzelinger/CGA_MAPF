@@ -102,10 +102,10 @@ def main():
     # img_dir = 'maze-32-32-2.map'  # v
     # img_dir = 'room-32-32-4.map'  # v
 
-    img_dir = 'random-64-64-10.map'
+    # img_dir = 'random-64-64-10.map'
     # img_dir = 'random-64-64-20.map'
     # img_dir = 'room-64-64-8.map'
-    # img_dir = 'den312d.map'
+    img_dir = 'den312d.map'
 
 
     path_to_maps: str = 'maps'
