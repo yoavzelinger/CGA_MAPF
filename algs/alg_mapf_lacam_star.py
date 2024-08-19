@@ -208,8 +208,8 @@ def main():
     # flag_star: bool = True
     flag_star: bool = False
 
-    to_render = True
-    # to_render = False
+    # to_render = True
+    to_render = False
 
     params = {
         'max_time': 60,

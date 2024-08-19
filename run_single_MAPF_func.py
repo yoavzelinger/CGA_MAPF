@@ -4,8 +4,8 @@ from functions_plotting import *
 
 
 def run_mapf_alg(alg, params, final_render: bool = True):
-    set_seed(random_seed_bool=False, seed=5)
-    # set_seed(random_seed_bool=False, seed=123)
+    # set_seed(random_seed_bool=False, seed=5)
+    set_seed(random_seed_bool=False, seed=123)
     # set_seed(random_seed_bool=True)
 
     # img_dir = '10_10_my_rand.map'
@@ -17,18 +17,19 @@ def run_mapf_alg(alg, params, final_render: bool = True):
     # img_dir = 'empty-32-32.map'
     # img_dir = '10_10_my_corridor.map'
     # img_dir = 'random-32-32-10.map'
-    img_dir = 'random-32-32-20.map'
+    # img_dir = 'random-32-32-20.map'
     # img_dir = 'room-32-32-4.map'
-    # img_dir = 'maze-32-32-2.map'
+    img_dir = 'maze-32-32-2.map'
     # img_dir = 'maze-32-32-4.map'
 
     # n_agents = 700
-    n_agents = 600
+    # n_agents = 600
     # n_agents = 500
+    # n_agents = 450
     # n_agents = 400
     # n_agents = 350
     # n_agents = 300
-    # n_agents = 250
+    n_agents = 250
     # n_agents = 200
     # n_agents = 170
     # n_agents = 150

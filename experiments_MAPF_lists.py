@@ -6,6 +6,7 @@ from algs.alg_mapf_pibt import run_pibt
 from algs.alg_mapf_lacam import run_lacam
 from algs.alg_mapf_lacam_star import run_lacam_star
 from algs.alg_mapf_cga import run_cga_mapf
+from algs.alg_mapf_cga_pure import run_cga_pure
 
 # ------------------------------------------------------------------------------------------------------------ #
 # General
@@ -319,14 +320,20 @@ alg_list_pibt = [
     #     'alg_name': f'LaCAM',
     #     'to_render': False,
     # }),
-    (run_lacam_star, {
-        'alg_name': f'LaCAM*',
-        'flag_star': False,
-        # 'flag_star': True,
-        'to_render': False,
-    }),
+    # (run_lacam_star, {
+    #     'alg_name': f'LaCAM*',
+    #     'flag_star': False,
+    #     # 'flag_star': True,
+    #     'to_render': False,
+    # }),
     (run_cga_mapf, {
         'alg_name': f'CGA-MAPF',
+        'alt_goal_flag': 'first',
+        'alt_goal_num': 1,
+        'to_render': False,
+    }),
+    (run_cga_pure, {
+        'alg_name': f'CGA-PURE',
         'alt_goal_flag': 'first',
         'alt_goal_num': 1,
         'to_render': False,
