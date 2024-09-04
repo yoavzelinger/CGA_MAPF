@@ -14,27 +14,18 @@ def get_marker_line(alg_name: str):
     if alg_name in markers_lines_dict:
         return markers_lines_dict[alg_name]
     marker_line = '-'
-    # if 'APF' in alg_name:
-    #     marker_line += '--'
-    # else:
-    #     marker_line += '-'
-    if 'PrP-A*' in alg_name:
+    if 'PrP' == alg_name:
         marker_line += '^'
-    elif 'PrP-SIPPS' in alg_name:
-        marker_line += 'v'
-    elif 'LNS2-A*' in alg_name:
-        marker_line += 'X'
-    elif 'LNS2-SIPPS' in alg_name:
+    elif 'LNS2' == alg_name:
         marker_line += 'P'
-    elif 'PIBT' in alg_name:
+    elif 'PIBT' == alg_name:
         marker_line += 'h'
-    elif 'LNS2' in alg_name:
-        marker_line += 's'
-    elif 'LaCAM' in alg_name and '*' not in alg_name:
+    elif 'LaCAM' == alg_name:
         marker_line += '1'
-    elif 'LaCAM*' in alg_name:
+    elif 'LaCAM*' == alg_name:
         marker_line += '2'
-    # elif 'CGA' in alg_name:
+    elif 'CGA-MAPF' == alg_name:
+        marker_line += 'X'
     #     marker_line += 'd'
     else:
         marker_line += random.choice(markers)
@@ -45,23 +36,18 @@ def get_marker_line(alg_name: str):
 def get_alg_color(alg_name: str):
     if alg_name in colors_dict:
         return colors_dict[alg_name]
-    if 'PrP-A*' in alg_name:
+    if 'PrP' == alg_name:
         color = 'blue'
-    elif 'PrP-SIPPS' in alg_name:
-        color = 'orange'
-    elif 'LNS2-A*' in alg_name:
-        # color = 'lightskyblue'
+    elif 'LNS2' == alg_name:
         color = 'teal'
-    elif 'LNS2-SIPPS' in alg_name:
-        color = 'peru'
-    elif 'PIBT' in alg_name:
+    elif 'PIBT' == alg_name:
         color = 'salmon'
-    elif 'LNS2' in alg_name:
-        color = 'lightgreen'
-    elif 'LaCAM' in alg_name and '*' not in alg_name:
+    elif 'LaCAM' == alg_name:
         color = 'indigo'
-    elif 'LaCAM*' in alg_name:
+    elif 'LaCAM*' == alg_name:
         color = 'plum'
+    elif 'CGA-MAPF' == alg_name:
+        color = 'red'
     else:
         color = random.choice(color_names)
     colors_dict[alg_name] = color

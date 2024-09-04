@@ -205,11 +205,11 @@ def run_lifelong_lacam_star():
 @use_profiler(save_dir='../stats/alg_lacam_star.pstat')
 def main():
 
-    # flag_star: bool = True
-    flag_star: bool = False
+    flag_star: bool = True
+    # flag_star: bool = False
 
-    # to_render = True
-    to_render = False
+    to_render = True
+    # to_render = False
 
     params = {
         'max_time': 60,

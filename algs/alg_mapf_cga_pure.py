@@ -123,19 +123,19 @@ def run_cga_pure(
 @use_profiler(save_dir='../stats/alg_cga_mapf_pure.pstat')
 def main():
 
-    # to_render = True
-    to_render = False
+    to_render = True
+    # to_render = False
 
     params = {
         'max_time': 1000,
-        'alg_name': 'CGA-MAPF',
-        # 'alt_goal_flag': 'first',
+        'alg_name': 'CGA-PURE',
+        'alt_goal_flag': 'first',
         # 'alt_goal_flag': 'num', 'alt_goal_num': 3,
-        'alt_goal_flag': 'all',
+        # 'alt_goal_flag': 'all',
         'to_render': to_render,
     }
-    # run_mapf_alg(alg=run_cga_pure, params=params, final_render=False)
-    run_mapf_alg(alg=run_cga_pure, params=params, final_render=True)
+    run_mapf_alg(alg=run_cga_pure, params=params, final_render=False)
+    # run_mapf_alg(alg=run_cga_pure, params=params, final_render=True)
 
 
 if __name__ == '__main__':

@@ -36,7 +36,7 @@ def run_lns2(
     alg_name: str = params['alg_name']
     constr_type: str = params['constr_type']
     n_neighbourhood: bool = params['n_neighbourhood']
-    to_render: bool = params['final_render']
+    to_render: bool = params['to_render']
     max_time: bool = params['max_time']
 
     start_time = time.time()

@@ -143,7 +143,7 @@ def create_init_solution(
         # checks
         runtime = time.time() - start_time
         print(f'\r[{alg_name} - init] | agents: {len(h_priority_agents): <3} / {len(agents)} | {runtime= : .2f} s.',
-              end='\n')  # , end=''
+              end='')  # , end=''
 
 
 def solve_subset_with_prp(

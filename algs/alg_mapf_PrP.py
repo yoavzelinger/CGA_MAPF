@@ -17,7 +17,7 @@ def run_prp_sipps(
 
     constr_type: str = params['constr_type']
     alg_name: bool = params['alg_name']
-    to_render: bool = params['final_render']
+    to_render: bool = params['to_render']
     max_time: bool = params['max_time']
 
     start_time = time.time()
@@ -95,7 +95,7 @@ def run_prp_sipps(
 
             # checks
             runtime = time.time() - start_time
-            print(f'\r[{alg_name}] {r_iter=: <3} | agents: {len(h_priority_agents): <3} / {len(agents)} | {runtime= : .2f} s.')  # , end=''
+            print(f'\r[{alg_name}] {r_iter=: <3} | agents: {len(h_priority_agents): <3} / {len(agents)} | {runtime= : .2f} s.', end='')  # , end=''
             # collisions: int = 0
             # for i in range(len(h_priority_agents[0].path)):
             #     check_vc_ec_neic_iter(h_priority_agents, i, False)
