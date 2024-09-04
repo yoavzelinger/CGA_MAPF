@@ -111,7 +111,7 @@ def run_k_lns2(
     pf_alg: str = params['pf_alg']
     k_limit: bool = params['k_limit']
     n_neighbourhood: bool = params['n_neighbourhood']
-    to_render: bool = params['final_render']
+    to_render: bool = params['to_render']
     img_np: np.ndarray = params['img_np']
     max_time: bool = params['max_time']
 
@@ -138,8 +138,10 @@ def run_k_lns2(
         agents = get_shuffled_agents(agents)
         create_k_limit_init_solution(
             agents, nodes, nodes_dict, h_dict, map_dim, pf_alg_name, pf_alg, k_limit, start_time,
-            vc_empty_np, ec_empty_np, pc_empty_np
+            vc_empty_np, ec_empty_np, pc_empty_np, params
         )
+        if time.time() - start_time >= max_time:
+            return None, {'agents': agents}
         cp_graph, cp_graph_names = get_k_limit_cp_graph(agents, k_limit=k_limit)
         cp_len = len(cp_graph)
         occupied_from: Dict[str, AgentAlg] = {a.curr_node.xy_name: a for a in agents}

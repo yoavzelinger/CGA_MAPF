@@ -58,10 +58,18 @@ alg_list_general = [
         'pf_alg': run_sipps,
         'to_render': False,
     }),
-    (run_lns2, {
+    # (run_lns2, {
+    #     'alg_name': f'LNS2',
+    #     'constr_type': 'soft',
+    #     'n_neighbourhood': 5,
+    #     'to_render': False,
+    # }),
+    (run_k_lns2, {
+        'k_limit': (k_limit := 5),
         'alg_name': f'LNS2',
-        'constr_type': 'soft',
-        'n_neighbourhood': 5,
+        'pf_alg_name': 'sipps',
+        'pf_alg': run_sipps,
+        'n_neighbourhood': k_limit,
         'to_render': False,
     }),
     (run_pibt, {
@@ -92,10 +100,18 @@ alg_list_cga = [
         'pf_alg': run_sipps,
         'to_render': False,
     }),
-    (run_lns2, {
+    # (run_lns2, {
+    #     'alg_name': f'LNS2',
+    #     'constr_type': 'soft',
+    #     'n_neighbourhood': 5,
+    #     'to_render': False,
+    # }),
+    (run_k_lns2, {
+        'k_limit': (k_limit := 15),
         'alg_name': f'LNS2',
-        'constr_type': 'soft',
-        'n_neighbourhood': 5,
+        'pf_alg_name': 'sipps',
+        'pf_alg': run_sipps,
+        'n_neighbourhood': k_limit,
         'to_render': False,
     }),
     (run_pibt, {

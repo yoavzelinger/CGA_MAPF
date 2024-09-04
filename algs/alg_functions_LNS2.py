@@ -335,8 +335,10 @@ def create_k_limit_init_solution(
         pf_alg,
         k_limit: int,
         start_time: int | float,
-        vc_empty_np, ec_empty_np, pc_empty_np
+        vc_empty_np, ec_empty_np, pc_empty_np,
+        params,
 ):
+    max_time: bool = params['max_time']
     h_priority_agents: List[AgentAlg] = []
     si_table: Dict[str, List[Tuple[int, int, str]]] = init_si_table(nodes)
     if pf_alg_name == 'sipps':
@@ -349,6 +351,8 @@ def create_k_limit_init_solution(
         raise RuntimeError('nono')
 
     for agent in agents:
+        if time.time() - start_time >= max_time:
+            return None, {'agents': agents}
         new_path, alg_info = pf_alg(
             agent.curr_node, agent.goal_node, nodes, nodes_dict, h_dict,
             vc_hard_np, ec_hard_np, pc_hard_np, vc_soft_np, ec_soft_np, pc_soft_np,

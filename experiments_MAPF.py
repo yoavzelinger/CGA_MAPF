@@ -32,23 +32,23 @@ def run_mapf_experiments():
     # img_dir = '15-15-six-rooms.map'
     # img_dir = '15-15-eight-rooms.map'
 
-    # img_dir = 'empty-32-32.map'
+    img_dir = 'empty-32-32.map'
     # img_dir = 'random-32-32-10.map'
     # img_dir = 'room-32-32-4.map'
     # img_dir = 'random-32-32-20.map'
-    img_dir = 'maze-32-32-2.map'
+    # img_dir = 'maze-32-32-2.map'
     # img_dir = 'maze-32-32-4.map'
 
     # ------------------------------------------------- #
 
     # n_agents_list = [300, 350, 400, 450]
-    n_agents_list = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    # n_agents_list = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     # n_agents_list = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 19, 20]
     # n_agents_list = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     # n_agents_list = [50, 100, 150, 200, 250, 300, 350]
     # n_agents_list = [150, 200, 250, 300, 350]
     # n_agents_list = [10, 50, 100, 150, 200, 250, 300, 350, 400]
-    # n_agents_list = [100, 200, 300, 400, 500, 600]
+    n_agents_list = [100, 200, 300, 400, 500, 600]
     # n_agents_list = [200, 250, 300, 350, 400, 450, 500, 550, 600]
     # n_agents_list = [200, 300, 400, 500, 600]
     # n_agents_list = [300, 400, 500, 600, 700]
@@ -65,8 +65,8 @@ def run_mapf_experiments():
 
     # limits
     # max_time = 1e7  # seconds
-    # max_time = 60  # seconds
-    max_time = 30  # seconds
+    max_time = 60  # seconds
+    # max_time = 30  # seconds
     # max_time = 10  # seconds
     # max_time = 5  # seconds
     # debug

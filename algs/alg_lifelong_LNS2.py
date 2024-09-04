@@ -25,7 +25,7 @@ def solve_k_LNS2(
     agents = get_shuffled_agents(agents)
     create_k_limit_init_solution(
         agents, nodes, nodes_dict, h_dict, map_dim, pf_alg_name, pf_alg, k_limit, iter_start_time,
-        vc_empty_np, ec_empty_np, pc_empty_np
+        vc_empty_np, ec_empty_np, pc_empty_np, params
     )
     cp_graph, cp_graph_names = get_k_limit_cp_graph(agents, k_limit=k_limit)
     cp_len = len(cp_graph)
