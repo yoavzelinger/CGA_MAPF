@@ -66,7 +66,7 @@ def show_results(file_dir):
 
 def main():
 
-    file_dir = 'MAPF_2024-09-04--18-54_ALGS-2_RUNS-3_MAP-maze-32-32-2.json'
+    file_dir = 'MAPF_2024-09-04--19-12_ALGS-6_RUNS-3_MAP-maze-32-32-2.json'
 
     # LMAPF
     # file_dir = ''
