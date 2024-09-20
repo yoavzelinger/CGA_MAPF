@@ -27,10 +27,10 @@ def run_mapf_experiments():
 
     # img_dir = 'empty-32-32.map'
     # img_dir = 'random-32-32-10.map'
-    # img_dir = 'random-32-32-20.map'
+    img_dir = 'random-32-32-20.map'
     # img_dir = 'maze-32-32-4.map'
     # img_dir = 'maze-32-32-2.map'
-    img_dir = 'room-32-32-4.map'
+    # img_dir = 'room-32-32-4.map'
     # ------------------------------------------------- #
 
     # n_agents_list = [400]
@@ -38,7 +38,7 @@ def run_mapf_experiments():
     # n_agents_list = [100, 200, 300, 400]
     # n_agents_list = [50, 100, 150, 200, 250, 300, 350, 400]
     # n_agents_list = [100, 200, 300, 400, 500]
-    n_agents_list = [200, 300, 400, 500, 600]
+    n_agents_list = [100, 200, 300, 400, 500, 600, 700]
     # n_agents_list = [300, 400, 500, 600, 700]
 
     # ------------------------------------------------- #
@@ -54,6 +54,9 @@ def run_mapf_experiments():
     # n_steps = 50
     # n_steps = 100
     n_steps = 200
+
+    # pace of changing targets
+    k_limit: int = 5
 
     # ------------------------------------------------- #
     alg_list = alg_list_general
@@ -112,7 +115,9 @@ def run_mapf_experiments():
                 params['max_iter_time'] = max_iter_time
                 params['n_steps'] = n_steps
                 params['sv_map'] = sv_map
+                params['k_limit'] = k_limit
                 alg_name = params['alg_name']
+
 
                 # the run
                 paths_dict, alg_info = alg(

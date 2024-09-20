@@ -25,6 +25,7 @@ def run_lifelong_cga(
     to_render: bool = params['to_render']
     img_np: np.ndarray = params['img_np']
     sv_map: np.ndarray = params['sv_map']
+    k_limit: bool = params['k_limit']
 
     if to_render:
         fig, ax = plt.subplots(1, 2, figsize=(14, 7))
@@ -38,6 +39,10 @@ def run_lifelong_cga(
     agents.sort(key=lambda a: a.priority, reverse=True)
 
     for step_iter in range(n_steps):
+
+        if step_iter > 0 and (step_iter - 1) % k_limit == 0:
+            # update goal and throughput
+            throughput += update_goal_nodes(agents, nodes)
 
         # PREPARATIONS
         (config_from, occupied_from, config_to, occupied_to,
@@ -99,7 +104,7 @@ def run_lifelong_cga(
         # unfinished first
         agents.sort(key=lambda a: a.priority, reverse=True)
 
-        throughput += update_goal_nodes(agents, nodes)
+        # throughput += update_goal_nodes(agents, nodes)
 
         # print + render
         runtime = time.time() - start_time
