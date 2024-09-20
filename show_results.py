@@ -91,7 +91,7 @@ def main():
     # file_dir = ''
 
     # show_results(file_dir=f'logs_for_experiments/{file_dir}')
-    show_results(file_dir=f'final_logs/{file_dir}')
+    show_results(file_dir=f'final_logs_CGA_MAPF_Paper/{file_dir}')
 
 
 if __name__ == '__main__':

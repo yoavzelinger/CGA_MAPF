@@ -128,7 +128,7 @@ def run_prp_a_star(
 ) -> Tuple[Dict[str, List[Node]] | None, dict]:
 
     alg_name: bool = params['alg_name']
-    to_render: bool = params['final_render']
+    to_render: bool = params['to_render']
     max_time: bool = params['max_time']
 
     start_time = time.time()

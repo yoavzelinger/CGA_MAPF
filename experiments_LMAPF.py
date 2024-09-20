@@ -2,11 +2,7 @@ from globals import *
 from functions_general import *
 from functions_plotting import *
 
-from algs.alg_sipps import run_sipps
-from algs.alg_temporal_a_star import run_temporal_a_star
-from algs.alg_lifelong_PrP import run_lifelong_prp
-from algs.alg_lifelong_LNS2 import run_lifelong_LNS2
-from algs.alg_lifelong_PIBT import run_lifelong_pibt
+from experiments_LMAPF_lists import *
 
 
 @use_profiler(save_dir='stats/experiments_lifelong_mapf.pstat')
@@ -30,19 +26,19 @@ def run_mapf_experiments():
     # img_dir = '15-15-eight-rooms.map'
 
     # img_dir = 'empty-32-32.map'
-    img_dir = 'random-32-32-10.map'
+    # img_dir = 'random-32-32-10.map'
     # img_dir = 'random-32-32-20.map'
     # img_dir = 'maze-32-32-4.map'
     # img_dir = 'maze-32-32-2.map'
-    # img_dir = 'room-32-32-4.map'
+    img_dir = 'room-32-32-4.map'
     # ------------------------------------------------- #
 
     # n_agents_list = [400]
     # n_agents_list = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     # n_agents_list = [100, 200, 300, 400]
-    n_agents_list = [50, 100, 150, 200, 250, 300, 350, 400]
+    # n_agents_list = [50, 100, 150, 200, 250, 300, 350, 400]
     # n_agents_list = [100, 200, 300, 400, 500]
-    # n_agents_list = [200, 300, 400, 500, 600]
+    n_agents_list = [200, 300, 400, 500, 600]
     # n_agents_list = [300, 400, 500, 600, 700]
 
     # ------------------------------------------------- #
@@ -55,51 +51,12 @@ def run_mapf_experiments():
     max_iter_time = 5
     # max_iter_time = 10
 
-    n_steps = 50
+    # n_steps = 50
     # n_steps = 100
+    n_steps = 200
 
     # ------------------------------------------------- #
-
-    alg_list = [
-        (run_lifelong_prp, {
-            'alg_name': f'L-PrP-SIPPS',
-            'constr_type': 'hard',
-            'pf_alg': run_sipps,
-            'pf_alg_name': 'sipps',
-            'k_limit': 5,
-            'final_render': False,
-        }),
-        (run_lifelong_prp, {
-            'alg_name': f'L-PrP-A*',
-            'constr_type': 'hard',
-            'pf_alg': run_temporal_a_star,
-            'pf_alg_name': 'a_star',
-            'k_limit': 5,
-            'final_render': False,
-        }),
-        (run_lifelong_LNS2, {
-            'alg_name': f'L-LNS2-SIPPS',
-            'constr_type': 'soft',
-            'k_limit': 5,
-            'n_neighbourhood': 5,
-            'pf_alg_name': 'sipps',
-            'pf_alg': run_sipps,
-            'final_render': False,
-        }),
-        (run_lifelong_LNS2, {
-            'alg_name': f'L-LNS2-A*',
-            'constr_type': 'hard',
-            'k_limit': 5,
-            'n_neighbourhood': 5,
-            'pf_alg_name': 'a_star',
-            'pf_alg': run_temporal_a_star,
-            'final_render': False,
-        }),
-        (run_lifelong_pibt, {
-            'alg_name': f'L-PIBT',
-            'final_render': False,
-        }),
-    ]
+    alg_list = alg_list_general
 
     # ------------------------------------------------- #
 
@@ -133,11 +90,13 @@ def run_mapf_experiments():
 
     path_to_maps: str = 'maps'
     path_to_heuristics: str = 'logs_for_heuristics'
+    path_to_sv_maps: str = 'logs_for_freedom_maps'
 
     img_np, (height, width) = get_np_from_dot_map(img_dir, path_to_maps)
     map_dim = (height, width)
     nodes, nodes_dict = build_graph_from_np(img_np, show_map=False)
     h_dict = exctract_h_dict(img_dir, path_to_heuristics)
+    sv_map: np.ndarray = get_sv_map(img_dir, folder_dir=path_to_sv_maps)
 
     for n_agents in n_agents_list:
 
@@ -152,6 +111,7 @@ def run_mapf_experiments():
                 params['img_np'] = img_np
                 params['max_iter_time'] = max_iter_time
                 params['n_steps'] = n_steps
+                params['sv_map'] = sv_map
                 alg_name = params['alg_name']
 
                 # the run

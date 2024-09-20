@@ -27,6 +27,10 @@ def get_marker_line(alg_name: str):
     elif 'CGA-MAPF' == alg_name:
         marker_line += 'X'
     #     marker_line += 'd'
+    elif 'CGA' == alg_name:
+        marker_line += 'X'
+    elif 'CGA+PIBT' == alg_name:
+        marker_line += 'd'
     else:
         marker_line += random.choice(markers)
     markers_lines_dict[alg_name] = marker_line
@@ -47,6 +51,10 @@ def get_alg_color(alg_name: str):
     elif 'LaCAM*' == alg_name:
         color = 'plum'
     elif 'CGA-MAPF' == alg_name:
+        color = 'red'
+    elif 'CGA' == alg_name:
+        color = 'purple'
+    elif 'CGA+PIBT' == alg_name:
         color = 'red'
     else:
         color = random.choice(color_names)
@@ -340,7 +348,7 @@ def plot_throughput(ax, info):
         throughput_list = []
         for n_a in n_agents_list:
             throughput_list.append(np.mean(info[alg_name][f'{n_a}']['throughput']))
-        ax.plot(n_agents_list, throughput_list, markers_lines_dict[alg_name], color=colors_dict[alg_name],
+        ax.plot(n_agents_list, throughput_list, get_marker_line(alg_name), color=get_alg_color(alg_name),
                 alpha=0.5, label=f'{alg_name}', linewidth=5, markersize=20)
     ax.set_xlim([min(n_agents_list) - 20, max(n_agents_list) + 20])
     ax.set_xticks(n_agents_list)
