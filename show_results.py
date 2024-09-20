@@ -1,3 +1,5 @@
+import time
+
 from functions_plotting import *
 
 
@@ -26,20 +28,26 @@ def show_results(file_dir):
             #     "APF-k-PrP-SIPPS",
             # ]
 
-            fig, ax = plt.subplots(2, 2, figsize=(8, 8))
-            # fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+            # fig, ax = plt.subplots(2, 2, figsize=(8, 8))
+            #
+            # # plot_rsoc(ax, info=logs_dict)
+            #
+            # plot_sr(ax[0, 0], info=logs_dict)
+            # plot_time_metric(ax[0, 1], info=logs_dict)
+            # # plot_time_metric_cactus(ax[0, 1], info=logs_dict)
+            # # plot_makespan(ax[1, 0], info=logs_dict)
+            # plot_makespan_cactus(ax[1, 0], info=logs_dict)
+            # # plot_soc(ax[1, 1], info=logs_dict)
+            # plot_soc_cactus(ax[1, 1], info=logs_dict)
+            # # plot_sr(ax, info=logs_dict)
+            # # plot_time_metric_cactus(ax, info=logs_dict)
 
-            # plot_rsoc(ax, info=logs_dict)
-
-            plot_sr(ax[0, 0], info=logs_dict)
-            plot_time_metric(ax[0, 1], info=logs_dict)
-            # plot_time_metric_cactus(ax[0, 1], info=logs_dict)
-            # plot_makespan(ax[1, 0], info=logs_dict)
-            plot_makespan_cactus(ax[1, 0], info=logs_dict)
-            # plot_soc(ax[1, 1], info=logs_dict)
-            plot_soc_cactus(ax[1, 1], info=logs_dict)
+            sleep_t = 4
+            fig, ax = plt.subplots(1, 1, figsize=(8, 8))
             # plot_sr(ax, info=logs_dict)
-            # plot_time_metric_cactus(ax, info=logs_dict)
+            # plot_time_metric(ax, info=logs_dict)
+            plot_makespan_cactus(ax, info=logs_dict)
+            # plot_soc_cactus(ax, info=logs_dict)
 
         if expr_type == 'LMAPF':
             # logs_dict['alg_names'] = [
@@ -66,19 +74,24 @@ def show_results(file_dir):
 
 def main():
 
-    file_dir = 'MAPF_2024-09-04--19-12_ALGS-6_RUNS-3_MAP-maze-32-32-2.json'
+    # file_dir = 'MAPF_2024-09-04--19-12_ALGS-6_RUNS-3_MAP-maze-32-32-2.json'
 
     # LMAPF
     # file_dir = ''
 
     # MAPF
-    # file_dir = ''
+    # file_dir = 'MAPF_2024-09-04--21-51_ALGS-6_RUNS-15_MAP-empty-32-32.json'
+    # file_dir = 'MAPF_2024-09-05--09-46_ALGS-6_RUNS-15_MAP-random-32-32-10.json'
+    # file_dir = 'MAPF_2024-09-05--17-52_ALGS-6_RUNS-15_MAP-random-32-32-20.json'
+    # file_dir = 'MAPF_2024-09-05--20-55_ALGS-6_RUNS-15_MAP-room-32-32-4.json'
+    # file_dir = 'MAPF_2024-09-06--11-44_ALGS-6_RUNS-15_MAP-maze-32-32-2.json'
+    file_dir = 'MAPF_2024-09-07--16-36_ALGS-6_RUNS-15_MAP-maze-32-32-4.json'
 
     # parameters
     # file_dir = ''
 
-    show_results(file_dir=f'logs_for_experiments/{file_dir}')
-    # show_results(file_dir=f'final_logs/{file_dir}')
+    # show_results(file_dir=f'logs_for_experiments/{file_dir}')
+    show_results(file_dir=f'final_logs/{file_dir}')
 
 
 if __name__ == '__main__':

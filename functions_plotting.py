@@ -146,12 +146,15 @@ def plot_sr(ax, info):
     ax.set_xlim([min(n_agents_list), max(n_agents_list)])
     ax.set_ylim([0, 1 + 0.1])
     ax.set_xticks(n_agents_list)
-    ax.set_xlabel('N agents', fontsize=15)
-    ax.set_ylabel('Success Rate', fontsize=15)
+    ax.set_xlabel('N agents', fontsize=27)
+    ax.set_ylabel('Success Rate', fontsize=27)
     # ax.set_title(f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.')
     # set_plot_title(ax, f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.', size=11)
-    set_plot_title(ax, f'{img_dir[:-4]} Map', size=11)
-    set_legend(ax, size=12)
+    set_plot_title(ax, f'{img_dir[:-4]}', size=30)
+    # set_legend(ax, size=27)
+    labelsize = 20
+    ax.xaxis.set_tick_params(labelsize=labelsize)
+    ax.yaxis.set_tick_params(labelsize=labelsize)
     plt.tight_layout()
 
 
@@ -176,12 +179,14 @@ def plot_time_metric(ax, info):
         # print(f'{alg_name}\t\t\t: {res_str}')
     ax.set_xlim([min(x_list) - 20, max(x_list) + 20])
     ax.set_xticks(x_list)
-    ax.set_xlabel('N agents', fontsize=15)
-    ax.set_ylabel('Runtime', fontsize=15)
+    ax.set_xlabel('N agents', fontsize=27)
+    ax.set_ylabel('Runtime', fontsize=27)
     # ax.set_title(f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.')
-    set_plot_title(ax, f'{img_dir[:-4]} Map | time limit: {max_time} sec.',
-                   size=11)
-    set_legend(ax, size=12)
+    set_plot_title(ax, f'{img_dir[:-4]}', size=30)
+    labelsize = 20
+    ax.xaxis.set_tick_params(labelsize=labelsize)
+    ax.yaxis.set_tick_params(labelsize=labelsize)
+    # set_legend(ax, size=23)
 
 
 def plot_time_metric_cactus(ax, info):
@@ -256,16 +261,19 @@ def plot_soc_cactus(ax, info):
             # res_str += f'\t{n_a} - {y_list[-1]: .2f}, '
         y_list.sort()
         ax.plot(y_list, get_marker_line(alg_name), color=get_alg_color(alg_name),
-                alpha=0.5, label=f'{alg_name}', linewidth=2, markersize=10)
+                alpha=0.5, label=f'{alg_name}', linewidth=5, markersize=20)
         # print(f'{i_alg}\t\t\t: {res_str}')
     # ax.set_xlim([min(x_list) - 20, max(x_list) + 20])
     # ax.set_xticks(x_list)
-    ax.set_xlabel('Solved Instances', fontsize=15)
-    ax.set_ylabel('SoC', fontsize=15)
+    ax.set_xlabel('Solved Instances', fontsize=27)
+    ax.set_ylabel('SoC', fontsize=27)
     # ax.set_title(f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.')
-    set_plot_title(ax, f'{img_dir[:-4]} Map | time limit: {max_time} sec.',
-                   size=11)
-    # set_legend(ax, size=12)
+    set_plot_title(ax, f'{img_dir[:-4]}',
+                   size=30)
+    labelsize = 20
+    ax.xaxis.set_tick_params(labelsize=labelsize)
+    ax.yaxis.set_tick_params(labelsize=labelsize)
+    # set_legend(ax, size=23)
 
 
 def plot_makespan(ax, info):
@@ -306,16 +314,19 @@ def plot_makespan_cactus(ax, info):
             # res_str += f'\t{n_a} - {y_list[-1]: .2f}, '
         y_list.sort()
         ax.plot(y_list, get_marker_line(alg_name), color=get_alg_color(alg_name),
-                alpha=0.5, label=f'{alg_name}', linewidth=2, markersize=10)
+                alpha=0.5, label=f'{alg_name}', linewidth=4, markersize=15)
         # print(f'{i_alg}\t\t\t: {res_str}')
     # ax.set_xlim([min(x_list) - 20, max(x_list) + 20])
     # ax.set_xticks(x_list)
-    ax.set_xlabel('Solved Instances', fontsize=15)
-    ax.set_ylabel('Makespan', fontsize=15)
+    ax.set_xlabel('Solved Instances', fontsize=27)
+    ax.set_ylabel('Makespan', fontsize=27)
     # ax.set_title(f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.')
-    set_plot_title(ax, f'{img_dir[:-4]} Map | time limit: {max_time} sec.',
-                   size=11)
-    # set_legend(ax, size=12)
+    set_plot_title(ax, f'{img_dir[:-4]}',
+                   size=30)
+    labelsize = 20
+    ax.xaxis.set_tick_params(labelsize=labelsize)
+    ax.yaxis.set_tick_params(labelsize=labelsize)
+    # set_legend(ax, size=23)
 
 
 def plot_throughput(ax, info):

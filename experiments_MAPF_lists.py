@@ -142,3 +142,47 @@ alg_list_cga = [
     # }),
 
 ]
+
+
+alg_list_top = [
+    (run_lacam, {
+        'alg_name': f'LaCAM',
+        'to_render': False,
+    }),
+    (run_lacam_star, {
+        'alg_name': f'LaCAM*',
+        'flag_star': False,
+        # 'flag_star': True,
+        'to_render': False,
+    }),
+    (run_cga_pure, {
+        'alg_name': f'CGA-MAPF',
+        'alt_goal_flag': 'first',
+        'alt_goal_num': 1,
+        'to_render': False,
+    }),
+    # (run_cga_mapf, {
+    #     'alg_name': f'CGA+PIBT',
+    #     'alt_goal_flag': 'first',
+    #     'alt_goal_num': 1,
+    #     'to_render': False,
+    # }),
+
+]
+
+
+alg_list_cga_only = [
+    (run_cga_pure, {
+        'alg_name': f'CGA-MAPF',
+        'alt_goal_flag': 'first',
+        'alt_goal_num': 1,
+        'to_render': False,
+    }),
+    # (run_cga_mapf, {
+    #     'alg_name': f'CGA+PIBT',
+    #     'alt_goal_flag': 'first',
+    #     'alt_goal_num': 1,
+    #     'to_render': False,
+    # }),
+
+]
