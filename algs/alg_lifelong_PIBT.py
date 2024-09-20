@@ -20,7 +20,11 @@ def run_lifelong_pibt(
     max_iter_time: int | float = params['max_iter_time']
     n_steps: int = params['n_steps']
     alg_name: bool = params['alg_name']
-    to_render: bool = params['final_render']
+    to_render: bool = params['to_render']
+    img_np: np.ndarray = params['img_np']
+
+    if to_render:
+        fig, ax = plt.subplots(1, 2, figsize=(14, 7))
 
     start_time = time.time()
     throughput: int = 0
@@ -66,7 +70,22 @@ def run_lifelong_pibt(
 
         # print + render
         runtime = time.time() - start_time
-        print(f'\r[{alg_name}] {step_iter=: <3} | runtime: {runtime: .2f} s. | {throughput=}',end='')
+        print(f'\r[{alg_name}] {step_iter=: <3} | runtime: {runtime: .2f} s. | {throughput=}', end='')
+        # ------------------------------ #
+        # ------------------------------ #
+        # ------------------------------ #
+        if to_render:
+            # plot the iteration
+            i_agent = agents[0]
+            plot_info = {
+                'img_np': img_np,
+                'agents': agents,
+                'i_agent': i_agent,
+                'i': step_iter,
+            }
+            plot_step_in_env(ax[0], plot_info)
+            plt.pause(0.001)
+            # plt.pause(1)
 
     # checks
     # for i in range(len(agents[0].path)):
@@ -77,16 +96,17 @@ def run_lifelong_pibt(
 @use_profiler(save_dir='../stats/alg_lifelong_pibt.pstat')
 def main():
 
-    # final_render = True
+    # to_render = True
     to_render = False
 
     params = {
         'max_iter_time': 5,  # seconds
-        'n_steps': 50,
+        'n_steps': 500,
         'alg_name': f'Lifelong-PIBT',
-        'final_render': to_render,
+        'to_render': to_render,
     }
-    run_mapf_alg(alg=run_lifelong_pibt, params=params)
+    run_mapf_alg(alg=run_lifelong_pibt, params=params, final_render=False)
+    # run_mapf_alg(alg=run_lifelong_pibt, params=params, final_render=True)
 
 
 if __name__ == '__main__':

@@ -120,6 +120,14 @@ def get_blocked_sv_map(img_dir: str, folder_dir: str = 'logs_for_freedom_maps'):
         return blocked_sv_map
 
 
+def get_sv_map(img_dir: str, folder_dir: str = 'logs_for_freedom_maps'):
+    possible_dir = f'{folder_dir}/{img_dir[:-4]}.npy'
+    assert os.path.exists(possible_dir)
+    with open(possible_dir, 'rb') as f:
+        sv_map = np.load(f)
+        return sv_map
+
+
 def create_constraints(
         paths: List[List[Node]], map_dim: Tuple[int, int], max_path_len: int
 ) -> Tuple[np.ndarray | None, np.ndarray | None, np.ndarray | None]:

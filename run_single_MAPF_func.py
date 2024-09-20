@@ -17,14 +17,14 @@ def run_mapf_alg(alg, params, final_render: bool = True):
     # img_dir = '10_10_my_corridor.map'
     # img_dir = 'empty-32-32.map'
     # img_dir = 'random-32-32-10.map'
-    img_dir = 'random-32-32-20.map'
+    # img_dir = 'random-32-32-20.map'
     # img_dir = 'room-32-32-4.map'
-    # img_dir = 'maze-32-32-2.map'
+    img_dir = 'maze-32-32-2.map'
     # img_dir = 'maze-32-32-4.map'
 
     # n_agents = 700
-    n_agents = 600
-    # n_agents = 500
+    # n_agents = 600
+    n_agents = 500
     # n_agents = 450
     # n_agents = 400
     # n_agents = 350
@@ -36,6 +36,7 @@ def run_mapf_alg(alg, params, final_render: bool = True):
     # n_agents = 100
     # n_agents = 80
     # n_agents = 70
+    # n_agents = 50
     # n_agents = 40
 
     path_to_maps: str = '../maps'
@@ -47,6 +48,7 @@ def run_mapf_alg(alg, params, final_render: bool = True):
     nodes, nodes_dict = build_graph_from_np(img_np, show_map=False)
     h_dict: Dict[str, np.ndarray] = exctract_h_dict(img_dir, path_to_heuristics)
     blocked_sv_map: np.ndarray = get_blocked_sv_map(img_dir, folder_dir=path_to_sv_maps)
+    sv_map: np.ndarray = get_sv_map(img_dir, folder_dir=path_to_sv_maps)
 
     start_nodes: List[Node] = random.sample(nodes, n_agents)
     goal_nodes: List[Node] = random.sample(nodes, n_agents)
@@ -59,6 +61,7 @@ def run_mapf_alg(alg, params, final_render: bool = True):
     # goal_nodes: List[Node] = [nodes_dict['4_1'], nodes_dict['4_0'], nodes_dict['4_2'], nodes_dict['4_3']]
 
     params['img_np'] = img_np
+    params['sv_map'] = sv_map
     params['blocked_sv_map'] = blocked_sv_map
     paths_dict, info = alg(
         start_nodes, goal_nodes, nodes, nodes_dict, h_dict, map_dim, params

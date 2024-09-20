@@ -25,6 +25,10 @@ from functions_plotting import *
 
 
 def next_is_blocked(next_node: Node, agent: AgentAlg, config_from: Dict[str, Node]) -> bool:
+    """
+    Blocked here means the corner location surrounded by walls from three sides,
+    where there is no escape room for the agent in the corner.
+    """
     curr_node: Node = config_from[agent.name]
     nei_nodes_names = next_node.neighbours[:]
     nei_nodes_names.remove(next_node.xy_name)  # self
