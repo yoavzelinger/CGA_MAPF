@@ -77,7 +77,7 @@ def main():
     # file_dir = 'MAPF_2024-09-04--19-12_ALGS-6_RUNS-3_MAP-maze-32-32-2.json'
 
     # LMAPF
-    # file_dir = ''
+    file_dir = 'LMAPF_2024-09-21--12-03_ALGS-3_RUNS-5_MAP-empty-32-32.json'
 
     # MAPF
     # file_dir = 'MAPF_2024-09-04--21-51_ALGS-6_RUNS-15_MAP-empty-32-32.json'
@@ -85,13 +85,13 @@ def main():
     # file_dir = 'MAPF_2024-09-05--17-52_ALGS-6_RUNS-15_MAP-random-32-32-20.json'
     # file_dir = 'MAPF_2024-09-05--20-55_ALGS-6_RUNS-15_MAP-room-32-32-4.json'
     # file_dir = 'MAPF_2024-09-06--11-44_ALGS-6_RUNS-15_MAP-maze-32-32-2.json'
-    file_dir = 'MAPF_2024-09-07--16-36_ALGS-6_RUNS-15_MAP-maze-32-32-4.json'
+    # file_dir = 'MAPF_2024-09-07--16-36_ALGS-6_RUNS-15_MAP-maze-32-32-4.json'
 
     # parameters
     # file_dir = ''
 
-    # show_results(file_dir=f'logs_for_experiments/{file_dir}')
-    show_results(file_dir=f'final_logs_CGA_MAPF_Paper/{file_dir}')
+    show_results(file_dir=f'logs_for_experiments/{file_dir}')
+    # show_results(file_dir=f'final_logs_CGA_MAPF_Paper/{file_dir}')
 
 
 if __name__ == '__main__':

@@ -27,9 +27,9 @@ def get_marker_line(alg_name: str):
     elif 'CGA-MAPF' == alg_name:
         marker_line += 'X'
     #     marker_line += 'd'
-    elif 'CGA' == alg_name:
+    elif 'CGA(L)' == alg_name:
         marker_line += 'X'
-    elif 'CGA+PIBT' == alg_name:
+    elif 'CGA(L)+PIBT' == alg_name:
         marker_line += 'd'
     else:
         marker_line += random.choice(markers)
@@ -52,9 +52,9 @@ def get_alg_color(alg_name: str):
         color = 'plum'
     elif 'CGA-MAPF' == alg_name:
         color = 'red'
-    elif 'CGA' == alg_name:
+    elif 'CGA(L)' == alg_name:
         color = 'purple'
-    elif 'CGA+PIBT' == alg_name:
+    elif 'CGA(L)+PIBT' == alg_name:
         color = 'red'
     else:
         color = random.choice(color_names)

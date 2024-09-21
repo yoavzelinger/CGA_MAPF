@@ -25,25 +25,29 @@ def run_mapf_experiments():
     # img_dir = '15-15-six-rooms.map'
     # img_dir = '15-15-eight-rooms.map'
 
-    # img_dir = 'empty-32-32.map'
+    img_dir = 'empty-32-32.map'
     # img_dir = 'random-32-32-10.map'
-    img_dir = 'random-32-32-20.map'
-    # img_dir = 'maze-32-32-4.map'
-    # img_dir = 'maze-32-32-2.map'
+    # img_dir = 'random-32-32-20.map'
+
     # img_dir = 'room-32-32-4.map'
+    # img_dir = 'maze-32-32-2.map'
+    # img_dir = 'maze-32-32-4.map'
     # ------------------------------------------------- #
 
+    # n_agents_list = [50, 100]
     # n_agents_list = [400]
     # n_agents_list = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     # n_agents_list = [100, 200, 300, 400]
-    # n_agents_list = [50, 100, 150, 200, 250, 300, 350, 400]
     # n_agents_list = [100, 200, 300, 400, 500]
-    n_agents_list = [100, 200, 300, 400, 500, 600, 700]
     # n_agents_list = [300, 400, 500, 600, 700]
+
+    n_agents_list = [100, 200, 300, 400, 500, 600, 700]
+    # n_agents_list = [100, 150, 200, 250, 300, 350, 400]
 
     # ------------------------------------------------- #
 
-    i_problems = 5
+    # i_problems = 5
+    i_problems = 15
 
     # ------------------------------------------------- #
 
@@ -53,10 +57,15 @@ def run_mapf_experiments():
 
     # n_steps = 50
     # n_steps = 100
-    n_steps = 200
+    # n_steps = 200
+    n_steps = 500
 
     # pace of changing targets
     k_limit: int = 5
+
+    # saving
+    # to_save = False
+    to_save = True
 
     # ------------------------------------------------- #
     alg_list = alg_list_general
@@ -84,6 +93,8 @@ def run_mapf_experiments():
     logs_dict['img_dir'] = img_dir
     logs_dict['max_iter_time'] = max_iter_time
     logs_dict['n_steps'] = n_steps
+    logs_dict['k_limit'] = k_limit
+    logs_dict['expr_type'] = 'LMAPF'
 
     # ------------------------------------------------------------------------------------------------------------ #
     # ------------------------------------------------------------------------------------------------------------ #
@@ -130,6 +141,9 @@ def run_mapf_experiments():
             # plot
             plot_throughput(ax, info=logs_dict)
             plt.pause(0.001)
+
+    if to_save:
+        save_results(logs_dict)
 
     print('\n[INFO]: finished BIG Lifelong MAPF experiments')
     plt.show()

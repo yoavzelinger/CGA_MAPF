@@ -13,7 +13,7 @@ from algs.alg_lifelong_cga_pure import run_lifelong_cga_pure
 
 alg_list_general = [
         # (run_lifelong_prp, {
-        #     'alg_name': f'PrP-SIPPS',
+        #     'alg_name': f'PrP',
         #     'constr_type': 'hard',
         #     'pf_alg': run_sipps,
         #     'pf_alg_name': 'sipps',
@@ -38,7 +38,7 @@ alg_list_general = [
         #     'to_render': False,
         # }),
         # (run_lifelong_LNS2, {
-        #     'alg_name': f'LNS2-A*',
+        #     'alg_name': f'LNS2',
         #     'constr_type': 'hard',
         #     'k_limit': 5,
         #     'n_neighbourhood': 5,
@@ -47,7 +47,7 @@ alg_list_general = [
         #     'to_render': False,
         # }),
         (run_lifelong_cga, {
-            'alg_name': f'CGA+PIBT',
+            'alg_name': f'CGA(L)+PIBT',
             'alt_goal_flag': 'first',
             'alt_goal_num': 1,
             'to_render': False,
@@ -56,12 +56,12 @@ alg_list_general = [
             'alg_name': f'PIBT',
             'to_render': False,
         }),
-        # (run_lifelong_cga_pure, {
-        #     'alg_name': f'CGA',
-        #     'alt_goal_flag': 'first',
-        #     'alt_goal_num': 1,
-        #     'to_render': False,
-        # }),
+        (run_lifelong_cga_pure, {
+            'alg_name': f'CGA(L)',
+            'alt_goal_flag': 'first',
+            'alt_goal_num': 1,
+            'to_render': False,
+        }),
     ]
 
 
