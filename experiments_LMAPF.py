@@ -136,7 +136,7 @@ def run_mapf_experiments():
                 )
 
                 logs_dict[alg_name][f'{n_agents}']['throughput'].append(alg_info['throughput'])
-                print(f'\n{n_agents=}, {i_problem=}, {alg_name=}, throughput={alg_info['throughput']}')
+                print(f'\n{n_agents=}, {i_problem=}, {alg_name=}, throughput={alg_info["throughput"]}')
 
             # plot
             plot_throughput(ax, info=logs_dict)
