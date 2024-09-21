@@ -57,8 +57,8 @@ def run_mapf_experiments():
 
     # n_steps = 50
     # n_steps = 100
-    # n_steps = 200
-    n_steps = 500
+    n_steps = 200
+    # n_steps = 500
 
     # pace of changing targets
     k_limit: int = 5
