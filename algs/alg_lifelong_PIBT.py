@@ -62,7 +62,10 @@ def run_lifelong_pibt(
             agent.path.append(next_node)
             agent.prev_node = agent.curr_node
             agent.curr_node = next_node
-            if agent.curr_node != agent.goal_node:
+            if agent.goal_node is None:
+                agent.priority = agent.init_priority
+                agents_finished.append(agent)
+            elif agent.curr_node != agent.goal_node:
                 agent.priority += 1
             else:
                 agent.priority = agent.init_priority
@@ -101,12 +104,13 @@ def run_lifelong_pibt(
 @use_profiler(save_dir='../stats/alg_lifelong_pibt.pstat')
 def main():
 
-    # to_render = True
-    to_render = False
+    to_render = True
+    # to_render = False
 
     params = {
         'max_iter_time': 5,  # seconds
-        'n_steps': 500,
+        'n_steps': 200,
+        'k_limit': 5,
         'alg_name': f'Lifelong-PIBT',
         'to_render': to_render,
     }

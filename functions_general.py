@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 
 from globals import *
@@ -430,12 +432,24 @@ def add_k_paths_to_agents(agents: List[AgentAlg] | list) -> None:
 
 def update_goal_nodes(agents: List[AgentAlg] | list, nodes: List[Node]) -> int:
     finished_goals = 0
-    goal_names: List[str] = [a.goal_node.xy_name for a in agents]
+    goal_names: List[str] = [a.goal_node.xy_name for a in agents if a.goal_node is not None]
     heapq.heapify(goal_names)
     free_nodes: List[Node] = [n for n in nodes if n.xy_name not in goal_names]
     for agent in agents:
-        if agent.curr_node == agent.goal_node:
+
+        to_change_goal: bool = False
+
+        if agent.goal_node is not None and agent.curr_node == agent.goal_node:
             finished_goals += 1
+            to_change_goal = True
+
+        if agent.goal_node is None:
+            to_change_goal = True
+
+        if to_change_goal:
+            # if random.random() < 0.5:
+            #     agent.goal_node = None
+            #     continue
             next_goal_node = random.choice(free_nodes)
             while next_goal_node.xy_name in goal_names:
                 next_goal_node = random.choice(free_nodes)

@@ -144,7 +144,7 @@ class AgentAlg:
         self.start_node_name: str = self.start_node.xy_name
         self.curr_node: Node = start_node
         # self.curr_node_name: str = self.curr_node.xy_name
-        self.goal_node: Node = goal_node
+        self.goal_node: Node | None = goal_node
         self.goal_node_name: str = self.goal_node.xy_name
         self.alt_goal_node: Node | None = None
         self.message: str = ''
@@ -166,7 +166,9 @@ class AgentAlg:
     def get_goal_node(self) -> Node:
         if self.alt_goal_node is not None:
             return self.alt_goal_node
-        return self.goal_node
+        if self.goal_node is not None:
+            return self.goal_node
+        return self.curr_node
 
     def __str__(self):
         return self.name

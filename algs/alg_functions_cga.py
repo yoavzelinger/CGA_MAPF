@@ -101,13 +101,28 @@ def build_corridor_from_nodes(
         curr_node: Node,
         goal_node: Node,
         h_dict: Dict[str, np.ndarray],
-        non_sv_nodes_np: np.ndarray
+        non_sv_nodes_np: np.ndarray,
+        # occupied_to: Dict[str, AgentAlg],
+        # blocked_nodes_names: List[str],
 ) -> List[Node]:
     main_next_node = get_min_h_nei_node(curr_node, goal_node, h_dict)
+    # not_in_occupied_to = main_next_node.xy_name not in occupied_to
+    # not_in_blocked = main_next_node.xy_name not in blocked_nodes_names
+    # if not not_in_occupied_to or not not_in_blocked:
+    #     return []
     corridor: List[Node] = [curr_node, main_next_node]
+    is_non_sv = non_sv_nodes_np[main_next_node.x, main_next_node.y] == 0
+    is_not_goal = main_next_node != goal_node
+    # while is_non_sv and is_not_goal and not_in_occupied_to and not_in_blocked:
     while non_sv_nodes_np[main_next_node.x, main_next_node.y] == 0 and main_next_node != goal_node:
         main_next_node = get_min_h_nei_node(main_next_node, goal_node, h_dict)
+        # not_in_occupied_to = main_next_node.xy_name not in occupied_to
+        # not_in_blocked = main_next_node.xy_name not in blocked_nodes_names
+        # if not not_in_occupied_to or not not_in_blocked:
+        #     return corridor
         corridor.append(main_next_node)
+        # is_non_sv = non_sv_nodes_np[main_next_node.x, main_next_node.y] == 0
+        # is_not_goal = main_next_node != goal_node
     return corridor
 
 
@@ -349,7 +364,8 @@ def calc_cga_step(
         non_sv_nodes_np: np.ndarray,
         blocked_nodes_names: List[str],
         params: dict,
-        start_time: float, max_time: int | float
+        start_time: float, max_time: int | float,
+        to_block_edges_of_goal: bool = True
 ) -> List[AgentAlg]:
     """
     v - Build corridor
@@ -368,8 +384,19 @@ def calc_cga_step(
 
     # Build corridor
     corridor: List[Node] = build_corridor_from_nodes(
-        config_from[main_agent.name], main_agent.get_goal_node(), h_dict, non_sv_nodes_np
+        config_from[main_agent.name], main_agent.get_goal_node(), h_dict, non_sv_nodes_np,
+        # occupied_to, blocked_nodes_names
     )
+    if not to_block_edges_of_goal and len(corridor) >= 1:
+        new_corridor: List[Node] = []
+        for n in corridor:
+            if n.xy_name in occupied_to or n.xy_name in blocked_nodes_names:
+                break
+            new_corridor.append(n)
+        if len(new_corridor) <= 1:
+            return []
+        corridor = new_corridor
+
     # if corridor is occupied somewhere
     for n in corridor:
         if n.xy_name in occupied_to or n.xy_name in blocked_nodes_names:
@@ -389,11 +416,12 @@ def calc_cga_step(
 
     # get edge_blocked_nodes
     edge_blocked_nodes_names: List[str] = []
-    if main_goal_node == corridor[-1]:
-        # edge_blocked_nodes.append(main_goal_node)
-        for n in main_goal_node.neighbours_nodes:
-            if n not in corridor:
-                heapq.heappush(edge_blocked_nodes_names, n.xy_name)
+    if to_block_edges_of_goal:
+        if main_goal_node == corridor[-1]:
+            # edge_blocked_nodes.append(main_goal_node)
+            for n in main_goal_node.neighbours_nodes:
+                if n not in corridor:
+                    heapq.heappush(edge_blocked_nodes_names, n.xy_name)
 
     for ev_agent in ev_agents:
         ev_path, captured_free_node, blocked_is_involved = find_ev_path(

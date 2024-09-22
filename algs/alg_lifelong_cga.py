@@ -73,7 +73,10 @@ def run_lifelong_cga(
                     agent, step_iter,
                     config_from, occupied_from, config_to, occupied_to,
                     agents, agents_dict, nodes, nodes_dict, last_visit_dict, h_dict, sv_map,
-                    blocked_nodes_names, params, start_time, max_iter_time)
+                    blocked_nodes_names, params, start_time, max_iter_time,
+                    to_block_edges_of_goal=False,
+                    # to_block_edges_of_goal=True,
+                )
                 for m_a in moved_agents:
                     heapq.heappush(cga_step_agents_names, m_a.name)
                 cga_curr_step_lists.append(moved_agents)
@@ -95,7 +98,10 @@ def run_lifelong_cga(
                 agent.path.append(next_node)
             agent.prev_node = agent.curr_node
             agent.curr_node = next_node
-            if agent.curr_node != agent.goal_node:
+            if agent.goal_node is None:
+                agent.priority = agent.init_priority
+                agents_finished.append(agent)
+            elif agent.curr_node != agent.goal_node:
                 agent.priority += 1
             else:
                 agent.priority = agent.init_priority
@@ -139,11 +145,12 @@ def main():
 
     params = {
         'max_iter_time': 5,  # seconds
-        'n_steps': 500,
+        'n_steps': 200,
+        'k_limit': 5,
         'alg_name': f'Lifelong_CGA_PIBT',
-        'alt_goal_flag': 'first',
+        # 'alt_goal_flag': 'first',
         # 'alt_goal_flag': 'num', 'alt_goal_num': 3,
-        # 'alt_goal_flag': 'all',
+        'alt_goal_flag': 'all',
         'to_render': to_render,
     }
     run_mapf_alg(alg=run_lifelong_cga, params=params, final_render=False)
