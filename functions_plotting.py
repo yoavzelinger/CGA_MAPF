@@ -15,21 +15,21 @@ def get_marker_line(alg_name: str):
         return markers_lines_dict[alg_name]
     marker_line = '-'
     if 'PrP' == alg_name:
-        marker_line += '^'
+        marker_line += 'v'
     elif 'LNS2' == alg_name:
-        marker_line += 'P'
+        marker_line += 'p'
     elif 'PIBT' == alg_name:
         marker_line += 'h'
     elif 'LaCAM' == alg_name:
         marker_line += '1'
     elif 'LaCAM*' == alg_name:
         marker_line += '2'
-    elif 'CGA-MAPF' == alg_name:
+    elif alg_name in ['CGA-MAPF', 'MACGA']:
         marker_line += 'X'
     #     marker_line += 'd'
     elif 'CGA(L)' == alg_name:
         marker_line += 'X'
-    elif 'CGA(L)+PIBT' == alg_name:
+    elif alg_name in ['CGA+PIBT', 'MACGA+PIBT']:
         marker_line += 'd'
     else:
         marker_line += random.choice(markers)
@@ -41,21 +41,21 @@ def get_alg_color(alg_name: str):
     if alg_name in colors_dict:
         return colors_dict[alg_name]
     if 'PrP' == alg_name:
-        color = 'blue'
+        color = 'green'
     elif 'LNS2' == alg_name:
-        color = 'teal'
+        color = 'blue'
     elif 'PIBT' == alg_name:
         color = 'salmon'
     elif 'LaCAM' == alg_name:
         color = 'indigo'
     elif 'LaCAM*' == alg_name:
         color = 'plum'
-    elif 'CGA-MAPF' == alg_name:
+    elif alg_name in ['CGA-MAPF', 'MACGA']:
         color = 'red'
     elif 'CGA(L)' == alg_name:
         color = 'purple'
-    elif 'CGA(L)+PIBT' == alg_name:
-        color = 'red'
+    elif alg_name in ['CGA+PIBT', 'MACGA+PIBT']:
+        color = 'brown'
     else:
         color = random.choice(color_names)
     colors_dict[alg_name] = color
@@ -159,7 +159,7 @@ def plot_sr(ax, info):
     # ax.set_title(f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.')
     # set_plot_title(ax, f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.', size=11)
     set_plot_title(ax, f'{img_dir[:-4]}', size=30)
-    # set_legend(ax, size=27)
+    set_legend(ax, size=24)
     labelsize = 20
     ax.xaxis.set_tick_params(labelsize=labelsize)
     ax.yaxis.set_tick_params(labelsize=labelsize)
@@ -178,11 +178,14 @@ def plot_time_metric(ax, info):
     x_list = n_agents_list
     for alg_name in alg_names:
         soc_list = []
+        x_list_to_plot = []
         res_str = ''
         for n_a in x_list:
-            soc_list.append(np.mean(info[alg_name][f'{n_a}']['time']))
-            res_str += f'\t{n_a} - {soc_list[-1]: .2f}, '
-        ax.plot(x_list, soc_list, get_marker_line(alg_name), color=get_alg_color(alg_name),
+            if len(info[alg_name][f'{n_a}']['time']) > 5:
+                x_list_to_plot.append(n_a)
+                soc_list.append(np.mean(info[alg_name][f'{n_a}']['time']))
+                res_str += f'\t{n_a} - {soc_list[-1]: .2f}, '
+        ax.plot(x_list_to_plot, soc_list, get_marker_line(alg_name), color=get_alg_color(alg_name),
                 alpha=0.5, label=f'{alg_name}', linewidth=5, markersize=20)
         # print(f'{alg_name}\t\t\t: {res_str}')
     ax.set_xlim([min(x_list) - 20, max(x_list) + 20])
@@ -194,7 +197,7 @@ def plot_time_metric(ax, info):
     labelsize = 20
     ax.xaxis.set_tick_params(labelsize=labelsize)
     ax.yaxis.set_tick_params(labelsize=labelsize)
-    # set_legend(ax, size=23)
+    set_legend(ax, size=23)
 
 
 def plot_time_metric_cactus(ax, info):
@@ -293,18 +296,23 @@ def plot_makespan(ax, info):
 
     for alg_name in alg_names:
         makespan_list = []
+        x_list_to_plot = []
         for n_a in n_agents_list:
-            makespan_list.append(np.mean(info[alg_name][f'{n_a}']['makespan']))
-        ax.plot(n_agents_list, makespan_list, markers_lines_dict[alg_name], color=colors_dict[alg_name],
-                alpha=0.5, label=f'{alg_name}', linewidth=5, markersize=20)
-    ax.set_xlim([min(n_agents_list) - 20, max(n_agents_list) + 20])
-    ax.set_xticks(n_agents_list)
-    ax.set_xlabel('N agents', fontsize=15)
-    ax.set_ylabel('Makespan', fontsize=15)
+            if len(info[alg_name][f'{n_a}']['makespan']) > 5:
+                x_list_to_plot.append(n_a)
+                makespan_list.append(np.mean(info[alg_name][f'{n_a}']['makespan']))
+        ax.plot(x_list_to_plot, makespan_list, get_marker_line(alg_name), color=get_alg_color(alg_name),
+                alpha=0.5, label=f'{alg_name}', linewidth=10, markersize=20)
+    # ax.set_xlim([min(n_agents_list) - 20, max(n_agents_list) + 20])
+    # ax.set_xticks(n_agents_list)
+    ax.set_xlabel('N agents', fontsize=27)
+    ax.set_ylabel('Makespan', fontsize=27)
     # ax.set_title(f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.')
-    set_plot_title(ax, f'{img_dir[:-4]} Map | time limit: {max_time} sec.',
-                   size=10)
-    set_legend(ax, size=12)
+    set_plot_title(ax, f'{img_dir[:-4]}', size=30)
+    labelsize = 20
+    ax.xaxis.set_tick_params(labelsize=labelsize)
+    ax.yaxis.set_tick_params(labelsize=labelsize)
+    # set_legend(ax, size=23)
 
 
 def plot_makespan_cactus(ax, info):
@@ -322,15 +330,14 @@ def plot_makespan_cactus(ax, info):
             # res_str += f'\t{n_a} - {y_list[-1]: .2f}, '
         y_list.sort()
         ax.plot(y_list, get_marker_line(alg_name), color=get_alg_color(alg_name),
-                alpha=0.5, label=f'{alg_name}', linewidth=4, markersize=15)
+                alpha=0.5, label=f'{alg_name}', linewidth=15, markersize=15)
         # print(f'{i_alg}\t\t\t: {res_str}')
     # ax.set_xlim([min(x_list) - 20, max(x_list) + 20])
     # ax.set_xticks(x_list)
     ax.set_xlabel('Solved Instances', fontsize=27)
     ax.set_ylabel('Makespan', fontsize=27)
     # ax.set_title(f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.')
-    set_plot_title(ax, f'{img_dir[:-4]}',
-                   size=30)
+    set_plot_title(ax, f'{img_dir[:-4]}', size=30)
     labelsize = 20
     ax.xaxis.set_tick_params(labelsize=labelsize)
     ax.yaxis.set_tick_params(labelsize=labelsize)

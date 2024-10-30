@@ -36,12 +36,12 @@ def run_mapf_experiments():
     # img_dir = 'random-32-32-10.map'
     # img_dir = 'random-32-32-20.map'
     # img_dir = 'room-32-32-4.map'
-    img_dir = 'maze-32-32-2.map'
-    # img_dir = 'maze-32-32-4.map'
+    # img_dir = 'maze-32-32-2.map'
+    img_dir = 'maze-32-32-4.map'
 
     # ------------------------------------------------- #
 
-    n_agents_list = [400]
+    # n_agents_list = [400]
     # n_agents_list = [600]
     # n_agents_list = [300, 350, 400, 450]
     # n_agents_list = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
@@ -50,7 +50,7 @@ def run_mapf_experiments():
     # n_agents_list = [50, 100, 150, 200, 250, 300, 350]
     # n_agents_list = [150, 200, 250, 300, 350]
     # n_agents_list = [10, 50, 100, 150, 200, 250, 300, 350, 400]
-    # n_agents_list = [50, 100, 150, 200, 250, 300, 350, 400]
+    n_agents_list = [50, 100, 150, 200, 250, 300, 350, 400]
     # n_agents_list = [100, 200, 300, 400, 500, 600]
     # n_agents_list = [200, 250, 300, 350, 400, 450, 500, 550, 600]
     # n_agents_list = [200, 300, 400, 500, 600]
@@ -163,8 +163,8 @@ def run_mapf_experiments():
 
             # plot
             plot_sr(ax[0, 0], info=logs_dict)
-            # plot_time_metric(ax[0, 1], info=logs_dict)
-            plot_time_metric_cactus(ax[0, 1], info=logs_dict)
+            plot_time_metric(ax[0, 1], info=logs_dict)
+            # plot_time_metric_cactus(ax[0, 1], info=logs_dict)
             # plot_makespan(ax[1, 1], info=logs_dict)
             # plot_soc(ax[1, 0], info=logs_dict)
             plot_soc_cactus(ax[1, 0], info=logs_dict)

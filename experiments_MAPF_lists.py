@@ -178,11 +178,11 @@ alg_list_cga_only = [
         'alt_goal_num': 1,
         'to_render': False,
     }),
-    # (run_cga_mapf, {
-    #     'alg_name': f'CGA+PIBT',
-    #     'alt_goal_flag': 'first',
-    #     'alt_goal_num': 1,
-    #     'to_render': False,
-    # }),
+    (run_cga_mapf, {
+        'alg_name': f'CGA+PIBT',
+        'alt_goal_flag': 'first',
+        'alt_goal_num': 1,
+        'to_render': False,
+    }),
 
 ]
