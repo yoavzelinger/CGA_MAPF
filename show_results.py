@@ -46,8 +46,9 @@ def show_results(file_dir):
             fig, ax = plt.subplots(1, 1, figsize=(8, 8))
             # plot_sr(ax, info=logs_dict)
             # plot_time_metric(ax, info=logs_dict)
-            plot_makespan(ax, info=logs_dict)
+            # plot_makespan(ax, info=logs_dict)
             # plot_makespan_cactus(ax, info=logs_dict)
+            plot_soc(ax, info=logs_dict)
             # plot_soc_cactus(ax, info=logs_dict)
 
         if expr_type == 'LMAPF':

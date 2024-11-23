@@ -241,20 +241,22 @@ def plot_soc(ax, info):
         soc_list = []
         x_list = []
         for n_a in n_agents_list:
-            if len(info[alg_name][f'{n_a}']['soc']) < i_problems:
+            if len(info[alg_name][f'{n_a}']['soc']) < 5:
                 break
             x_list.append(n_a)
             soc_list.append(np.mean(info[alg_name][f'{n_a}']['soc']))
         ax.plot(x_list, soc_list, get_marker_line(alg_name), color=get_alg_color(alg_name),
-                alpha=0.5, label=f'{alg_name}', linewidth=4, markersize=15)
+                alpha=0.5, label=f'{alg_name}', linewidth=5, markersize=20)
     ax.set_xlim([min(n_agents_list) - 20, max(n_agents_list) + 20])
     ax.set_xticks(n_agents_list)
-    ax.set_xlabel('N agents', fontsize=15)
-    ax.set_ylabel('SoC', fontsize=15)
+    ax.set_xlabel('N agents', fontsize=27)
+    ax.set_ylabel('SoC', fontsize=27)
     # ax.set_title(f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.')
-    set_plot_title(ax, f'{img_dir[:-4]} Map | time limit: {max_time} sec.',
-                   size=10)
-    # set_legend(ax, size=12)
+    set_plot_title(ax, f'{img_dir[:-4]}', size=30)
+    labelsize = 20
+    ax.xaxis.set_tick_params(labelsize=labelsize)
+    ax.yaxis.set_tick_params(labelsize=labelsize)
+    # set_legend(ax, size=23)
 
 
 def plot_soc_cactus(ax, info):
