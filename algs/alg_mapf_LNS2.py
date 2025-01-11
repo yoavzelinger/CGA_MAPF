@@ -259,6 +259,7 @@ def main():
         'k_limit': k_limit,
         'n_neighbourhood': n_neighbourhood,
         'final_render': to_render,
+        'to_render': to_render,
     }
     run_mapf_alg(alg=run_k_lns2, params=params_k_lns2_a_star)
 

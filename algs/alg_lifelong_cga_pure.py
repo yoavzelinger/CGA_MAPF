@@ -63,7 +63,7 @@ def run_lifelong_cga_pure(
             continue
 
         # execute the step + check the termination condition
-        agents_finished = []
+        agents_finished, agents_unfinished = [], []
         for agent in agents:
             if agent.name in config_to:
                 next_node = config_to[agent.name]
@@ -79,12 +79,15 @@ def run_lifelong_cga_pure(
             agent.curr_node = next_node
             if agent.curr_node != agent.goal_node:
                 agent.priority += 1
+                agents_unfinished.append(agent)
             else:
                 agent.priority = agent.init_priority
                 agents_finished.append(agent)
 
         # unfinished first
-        agents.sort(key=lambda a: a.priority, reverse=True)
+        # agents.sort(key=lambda a: a.priority, reverse=True)
+        agents_unfinished.sort(key=lambda a: a.priority, reverse=True)
+        agents = [*agents_finished, *agents_unfinished]
 
         throughput += update_goal_nodes(agents, nodes)
 

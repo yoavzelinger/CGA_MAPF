@@ -46,23 +46,23 @@ alg_list_general = [
         #     'pf_alg': run_temporal_a_star,
         #     'to_render': False,
         # }),
-        (run_lifelong_cga, {
-            'alg_name': f'CGA(L)+PIBT',
-            # 'alt_goal_flag': 'all',
-            'alt_goal_flag': 'first',
-            # 'alt_goal_flag': 'num', 'alt_goal_num': 3,
-            'to_render': False,
-        }),
-        (run_lifelong_pibt, {
-            'alg_name': f'PIBT',
-            'to_render': False,
-        }),
-        # (run_lifelong_cga_pure, {
-        #     'alg_name': f'CGA(L)',
+        # (run_lifelong_cga, {
+        #     'alg_name': f'CGA(L)+PIBT',
+        #     # 'alt_goal_flag': 'all',
         #     'alt_goal_flag': 'first',
-        #     'alt_goal_num': 1,
+        #     # 'alt_goal_flag': 'num', 'alt_goal_num': 3,
         #     'to_render': False,
         # }),
+        # (run_lifelong_pibt, {
+        #     'alg_name': f'PIBT',
+        #     'to_render': False,
+        # }),
+        (run_lifelong_cga_pure, {
+            'alg_name': f'CGA(L)',
+            'alt_goal_flag': 'first',
+            'alt_goal_num': 1,
+            'to_render': False,
+        }),
     ]
 
 

@@ -56,7 +56,7 @@ def run_lifelong_pibt(
                     agents_dict, nodes_dict, h_dict, [])
 
         # execute the step + check the termination condition
-        agents_finished = []
+        agents_finished, agents_unfinished = [], []
         for agent in agents:
             next_node = config_to[agent.name]
             agent.path.append(next_node)
@@ -67,12 +67,15 @@ def run_lifelong_pibt(
                 agents_finished.append(agent)
             elif agent.curr_node != agent.goal_node:
                 agent.priority += 1
+                agents_unfinished.append(agent)
             else:
                 agent.priority = agent.init_priority
                 agents_finished.append(agent)
 
         # unfinished first
         agents.sort(key=lambda a: a.priority, reverse=True)
+        # agents_unfinished.sort(key=lambda a: a.priority, reverse=True)
+        # agents = [*agents_finished, *agents_unfinished]
 
         # throughput += update_goal_nodes(agents, nodes)
 

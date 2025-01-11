@@ -29,7 +29,7 @@ def get_marker_line(alg_name: str):
     #     marker_line += 'd'
     elif 'CGA(L)' == alg_name:
         marker_line += 'X'
-    elif alg_name in ['CGA+PIBT', 'MACGA+PIBT']:
+    elif alg_name in ['CGA(L)+PIBT', 'MACGA+PIBT']:
         marker_line += 'd'
     else:
         marker_line += random.choice(markers)
@@ -54,7 +54,7 @@ def get_alg_color(alg_name: str):
         color = 'red'
     elif 'CGA(L)' == alg_name:
         color = 'purple'
-    elif alg_name in ['CGA+PIBT', 'MACGA+PIBT']:
+    elif alg_name in ['CGA(L)+PIBT', 'MACGA+PIBT']:
         color = 'brown'
     else:
         color = random.choice(color_names)
@@ -358,11 +358,15 @@ def plot_throughput(ax, info):
         for n_a in n_agents_list:
             throughput_list.append(np.mean(info[alg_name][f'{n_a}']['throughput']))
         ax.plot(n_agents_list, throughput_list, get_marker_line(alg_name), color=get_alg_color(alg_name),
-                alpha=0.5, label=f'{alg_name}', linewidth=5, markersize=20)
+                alpha=0.5, label=f'{alg_name}', linewidth=8, markersize=20)
     ax.set_xlim([min(n_agents_list) - 20, max(n_agents_list) + 20])
     ax.set_xticks(n_agents_list)
-    ax.set_xlabel('N agents', fontsize=15)
-    ax.set_ylabel('Throughput', fontsize=15)
+    ax.set_xlabel('N agents', fontsize=20, fontweight='bold')
+    ax.set_ylabel('Throughput', fontsize=20, fontweight='bold')
     # ax.set_title(f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.')
-    set_plot_title(ax, f'{img_dir[:-4]} Map | n_steps: {n_steps}', size=10)
-    set_legend(ax, size=12)
+    set_plot_title(ax, f'{img_dir[:-4]}', size=22)
+    labelsize = 20
+    ax.xaxis.set_tick_params(labelsize=labelsize)
+    ax.yaxis.set_tick_params(labelsize=labelsize)
+    # set_legend(ax, size=28)
+    plt.tight_layout()
