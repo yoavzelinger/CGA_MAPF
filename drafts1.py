@@ -8,4 +8,8 @@
 # for a, b in itertools.pairwise(lst):
 #     print(a, b)
 
-print(12 % 1)
+
+counter: int = 0
+while counter < 1000000000:
+  counter+=1
+print(counter)

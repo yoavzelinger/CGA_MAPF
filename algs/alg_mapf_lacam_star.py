@@ -77,7 +77,7 @@ def run_lacam_star(
                 C_new = get_C_child(parent=C, who=i_agent, where=nodes_dict[nei_name])
                 N.tree.append(C_new)
 
-        config_new = get_new_config(N, C, agents_dict, nodes_dict, h_dict)
+        config_new = get_new_config(N, C, agents_dict, nodes_dict, h_dict, iteration=iteration)
         # check_configs(N.order, N.config, config_new)
         if config_new is None:
             continue
@@ -148,9 +148,11 @@ def run_lacam_star(
                 'img_np': img_np,
                 'agents': agents,
                 'i_agent': i_agent,
+                'iteration': iteration,
             }
             plot_step_in_env(ax[0], plot_info)
-            plt.pause(0.001)
+            # plt.pause(0.001)
+            plt.pause(1)
             # plt.pause(5)
 
 
@@ -205,14 +207,14 @@ def run_lifelong_lacam_star():
 @use_profiler(save_dir='../stats/alg_lacam_star.pstat')
 def main():
 
-    flag_star: bool = True
-    # flag_star: bool = False
+    # flag_star: bool = True
+    flag_star: bool = False
 
     to_render = True
     # to_render = False
 
     params = {
-        'max_time': 60,
+        'max_time': 1000,
         'alg_name': 'LaCAM*',
         'flag_star': flag_star,
         'to_render': to_render

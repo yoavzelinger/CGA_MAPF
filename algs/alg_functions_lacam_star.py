@@ -109,6 +109,7 @@ def get_new_config(
         agents_dict: Dict[str, AgentAlg],
         nodes_dict: Dict[str, Node],
         h_dict: Dict[str, np.ndarray],
+        iteration: int = 0,
 ) -> Dict[str, Node] | None:
     # setup next configuration
     config_from: Dict[str, Node] = N.config
@@ -136,7 +137,11 @@ def get_new_config(
                 agent,
                 config_from, occupied_from,
                 config_to, occupied_to,
-                agents_dict, nodes_dict, h_dict, [], with_swap=True)
+                agents_dict, nodes_dict, h_dict, [],
+                with_swap=True,
+                # with_swap=False,
+                iteration=iteration
+            )
             if not success:
                 return None
     return config_to

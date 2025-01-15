@@ -161,9 +161,9 @@ def main():
     to_render = False
 
     params = {
-        'max_time': 1000,
+        'max_time': 60,
         'alg_name': 'LaCAM',
-        'final_render': to_render
+        'to_render': to_render
     }
     run_mapf_alg(alg=run_lacam, params=params)
 

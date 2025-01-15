@@ -1,3 +1,5 @@
+from babel.numbers import is_currency
+
 from globals import *
 from functions_general import *
 from functions_plotting import *
@@ -19,16 +21,34 @@ from functions_plotting import *
 # -------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------------------------------------------------------------------- #
 # -------------------------------------------------------------------------------------------------------------------- #
+# def get_sorted_nei_nodes(
+#         agent: AgentAlg,
+#         config_from: Dict[str, Node],
+#         # nodes_dict: Dict[str, Node],
+#         h_dict: Dict[str, np.ndarray],
+# ):
+#     h_goal_np: np.ndarray = h_dict[agent.get_goal_node().xy_name]
+#     # sort C in ascending order of dist(u, gi) where u ∈ C
+#     # nei_nodes: List[Node] = [nodes_dict[n_name] for n_name in config_from[agent.name].neighbours]
+#     nei_nodes: List[Node] = config_from[agent.name].neighbours_nodes[:]
+#     random.shuffle(nei_nodes)
+#
+#     def get_nei_v(n: Node) -> float:
+#         return float(h_goal_np[n.x, n.y])
+#
+#     nei_nodes.sort(key=get_nei_v)
+#     return nei_nodes
+
+
 def get_sorted_nei_nodes(
         agent: AgentAlg,
-        config_from: Dict[str, Node],
-        # nodes_dict: Dict[str, Node],
+        curr_node: Node,
         h_dict: Dict[str, np.ndarray],
 ):
     h_goal_np: np.ndarray = h_dict[agent.get_goal_node().xy_name]
     # sort C in ascending order of dist(u, gi) where u ∈ C
-    # nei_nodes: List[Node] = [nodes_dict[n_name] for n_name in config_from[agent.name].neighbours]
-    nei_nodes: List[Node] = config_from[agent.name].neighbours_nodes[:]
+    # nei_nodes: List[Node] = [nodes_dict[n_name] for n_name in curr_node.neighbours]
+    nei_nodes: List[Node] = curr_node.neighbours_nodes[:]
     random.shuffle(nei_nodes)
 
     def get_nei_v(n: Node) -> float:
@@ -93,7 +113,9 @@ def get_next_node(node: Node, blocked: List[Node]) -> Node | None:
 def check_if_swap_required(
         agent_i: AgentAlg,
         agent_j: AgentAlg,
-        config_from: Dict[str, Node],
+        i_curr_node: Node,
+        j_curr_node: Node,
+        # config_from: Dict[str, Node],
         h_dict: Dict[str, np.ndarray],
 ) -> bool:
     """
@@ -106,12 +128,13 @@ def check_if_swap_required(
         or,
         (2) when i reaches gi while j’s nearest neighboring vertex toward its goal is gi.
     """
-    prev_node_i = config_from[agent_i.name]
-    prev_node_j = config_from[agent_j.name]
+    # i_curr_node = config_from[agent_i.name]
+    # j_curr_node = config_from[agent_j.name]
+    i_goal_node = agent_i.get_goal_node()
     while True:
 
-        next_node_i = prev_node_j
-        next_node_j = get_next_node(prev_node_j, blocked=[prev_node_i])
+        next_node_i = j_curr_node
+        next_node_j = get_next_node(j_curr_node, blocked=[i_curr_node])
 
         if next_node_j is None:
             return True
@@ -119,20 +142,22 @@ def check_if_swap_required(
         if len(next_node_j.neighbours) > 3:
             return False
 
-        if next_node_i == agent_i.get_goal_node():
-            nei_nodes_j = get_sorted_nei_nodes(agent_j, config_from, h_dict)
+        if next_node_i == i_goal_node:
+            nei_nodes_j = get_sorted_nei_nodes(agent_j, j_curr_node, h_dict)
             nearest_nei_to_goal_j = nei_nodes_j[0]
-            if nearest_nei_to_goal_j == agent_i.get_goal_node():
+            if nearest_nei_to_goal_j == i_goal_node:
                 return True
 
-        prev_node_i = next_node_i
-        prev_node_j = next_node_j
+        i_curr_node = next_node_i
+        j_curr_node = next_node_j
 
 
 def check_if_swap_possible(
-        agent_i: AgentAlg,
-        agent_j: AgentAlg,
-        config_from: Dict[str, Node],
+        # agent_i: AgentAlg,
+        # agent_j: AgentAlg,
+        i_curr_node: Node,
+        j_curr_node: Node,
+        # config_from: Dict[str, Node],
 ) -> bool:
     """
     This is done by reversing the emulation direction; that is,
@@ -142,12 +167,12 @@ def check_if_swap_possible(
         (ii) The swap is impossible when i is on a vertex with degree of one.
     :return:
     """
-    prev_node_i = config_from[agent_i.name]
-    prev_node_j = config_from[agent_j.name]
+    # i_curr_node = config_from[agent_i.name]
+    # j_curr_node = config_from[agent_j.name]
     while True:
 
-        next_node_j = prev_node_i
-        next_node_i = get_next_node(prev_node_i, blocked=[prev_node_j])
+        next_node_j = i_curr_node
+        next_node_i = get_next_node(i_curr_node, blocked=[j_curr_node])
 
         if next_node_i is None:
             return False
@@ -155,33 +180,62 @@ def check_if_swap_possible(
         if len(next_node_i.neighbours) > 3:
             return True
 
-        prev_node_i = next_node_i
-        prev_node_j = next_node_j
+        i_curr_node = next_node_i
+        j_curr_node = next_node_j
 
 
 def swap_required_and_possible(
         agent_i: AgentAlg,
         first_node: Node,
         config_from: Dict[str, Node],
+        config_to: Dict[str, Node],
         occupied_from: Dict[str, AgentAlg],
         h_dict: Dict[str, np.ndarray],
         with_swap: bool,
+        iteration: int = 0,
 ) -> AgentAlg | None:
+    first_node_name = first_node.xy_name
     if not with_swap:
         return None
-    if len(first_node.neighbours) - 1 <= 2 and first_node.xy_name in occupied_from:
+    i_curr_node = config_from[agent_i.name]
+    if i_curr_node == first_node:
+        return None
+    # for the a and b cases
+    if first_node.xy_name in occupied_from:
         agent_j: AgentAlg = occupied_from[first_node.xy_name]
-        if agent_j == agent_i:
+        assert agent_j != agent_i
+        if agent_j.name in config_to:
             return None
         # necessity of the swap
-        is_required = check_if_swap_required(agent_i, agent_j, config_from, h_dict)
+        j_curr_node = config_from[agent_j.name]
+        # is_required = check_if_swap_required(agent_i, agent_j, config_from, h_dict)
+        is_required = check_if_swap_required(agent_i, agent_j, i_curr_node, j_curr_node, h_dict)
         if not is_required:
             return None
         # possibility of the swap
-        is_possible = check_if_swap_possible(agent_i, agent_j, config_from)
+        i_curr_node = config_from[agent_i.name]
+        j_curr_node = config_from[agent_j.name]
+        is_possible = check_if_swap_possible(i_curr_node, j_curr_node)
+        # is_possible = check_if_swap_possible(j_curr_node, i_curr_node)
         if not is_possible:
             return None
         return agent_j
+
+    # for the c case
+    # i_curr_node = config_from[agent_i.name]
+    # i_nei_nodes = i_curr_node.neighbours_nodes
+    # for i_nei_node in i_nei_nodes:
+    #     if i_nei_node == i_curr_node or i_nei_node.xy_name not in occupied_from or first_node == i_nei_node:
+    #         continue
+    #     agent_k: AgentAlg = occupied_from[i_nei_node.xy_name]
+    #     swap_is_required = check_if_swap_required(agent_k, agent_i, i_curr_node, first_node, h_dict)
+    #     if not swap_is_required:
+    #         return None
+    #     swap_is_possible = check_if_swap_possible(i_curr_node, first_node)
+    #     # swap_is_possible = check_if_swap_possible(first_node, i_curr_node)
+    #     if not swap_is_possible:
+    #         return None
+    #     return agent_k
     return None
 
 
@@ -203,14 +257,14 @@ def run_procedure_pibt(
     agent_i.message += f'| [{iteration}-{with_message}] pibt |'
 
     # nei_nodes = get_sorted_nei_nodes(main_agent, config_from, nodes_dict, h_dict)
-    nei_nodes = get_sorted_nei_nodes(agent_i, config_from, h_dict)
+    nei_nodes = get_sorted_nei_nodes(agent_i, config_from[agent_i.name], h_dict)
 
     #  j ← swap_required_and_possible
-    agent_j = swap_required_and_possible(agent_i, nei_nodes[0], config_from, occupied_from, h_dict, with_swap)
+    agent_j = swap_required_and_possible(agent_i, nei_nodes[0], config_from, config_to, occupied_from, h_dict, with_swap, iteration=iteration)
     if agent_j is not None:
         nei_nodes.reverse()
 
-    for j, nei_node in enumerate(nei_nodes):
+    for iter_nei_n, nei_node in enumerate(nei_nodes):
 
         if nei_node.xy_name in occupied_to:
             continue
@@ -226,8 +280,10 @@ def run_procedure_pibt(
 
         config_to[agent_i.name] = nei_node
         occupied_to[nei_node.xy_name] = agent_i
+
+
         agent_k = get_agent_k(nei_node, occupied_from, config_to)
-        if agent_k is not None:
+        if agent_k is not None and agent_k != agent_i:
             valid = run_procedure_pibt(
                 agent_k,
                 config_from, occupied_from,
@@ -236,7 +292,7 @@ def run_procedure_pibt(
             )
             if not valid:
                 continue
-        if with_swap and nei_node == nei_nodes[0] and agent_j is not None and agent_j.name not in config_to:
+        if with_swap and iter_nei_n == 0 and agent_j is not None and agent_j.name not in config_to:
             i_node_from = config_from[agent_i.name]
             if i_node_from.xy_name not in occupied_to:
                 config_to[agent_j.name] = i_node_from

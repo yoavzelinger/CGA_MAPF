@@ -91,6 +91,7 @@ def plot_step_in_env(ax, info):
     # a_name = info['i_agent'].name if 'i_agent' in info else 'agent_0'
     img_np = info['img_np']
     agents = info['agents']
+    iteration = info['iteration']
 
     field = img_np * -1
     ax.imshow(field, origin='lower', cmap='binary')
@@ -130,7 +131,7 @@ def plot_step_in_env(ax, info):
     if 'i' in info:
         i = info['i']
         title_str += f'(iteration: {i + 1})\n'
-    title_str += f'{len(agents)} agents '
+    title_str += f'{len(agents)} agents | iteration: {iteration}'
     ax.set_title(title_str)
 
 
