@@ -151,8 +151,8 @@ def run_lacam_star(
                 'iteration': iteration,
             }
             plot_step_in_env(ax[0], plot_info)
-            # plt.pause(0.001)
-            plt.pause(1)
+            plt.pause(0.001)
+            # plt.pause(1)
             # plt.pause(5)
 
 
@@ -210,8 +210,8 @@ def main():
     # flag_star: bool = True
     flag_star: bool = False
 
-    to_render = True
-    # to_render = False
+    # to_render = True
+    to_render = False
 
     params = {
         'max_time': 1000,

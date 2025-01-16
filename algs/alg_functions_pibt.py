@@ -109,7 +109,7 @@ def get_next_node(node: Node, blocked: List[Node]) -> Node | None:
         return None
     return random.choice(nei_nodes)
 
-
+# swap_is_required = check_if_swap_required(agent_k, agent_i, i_curr_node, first_node, h_dict)
 def check_if_swap_required(
         agent_i: AgentAlg,
         agent_j: AgentAlg,
@@ -131,6 +131,9 @@ def check_if_swap_required(
     # i_curr_node = config_from[agent_i.name]
     # j_curr_node = config_from[agent_j.name]
     i_goal_node = agent_i.get_goal_node()
+    if len(j_curr_node.neighbours) > 3:
+        return False
+
     while True:
 
         next_node_i = j_curr_node
@@ -143,10 +146,9 @@ def check_if_swap_required(
             return False
 
         if next_node_i == i_goal_node:
-            nei_nodes_j = get_sorted_nei_nodes(agent_j, j_curr_node, h_dict)
+            nei_nodes_j = get_sorted_nei_nodes(agent_j, next_node_j, h_dict)
             nearest_nei_to_goal_j = nei_nodes_j[0]
-            if nearest_nei_to_goal_j == i_goal_node:
-                return True
+            return nearest_nei_to_goal_j == i_goal_node
 
         i_curr_node = next_node_i
         j_curr_node = next_node_j
@@ -209,33 +211,27 @@ def swap_required_and_possible(
         # necessity of the swap
         j_curr_node = config_from[agent_j.name]
         # is_required = check_if_swap_required(agent_i, agent_j, config_from, h_dict)
-        is_required = check_if_swap_required(agent_i, agent_j, i_curr_node, j_curr_node, h_dict)
-        if not is_required:
-            return None
+        swap_is_required = check_if_swap_required(agent_i, agent_j, i_curr_node, j_curr_node, h_dict)
         # possibility of the swap
         i_curr_node = config_from[agent_i.name]
         j_curr_node = config_from[agent_j.name]
-        is_possible = check_if_swap_possible(i_curr_node, j_curr_node)
+        swap_is_possible = check_if_swap_possible(i_curr_node, j_curr_node)
         # is_possible = check_if_swap_possible(j_curr_node, i_curr_node)
-        if not is_possible:
-            return None
-        return agent_j
+        if swap_is_required and swap_is_possible:
+            return agent_j
 
     # for the c case
-    # i_curr_node = config_from[agent_i.name]
-    # i_nei_nodes = i_curr_node.neighbours_nodes
-    # for i_nei_node in i_nei_nodes:
-    #     if i_nei_node == i_curr_node or i_nei_node.xy_name not in occupied_from or first_node == i_nei_node:
-    #         continue
-    #     agent_k: AgentAlg = occupied_from[i_nei_node.xy_name]
-    #     swap_is_required = check_if_swap_required(agent_k, agent_i, i_curr_node, first_node, h_dict)
-    #     if not swap_is_required:
-    #         return None
-    #     swap_is_possible = check_if_swap_possible(i_curr_node, first_node)
-    #     # swap_is_possible = check_if_swap_possible(first_node, i_curr_node)
-    #     if not swap_is_possible:
-    #         return None
-    #     return agent_k
+    i_curr_node = config_from[agent_i.name]
+    i_nei_nodes = i_curr_node.neighbours_nodes
+    for i_nei_node in i_nei_nodes:
+        if i_nei_node == i_curr_node or i_nei_node.xy_name not in occupied_from or first_node == i_nei_node:
+            continue
+        agent_k: AgentAlg = occupied_from[i_nei_node.xy_name]
+        swap_is_required = check_if_swap_required(agent_k, agent_i, i_curr_node, first_node, h_dict)
+        swap_is_possible = check_if_swap_possible(i_curr_node, first_node)
+        # swap_is_possible = check_if_swap_possible(first_node, i_curr_node)
+        if swap_is_required and swap_is_possible:
+            return agent_k
     return None
 
 
@@ -288,7 +284,7 @@ def run_procedure_pibt(
                 agent_k,
                 config_from, occupied_from,
                 config_to, occupied_to,
-                agents_dict, nodes_dict, h_dict, blocked_nodes_names, iteration, with_message
+                agents_dict, nodes_dict, h_dict, blocked_nodes_names, iteration, with_message, with_swap
             )
             if not valid:
                 continue

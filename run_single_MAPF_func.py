@@ -15,12 +15,12 @@ def run_mapf_alg(alg, params, final_render: bool = True):
     # img_dir = '15-15-six-rooms.map'
     # img_dir = '15-15-eight-rooms.map'
 
-    img_dir = '10_10_my_corridor.map'
+    # img_dir = '10_10_my_corridor.map'
     # img_dir = 'empty-32-32.map'
     # img_dir = 'random-32-32-10.map'
     # img_dir = 'random-32-32-20.map'
     # img_dir = 'room-32-32-4.map'
-    # img_dir = 'maze-32-32-2.map'
+    img_dir = 'maze-32-32-2.map'
     # img_dir = 'maze-32-32-4.map'
 
     # n_agents = 700
@@ -29,7 +29,7 @@ def run_mapf_alg(alg, params, final_render: bool = True):
     # n_agents = 450
     # n_agents = 400
     # n_agents = 350
-    # n_agents = 300
+    n_agents = 300
     # n_agents = 250
     # n_agents = 200
     # n_agents = 170
@@ -40,7 +40,7 @@ def run_mapf_alg(alg, params, final_render: bool = True):
     # n_agents = 50
     # n_agents = 40
     # n_agents = 10
-    n_agents = 3
+    # n_agents = 3
 
     path_to_maps: str = '../maps'
     path_to_heuristics: str = '../logs_for_heuristics'
@@ -55,7 +55,10 @@ def run_mapf_alg(alg, params, final_render: bool = True):
 
     start_nodes: List[Node] = random.sample(nodes, n_agents)
     goal_nodes: List[Node] = random.sample(nodes, n_agents)
-    # start_nodes: List[Node] = [nodes_dict['4_0'], nodes_dict['4_1']]
+    # start_nodes: List[Node] = [nodes_dict['4_8'], nodes_dict['4_4'], nodes_dict['8_8']]
+    # goal_nodes: List[Node] = [nodes_dict['4_2'], nodes_dict['4_4'], nodes_dict['8_8']]
+    # start_nodes: List[Node] = [nodes_dict['4_8'], nodes_dict['4_4']]
+    # goal_nodes: List[Node] = [nodes_dict['4_2'], nodes_dict['4_4']]
     # goal_nodes: List[Node] = [nodes_dict['4_1'], nodes_dict['4_0']]
     # start_nodes: List[Node] = [nodes_dict['4_0'], nodes_dict['4_1'], nodes_dict['4_2']]
     # goal_nodes: List[Node] = [nodes_dict['4_1'], nodes_dict['4_0'], nodes_dict['4_2']]
@@ -93,7 +96,7 @@ def run_mapf_alg(alg, params, final_render: bool = True):
                 'img_np': img_np,
                 'agents': agents,
                 'i_agent': i_agent,
-                'i': i,
+                'iteration': i,
             }
             plot_step_in_env(ax[0], plot_info)
             plt.pause(plot_rate)
