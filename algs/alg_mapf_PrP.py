@@ -222,7 +222,7 @@ def run_k_prp(
     alg_name: bool = params['alg_name']
     pf_alg = params['pf_alg']
     pf_alg_name = params['pf_alg_name']
-    to_render: bool = params['final_render']
+    to_render: bool = params['to_render']
     max_time: bool = params['max_time']
     img_np: np.ndarray = params['img_np']
 

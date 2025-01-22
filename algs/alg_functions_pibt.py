@@ -196,7 +196,7 @@ def swap_required_and_possible(
         with_swap: bool,
         iteration: int = 0,
 ) -> AgentAlg | None:
-    first_node_name = first_node.xy_name
+    # first_node_name = first_node.xy_name
     if not with_swap:
         return None
     i_curr_node = config_from[agent_i.name]
@@ -247,8 +247,8 @@ def run_procedure_pibt(
         blocked_nodes_names: List[str],
         iteration: int = 0,
         with_message: str = '',
-        # with_swap: bool = True
-        with_swap: bool = False
+        with_swap: bool = True
+        # with_swap: bool = False
 ) -> bool:  # valid or invalid
     agent_i.message += f'| [{iteration}-{with_message}] pibt |'
 

@@ -160,7 +160,7 @@ def plot_sr(ax, info):
     # ax.set_title(f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.')
     # set_plot_title(ax, f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.', size=11)
     set_plot_title(ax, f'{img_dir[:-4]}', size=30)
-    set_legend(ax, size=24)
+    # set_legend(ax, size=18)
     labelsize = 20
     ax.xaxis.set_tick_params(labelsize=labelsize)
     ax.yaxis.set_tick_params(labelsize=labelsize)
@@ -198,7 +198,7 @@ def plot_time_metric(ax, info):
     labelsize = 20
     ax.xaxis.set_tick_params(labelsize=labelsize)
     ax.yaxis.set_tick_params(labelsize=labelsize)
-    set_legend(ax, size=23)
+    # set_legend(ax, size=24)
 
 
 def plot_time_metric_cactus(ax, info):
@@ -257,7 +257,7 @@ def plot_soc(ax, info):
     labelsize = 20
     ax.xaxis.set_tick_params(labelsize=labelsize)
     ax.yaxis.set_tick_params(labelsize=labelsize)
-    # set_legend(ax, size=23)
+    # set_legend(ax, size=25)
 
 
 def plot_soc_cactus(ax, info):
@@ -315,7 +315,7 @@ def plot_makespan(ax, info):
     labelsize = 20
     ax.xaxis.set_tick_params(labelsize=labelsize)
     ax.yaxis.set_tick_params(labelsize=labelsize)
-    # set_legend(ax, size=23)
+    # set_legend(ax, size=25)
 
 
 def plot_makespan_cactus(ax, info):

@@ -116,6 +116,7 @@ def run_cga_mapf(
                 'img_np': img_np,
                 'agents': agents,
                 'i_agent': i_agent,
+                'iteration': iteration,
             }
             plot_step_in_env(ax[0], plot_info)
             plt.pause(0.001)
@@ -137,8 +138,8 @@ def run_cga_mapf(
 @use_profiler(save_dir='../stats/alg_cga_mapf.pstat')
 def main():
 
-    to_render = True
-    # to_render = False
+    # to_render = True
+    to_render = False
 
     params = {
         'max_time': 1000,
@@ -150,8 +151,8 @@ def main():
         # 'alt_goal_flag': 'all',
         'to_render': to_render,
     }
-    run_mapf_alg(alg=run_cga_mapf, params=params, final_render=False)
-    # run_mapf_alg(alg=run_cga_mapf, params=params, final_render=True)
+    # run_mapf_alg(alg=run_cga_mapf, params=params, final_render=False)
+    run_mapf_alg(alg=run_cga_mapf, params=params, final_render=True)
 
 
 if __name__ == '__main__':

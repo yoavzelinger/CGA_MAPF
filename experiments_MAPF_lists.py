@@ -186,3 +186,85 @@ alg_list_cga_only = [
     }),
 
 ]
+
+
+alg_list_cga_lacam = [
+    (run_cga_pure, {
+        'alg_name': f'MACGA',
+        'alt_goal_flag': 'first',
+        'alt_goal_num': 1,
+        'to_render': False,
+    }),
+    (run_cga_mapf, {
+        'alg_name': f'MACGA+PIBT',
+        'alt_goal_flag': 'first',
+        'alt_goal_num': 1,
+        'to_render': False,
+    }),
+    (run_lacam_star, {
+        'alg_name': f'LaCAM*',
+        'flag_star': False,
+        'to_render': False,
+    }),
+
+]
+
+# ------------------------------------------------------------------------------------------------------------ #
+# MACGA Experiments
+# ------------------------------------------------------------------------------------------------------------ #
+
+alg_list_MACGA_paper_experiments = [
+    # ------------------------------------------------ #
+    # PrP Family
+    # ------------------------------------------------ #
+    # (run_k_prp, {
+    #     'alg_name': f'PrP',
+    #     'constr_type': 'hard',
+    #     'k_limit': 15,
+    #     'pf_alg_name': 'sipps',
+    #     'pf_alg': run_sipps,
+    #     'to_render': False,
+    # }),
+    # ------------------------------------------------ #
+    # LNS2 Family
+    # ------------------------------------------------ #
+    # (run_k_lns2, {
+    #     'k_limit': (k_limit := 15),
+    #     'alg_name': f'LNS2',
+    #     'pf_alg_name': 'sipps',
+    #     'pf_alg': run_sipps,
+    #     'n_neighbourhood': k_limit,
+    #     'to_render': False,
+    # }),
+    # ------------------------------------------------ #
+    # PIBT Family
+    # ------------------------------------------------ #
+    # (run_pibt, {
+    #     'alg_name': f'PIBT',
+    #     'to_render': False,
+    # }),
+    (run_lacam, {
+        'alg_name': f'LaCAM',
+        'to_render': False,
+    }),
+    (run_lacam_star, {
+        'alg_name': f'LaCAM*',
+        'flag_star': False,
+        'to_render': False,
+    }),
+    # ------------------------------------------------ #
+    # MACGA Family
+    # ------------------------------------------------ #
+    # (run_cga_pure, {
+    #     'alg_name': f'MACGA',
+    #     'alt_goal_flag': 'first',
+    #     'alt_goal_num': 1,
+    #     'to_render': False,
+    # }),
+    # (run_cga_mapf, {
+    #     'alg_name': f'MACGA+PIBT',
+    #     'alt_goal_flag': 'first',
+    #     'alt_goal_num': 1,
+    #     'to_render': False,
+    # }),
+]

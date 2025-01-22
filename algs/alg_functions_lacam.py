@@ -169,7 +169,7 @@ def get_new_config(
                 agent,
                 config_from, occupied_from,
                 config_to, occupied_to,
-                agents_dict, nodes_dict, h_dict, [])
+                agents_dict, nodes_dict, h_dict, [], with_swap=False)
             if not success:
                 return None
     return config_to

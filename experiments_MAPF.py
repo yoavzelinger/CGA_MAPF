@@ -35,9 +35,9 @@ def run_mapf_experiments():
     # img_dir = 'empty-32-32.map'
     # img_dir = 'random-32-32-10.map'
     # img_dir = 'random-32-32-20.map'
-    # img_dir = 'room-32-32-4.map'
+    # img_dir = 'maze-32-32-4.map'
     # img_dir = 'maze-32-32-2.map'
-    img_dir = 'maze-32-32-4.map'
+    img_dir = 'room-32-32-4.map'
 
     # ------------------------------------------------- #
 
@@ -50,33 +50,41 @@ def run_mapf_experiments():
     # n_agents_list = [50, 100, 150, 200, 250, 300, 350]
     # n_agents_list = [150, 200, 250, 300, 350]
     # n_agents_list = [10, 50, 100, 150, 200, 250, 300, 350, 400]
-    n_agents_list = [50, 100, 150, 200, 250, 300, 350, 400]
-    # n_agents_list = [100, 200, 300, 400, 500, 600]
+    # n_agents_list = [50, 100, 150, 200, 250, 300, 350, 400]
+    # n_agents_list = [350, 400, 450, 500, 550]
+    # n_agents_list = [200, 300, 400, 500, 600, 700]  # empty, rand10
+    # n_agents_list = [100, 200, 300, 400, 500, 600]  # rand20
+    # n_agents_list = [600]
+    # n_agents_list = [100, 150, 200, 250, 300, 350, 400, 450, 500, 550] # maze4
+    n_agents_list = [100, 150, 200, 250, 300, 350, 400, 450] # maze2, room
+    # n_agents_list = [100, 150, 200, 250, 300, 350, 400, 450]
     # n_agents_list = [200, 250, 300, 350, 400, 450, 500, 550, 600]
     # n_agents_list = [200, 300, 400, 500, 600]
     # n_agents_list = [300, 400, 500, 600, 700]
 
     # ------------------------------------------------- #
 
+    # i_problems = 2
     # i_problems = 3
     # i_problems = 5
     # i_problems = 10
-    i_problems = 15
-    # i_problems = 20
+    # i_problems = 15
+    i_problems = 20
 
     # ------------------------------------------------- #
 
     # limits
     # max_time = 1e7  # seconds
-    max_time = 60  # seconds
-    # max_time = 30  # seconds
+    # max_time = 60  # seconds
+    max_time = 30  # seconds
     # max_time = 10  # seconds
     # max_time = 5  # seconds
     # debug
     # to_assert = True
     to_assert = False
     # rendering
-    to_render = True
+    to_render = False
+    # to_render = True
     # final_render = False
     # saving
     # to_save = False
@@ -88,7 +96,9 @@ def run_mapf_experiments():
 
     # alg_list = alg_list_cga
     # alg_list = alg_list_top
-    alg_list = alg_list_cga_only
+    # alg_list = alg_list_cga_only
+    # alg_list = alg_list_cga_lacam
+    alg_list = alg_list_MACGA_paper_experiments
 
     # ------------------------------------------------- #
 
@@ -114,8 +124,8 @@ def run_mapf_experiments():
     # ------------------------------------------------------------------------------------------------------------ #
     # ------------------------------------------------------------------------------------------------------------ #
     # ------------------------------------------------------------------------------------------------------------ #
-
-    fig, ax = plt.subplots(2, 2, figsize=(8, 8))
+    if to_render:
+        fig, ax = plt.subplots(2, 2, figsize=(17, 10))
     to_continue_dict = {params['alg_name']: True for alg, params in alg_list}
 
     path_to_maps: str = 'maps'
@@ -162,14 +172,16 @@ def run_mapf_experiments():
                 print(f'\n{n_agents=}, {i_problem=}, {alg_name=}')
 
             # plot
-            plot_sr(ax[0, 0], info=logs_dict)
-            plot_time_metric(ax[0, 1], info=logs_dict)
-            # plot_time_metric_cactus(ax[0, 1], info=logs_dict)
-            # plot_makespan(ax[1, 1], info=logs_dict)
-            # plot_soc(ax[1, 0], info=logs_dict)
-            plot_soc_cactus(ax[1, 0], info=logs_dict)
-            plot_makespan_cactus(ax[1, 1], info=logs_dict)
-            plt.pause(0.01)
+            if to_render:
+                plot_sr(ax[0, 0], info=logs_dict)
+                plot_time_metric(ax[0, 1], info=logs_dict)
+                # plot_time_metric_cactus(ax[0, 1], info=logs_dict)
+                plot_makespan(ax[1, 1], info=logs_dict)
+                plot_soc(ax[1, 0], info=logs_dict)
+                # plot_soc_cactus(ax[1, 0], info=logs_dict)
+                # plot_makespan_cactus(ax[1, 1], info=logs_dict)
+                plt.tight_layout()
+                plt.pause(0.01)
 
         # check if solved all the prev problems
         for alg, params in alg_list:
@@ -180,7 +192,8 @@ def run_mapf_experiments():
         save_results(logs_dict)
 
     print('\n[INFO]: finished BIG MAPF experiments')
-    plt.show()
+    if to_render:
+        plt.show()
 
 
 # if final_render:
