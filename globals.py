@@ -80,11 +80,59 @@ lines = [
     ":",  # dotted line
 ]
 
-markers_iter = iter(markers)
 # markers_lines_dict = defaultdict(lambda: random.choice(markers))
 markers_lines_dict = {}
 colors_dict: DefaultDict[str, str | None] = defaultdict(lambda: None)
+markers_iter = iter(markers)
+colors_iter = iter(color_names)
 
+mrc_dict = {
+    "PrP-A*":
+        {'color': 'blue',
+         'marker-line': '-^',
+         'marker': '^',
+         },
+    "LNS2-A*":
+        {'color': 'teal',
+         'marker-line': '-X',
+         'marker': 'X',
+         },
+    "PrP":
+        {'color': 'green',
+         'marker-line': '-v',
+         'marker': 'v',
+         },
+    "LNS2":
+        {'color': 'blue',
+         'marker-line': '-P',
+         'marker': 'P',
+         },
+    "PIBT":
+        {'color': 'salmon',
+         'marker-line': '-h',
+         'marker': 'h',
+         },
+    "LaCAM":
+        {'color': 'indigo',
+         'marker-line': '-1',
+         'marker': '1',
+         },
+    "LaCAM*":
+        {'color': 'plum',
+         'marker-line': '-2',
+         'marker': '2',
+         },
+    "MACGA":
+        {'color': 'red',
+         'marker-line': '-X',
+         'marker': 'X',
+         },
+    "MACGA+PIBT":
+        {'color': 'brown',
+         'marker-line': '-d',
+         'marker': 'd',
+         },
+}
 
 # markers_lines_dict['LNS2'] = '-p'
 # colors_dict['LNS2'] = 'blue'

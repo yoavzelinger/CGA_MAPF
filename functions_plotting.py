@@ -1,3 +1,5 @@
+import numpy as np
+
 from globals import *
 
 
@@ -11,56 +13,30 @@ from globals import *
 
 
 def get_marker_line(alg_name: str):
-    if alg_name in markers_lines_dict:
-        return markers_lines_dict[alg_name]
-    marker_line = '-'
-    if 'PrP' == alg_name:
-        marker_line += 'v'
-    elif 'LNS2' == alg_name:
-        marker_line += 'p'
-    elif 'PIBT' == alg_name:
-        marker_line += 'h'
-    elif 'LaCAM' == alg_name:
-        marker_line += '1'
-    elif 'LaCAM*' == alg_name:
-        marker_line += '2'
-    elif alg_name in ['CGA-MAPF', 'MACGA']:
-        marker_line += 'X'
-    #     marker_line += 'd'
-    elif 'CGA(L)' == alg_name:
-        marker_line += 'X'
-    elif alg_name in ['CGA(L)+PIBT', 'MACGA+PIBT']:
-        marker_line += 'd'
-    else:
-        marker_line += random.choice(markers)
-    markers_lines_dict[alg_name] = marker_line
-    return marker_line
+    if alg_name not in mrc_dict or 'marker-line' not in mrc_dict[alg_name]:
+        marker_line = ''
+        if 'APF' in alg_name:
+            marker_line += '--'
+        else:
+            marker_line += '-'
+        marker_line += next(markers_iter)
+        if alg_name not in mrc_dict:
+            mrc_dict[alg_name] = {'marker-line': marker_line}
+        else:
+            mrc_dict[alg_name]['marker-line'] = marker_line
+        return marker_line
+    return mrc_dict[alg_name]['marker-line']
 
 
 def get_alg_color(alg_name: str):
-    if alg_name in colors_dict:
-        return colors_dict[alg_name]
-    if 'PrP' == alg_name:
-        color = 'green'
-    elif 'LNS2' == alg_name:
-        color = 'blue'
-    elif 'PIBT' == alg_name:
-        color = 'salmon'
-    elif 'LaCAM' == alg_name:
-        color = 'indigo'
-    elif 'LaCAM*' == alg_name:
-        color = 'plum'
-    elif alg_name in ['CGA-MAPF', 'MACGA']:
-        color = 'red'
-    elif 'CGA(L)' == alg_name:
-        color = 'purple'
-    elif alg_name in ['CGA(L)+PIBT', 'MACGA+PIBT']:
-        color = 'brown'
-    else:
-        color = random.choice(color_names)
-    colors_dict[alg_name] = color
-    return color
-
+    if alg_name not in mrc_dict or 'color' not in mrc_dict[alg_name]:
+        color = next(colors_iter)
+        if alg_name not in mrc_dict:
+            mrc_dict[alg_name] = {'color': color}
+        else:
+            mrc_dict[alg_name]['color'] = color
+        return color
+    return mrc_dict[alg_name]['color']
 
 def get_color(i):
     index_to_pick = i % len(color_names)
@@ -76,7 +52,7 @@ def set_legend(ax, framealpha=None, size=9):
     # to_put_legend = False
     if to_put_legend:
         if not framealpha:
-            framealpha = 0
+            framealpha = 0.8
         legend_properties = {'weight': 'bold', 'size': size}
         # legend_properties = {}
         if framealpha is not None:
@@ -214,20 +190,37 @@ def plot_time_metric_cactus(ax, info):
         rt_list = []
         # res_str = ''
         for n_a in x_list:
+            # for j in info[alg_name][f'{n_a}']['time']:
+            #     if j > 30:
+            #         print()
             rt_list.extend(info[alg_name][f'{n_a}']['time'])
             # res_str += f'\t{n_a} - {rt_list[-1]: .2f}, '
         rt_list.sort()
-        ax.plot(rt_list, get_marker_line(alg_name), color=get_alg_color(alg_name),
-                alpha=0.5, label=f'{alg_name}', linewidth=2, markersize=10)
+        ax.plot(rt_list, '-', color=get_alg_color(alg_name), alpha=0.5, linewidth=5, markersize=20)
+        # ax.plot(rt_list, get_marker_line(alg_name), color=get_alg_color(alg_name), alpha=0.5, label=f'{alg_name}', linewidth=5, markersize=20)
+
+        # Choose evenly spaced indices for the markers
+        num_markers = 10  # Number of markers to show
+        indices = np.linspace(0, len(rt_list) - 1, num_markers, dtype=int)
+
+        # Add markers at the chosen indices
+        x_data = np.arange(0, len(rt_list))
+        rt_list = np.array(rt_list)
+        plt.plot(x_data[indices], rt_list[indices], mrc_dict[alg_name]['marker'],
+                 color=get_alg_color(alg_name), markersize=15, label=f'{alg_name}')
+
         # print(f'{i_alg}\t\t\t: {res_str}')
     # ax.set_xlim([min(x_list) - 20, max(x_list) + 20])
     # ax.set_xticks(x_list)
-    ax.set_xlabel('Solved Instances', fontsize=15)
-    ax.set_ylabel('Runtime', fontsize=15)
+    ax.set_xlabel('Solved Instances', fontsize=27)
+    ax.set_ylabel('Runtime', fontsize=27)
     # ax.set_title(f'{img_dir[:-4]} Map | time limit: {time_to_think_limit} sec.')
-    set_plot_title(ax, f'{img_dir[:-4]} Map | time limit: {max_time} sec.',
-                   size=11)
-    # set_legend(ax, size=12)
+    # set_plot_title(ax, f'{img_dir[:-4]} Map | time limit: {max_time} sec.', size=11)
+    set_plot_title(ax, f'{img_dir[:-4]}', size=30)
+    labelsize = 20
+    ax.xaxis.set_tick_params(labelsize=labelsize)
+    ax.yaxis.set_tick_params(labelsize=labelsize)
+    # set_legend(ax, size=20)
 
 
 def plot_soc(ax, info):
@@ -332,9 +325,20 @@ def plot_makespan_cactus(ax, info):
             y_list.extend(info[alg_name][f'{n_a}']['makespan'])
             # res_str += f'\t{n_a} - {y_list[-1]: .2f}, '
         y_list.sort()
-        ax.plot(y_list, get_marker_line(alg_name), color=get_alg_color(alg_name),
-                alpha=0.5, label=f'{alg_name}', linewidth=15, markersize=15)
-        # print(f'{i_alg}\t\t\t: {res_str}')
+        y_list.sort()
+        ax.plot(y_list, '-', color=get_alg_color(alg_name), alpha=0.5, linewidth=5, markersize=20)
+        # ax.plot(y_list, get_marker_line(alg_name), color=get_alg_color(alg_name), alpha=0.5, label=f'{alg_name}', linewidth=3, markersize=10)
+
+        # Choose evenly spaced indices for the markers
+        num_markers = 10  # Number of markers to show
+        indices = np.linspace(0, len(y_list) - 1, num_markers, dtype=int)
+
+        # Add markers at the chosen indices
+        x_data = np.arange(0, len(y_list))
+        rt_list = np.array(y_list)
+        plt.plot(x_data[indices], rt_list[indices], mrc_dict[alg_name]['marker'],
+                 color=get_alg_color(alg_name), markersize=15, label=f'{alg_name}')
+
     # ax.set_xlim([min(x_list) - 20, max(x_list) + 20])
     # ax.set_xticks(x_list)
     ax.set_xlabel('Solved Instances', fontsize=27)
@@ -344,7 +348,7 @@ def plot_makespan_cactus(ax, info):
     labelsize = 20
     ax.xaxis.set_tick_params(labelsize=labelsize)
     ax.yaxis.set_tick_params(labelsize=labelsize)
-    # set_legend(ax, size=23)
+    # set_legend(ax, size=20)
 
 
 def plot_throughput(ax, info):
@@ -371,3 +375,56 @@ def plot_throughput(ax, info):
     ax.yaxis.set_tick_params(labelsize=labelsize)
     # set_legend(ax, size=28)
     plt.tight_layout()
+
+
+
+# def get_marker_line(alg_name: str):
+#     if alg_name in markers_lines_dict:
+#         return markers_lines_dict[alg_name]
+#     marker_line = '-'
+#     if 'PrP' == alg_name:
+#         marker_line += 'v'
+#     elif 'LNS2' == alg_name:
+#         marker_line += 'p'
+#     elif 'PIBT' == alg_name:
+#         marker_line += 'h'
+#     elif 'LaCAM' == alg_name:
+#         marker_line += '1'
+#     elif 'LaCAM*' == alg_name:
+#         marker_line += '2'
+#     elif alg_name in ['CGA-MAPF', 'MACGA']:
+#         marker_line += 'X'
+#     #     marker_line += 'd'
+#     elif 'CGA(L)' == alg_name:
+#         marker_line += 'X'
+#     elif alg_name in ['CGA(L)+PIBT', 'MACGA+PIBT']:
+#         marker_line += 'd'
+#     else:
+#         marker_line += random.choice(markers)
+#     markers_lines_dict[alg_name] = marker_line
+#     return marker_line
+#
+#
+# def get_alg_color(alg_name: str):
+#     if alg_name in colors_dict:
+#         return colors_dict[alg_name]
+#     if 'PrP' == alg_name:
+#         color = 'green'
+#     elif 'LNS2' == alg_name:
+#         color = 'blue'
+#     elif 'PIBT' == alg_name:
+#         color = 'salmon'
+#     elif 'LaCAM' == alg_name:
+#         color = 'indigo'
+#     elif 'LaCAM*' == alg_name:
+#         color = 'plum'
+#     elif alg_name in ['CGA-MAPF', 'MACGA']:
+#         color = 'red'
+#     elif 'CGA(L)' == alg_name:
+#         color = 'purple'
+#     elif alg_name in ['CGA(L)+PIBT', 'MACGA+PIBT']:
+#         color = 'brown'
+#     else:
+#         color = random.choice(color_names)
+#     colors_dict[alg_name] = color
+#     return color
