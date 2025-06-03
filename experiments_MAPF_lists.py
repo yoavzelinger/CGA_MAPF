@@ -243,10 +243,10 @@ alg_list_MACGA_paper_experiments = [
     #     'alg_name': f'PIBT',
     #     'to_render': False,
     # }),
-    (run_lacam, {
-        'alg_name': f'LaCAM',
-        'to_render': False,
-    }),
+    # (run_lacam, {
+    #     'alg_name': f'LaCAM',
+    #     'to_render': False,
+    # }),
     (run_lacam_star, {
         'alg_name': f'LaCAM*',
         'flag_star': False,
@@ -261,10 +261,10 @@ alg_list_MACGA_paper_experiments = [
     #     'alt_goal_num': 1,
     #     'to_render': False,
     # }),
-    # (run_cga_mapf, {
-    #     'alg_name': f'MACGA+PIBT',
-    #     'alt_goal_flag': 'first',
-    #     'alt_goal_num': 1,
-    #     'to_render': False,
-    # }),
+    (run_cga_mapf, {
+        'alg_name': f'MACGA+PIBT',
+        'alt_goal_flag': 'first',
+        'alt_goal_num': 1,
+        'to_render': False,
+    }),
 ]
