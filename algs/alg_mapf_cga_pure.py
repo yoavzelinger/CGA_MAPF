@@ -89,7 +89,7 @@ def run_cga_pure(
 
         # print + render
         runtime = time.time() - start_time
-        print(f'\r{'*' * 10} | [{alg_name}] {iteration=: <3} | finished: {len(agents_finished)}/{n_agents: <3} | runtime: {runtime: .2f} seconds | {'*' * 10}', end='')
+        print(f'\r{"*" * 10} | [{alg_name}] {iteration=: <3} | finished: {len(agents_finished)}/{n_agents: <3} | runtime: {runtime: .2f} seconds | {"*" * 10}', end='')
         if to_render and iteration >= 0:
             # update curr nodes
             for a in agents:
