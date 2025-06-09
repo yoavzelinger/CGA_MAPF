@@ -44,9 +44,9 @@ def run_mapf_alg(alg, params, final_render: bool = True):
     # n_agents = 10
     # n_agents = 3
 
-    path_to_maps: str = '../maps'
-    path_to_heuristics: str = '../logs_for_heuristics'
-    path_to_sv_maps: str = '../logs_for_freedom_maps'
+    path_to_maps: str = './maps'
+    path_to_heuristics: str = './logs_for_heuristics'
+    path_to_sv_maps: str = './logs_for_freedom_maps'
 
     img_np, (height, width) = get_np_from_dot_map(img_dir, path_to_maps)
     map_dim = (height, width)
