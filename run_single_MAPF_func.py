@@ -34,6 +34,7 @@ def run_mapf_alg(alg, params, final_render: bool, map_name: str, total_agents: i
     img_np, (height, width) = get_np_from_dot_map(img_dir, path_to_maps)
     map_dim = (height, width)
     nodes, nodes_dict = build_graph_from_np(img_np, show_map=False)
+    density = (total_agents + (height * width - len(nodes))) / (height * width)
     h_dict: Dict[str, np.ndarray] = exctract_h_dict(img_dir, path_to_heuristics)
     blocked_sv_map: np.ndarray = get_blocked_sv_map(img_dir, folder_dir=path_to_sv_maps)
     # sv_map: np.ndarray = get_sv_map(img_dir, folder_dir=path_to_sv_maps)
@@ -47,19 +48,23 @@ def run_mapf_alg(alg, params, final_render: bool, map_name: str, total_agents: i
         start_nodes, goal_nodes, nodes, nodes_dict, h_dict, map_dim, params
     )
 
+    
+    agents: List = info['agents'] if paths_dict else None
+    SOC = sum([len(a.path) for a in agents]) if paths_dict else None
+    makespan = info['makespan'] if paths_dict else None
+    runtime = info['runtime'] if paths_dict else None
+    
     # plot
     if final_render and paths_dict is not None:
-        agents: List = info['agents']
         plt.close()
         fig, ax = plt.subplots(1, 2, figsize=(14, 7))
         plot_rate = 0.001
         # plot_rate = 0.5
         # plot_rate = 1
         max_path_len = max([len(a.path) for a in agents])
-        soc = sum([len(a.path) for a in agents])
 
         print(f'\n{max_path_len=}')
-        print(f'{soc=}')
+        print(f'{SOC=}')
         for i in range(max_path_len):
             # update curr nodes
             for a in agents:
@@ -75,3 +80,5 @@ def run_mapf_alg(alg, params, final_render: bool, map_name: str, total_agents: i
             plot_step_in_env(ax[0], plot_info)
             plt.pause(plot_rate)
         plt.show()
+
+    return map_name, scenario_index, total_agents - inactive_agents, inactive_agents, density, SOC, makespan, runtime

@@ -1,5 +1,6 @@
 import heapq
 from argparse import ArgumentParser
+import csv
 
 from algs.alg_functions_cga import *
 from algs.alg_functions_pibt import run_procedure_pibt
@@ -123,12 +124,31 @@ def run_cga_pure(
 
 parser = ArgumentParser(description="Run all tests")
 parser.add_argument("-e", "--environment", type=str, help="The environment - map name", required=True)
-parser.add_argument("-t", "--total_agents", type=int, help="Total number of agents", required=True)
-parser.add_argument("-i", "--inactive_agents", type=int, help="Number of inactive agents", required=True)
 parser.add_argument("-s", "--scenario_index", type=int, help="Scenario index", default=-1)
 parser.add_argument("-p", "--plot", action="store_true", help="Plot the results (default: False)")
 args = parser.parse_args()
 
+map_name = args.environment
+
+total_agents_amounts = [60, 120, 180, 240, 300]
+inactive_agents_amounts = [10, 40, 80, 120, 160, 200, 240, 280]
+
+if not os.path.exists("Output_files"):
+    os.makedirs("Output_files")
+
+with open(f"Output_files/Output_{map_name}.csv", mode="w", newline="",
+          encoding="utf-8") as file:
+    columns = ["map_name", "scenario_index", "active_agents", "inactive_agents", "density", "SOC", "makespan", "runtime"]
+    writer = csv.DictWriter(file, fieldnames=columns)
+    writer.writeheader()
+
+def addRecordToCsv(*current_values):
+
+    record = list(current_values)
+
+    with open(f"Output_files/Output_{map_name}.csv", mode="a", newline="", encoding="utf-8") as file:
+        writerRecord = csv.writer(file)
+        writerRecord.writerow(record)
 
 @use_profiler(save_dir='./stats/alg_cga_mapf_pure.pstat')
 def main():
@@ -146,11 +166,17 @@ def main():
     }
     if args.plot:
         assert args.scenario_index in range(1, 26), "Scenario index should be provided if plotting is enabled, and it should be in the range 1-25."
-        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=args.environment, total_agents=args.total_agents, inactive_agents=args.inactive_agents, scenario_index=args.scenario_index)
+        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=map_name, total_agents=args.total_agents, inactive_agents=args.inactive_agents, scenario_index=args.scenario_index)
         return
 
-    for scenario_index in range(1, 26):
-        run_mapf_alg(alg=run_cga_pure, params=params, final_render=False, map_name=args.environment, total_agents=args.total_agents, inactive_agents=args.inactive_agents, scenario_index=scenario_index)
+    for total_agents in total_agents_amounts:
+        for inactive_agents in inactive_agents_amounts:
+            if inactive_agents >= total_agents:
+                continue
+            print(f'\nRunning with {total_agents=} and {inactive_agents=}')
+            for scenario_index in range(1, 26):
+                current_values = run_mapf_alg(alg=run_cga_pure, params=params, final_render=False, map_name=map_name, total_agents=total_agents, inactive_agents=inactive_agents, scenario_index=scenario_index)
+                addRecordToCsv(current_values)
 
 if __name__ == '__main__':
     main()
