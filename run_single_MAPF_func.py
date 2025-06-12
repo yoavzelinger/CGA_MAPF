@@ -52,7 +52,7 @@ def run_mapf_alg(alg, params, final_render: bool, map_name: str, total_agents: i
     agents: List = info['agents'] if paths_dict else None
     SOC = sum([len(a.path) for a in agents]) if paths_dict else None
     makespan = info['makespan'] if paths_dict else None
-    runtime = info['runtime'] if paths_dict else None
+    runtime = info['time'] if paths_dict else None
     
     # plot
     if final_render and paths_dict is not None:
