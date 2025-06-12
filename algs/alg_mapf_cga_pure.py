@@ -122,7 +122,7 @@ def run_cga_pure(
     return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': iteration}
 
 parser = ArgumentParser(description="Run all tests")
-parser.add_argument("-m", "--map", type=str, help="The map name", required=True)
+parser.add_argument("-e", "--environment", type=str, help="The environment - map name", required=True)
 parser.add_argument("-t", "--total_agents", type=int, help="Total number of agents", required=True)
 parser.add_argument("-i", "--inactive_agents", type=int, help="Number of inactive agents", required=True)
 parser.add_argument("-s", "--scenario_index", type=int, help="Scenario index", default=-1)
@@ -146,11 +146,11 @@ def main():
     }
     if args.plot:
         assert args.scenario_index in range(1, 26), "Scenario index should be provided if plotting is enabled, and it should be in the range 1-25."
-        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=args.map, total_agents=parser.total_agents, inactive_agents=parser.inactive_agents, scenario_index=args.scenario_index, plot_results=True)
+        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=args.environment, total_agents=parser.total_agents, inactive_agents=parser.inactive_agents, scenario_index=args.scenario_index, plot_results=True)
         return
 
     for scenario_index in range(1, 26):
-        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=args.map, total_agents=parser.total_agents, inactive_agents=parser.inactive_agents, scenario_index=scenario_index)
+        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=args.environment, total_agents=parser.total_agents, inactive_agents=parser.inactive_agents, scenario_index=scenario_index)
 
 if __name__ == '__main__':
     main()
