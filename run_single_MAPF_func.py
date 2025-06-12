@@ -15,7 +15,7 @@ def get_start_goal_nodes(node_dict: Dict[str, Node], map_name: str, total_agents
     # iterate through the rows and create start and goal nodes
     start_nodes = []
     goal_nodes = []
-    for agent_index, (start_x, start_y, goal_x, goal_y) in df.iterrows():
+    for agent_index, (start_y, start_x, goal_y, goal_x) in df.iterrows():
         start_node = node_dict[f"{start_x}_{start_y}"]
         goal_node = None if agent_index < inactive_agents else node_dict[f"{goal_x}_{goal_y}"]
         start_nodes.append(start_node)

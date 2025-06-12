@@ -15,10 +15,10 @@ def extract_unique_agent_goal_pairs():
             original_length = len(data)
             df = pd.DataFrame(data, columns=[
                 'bucket', 'map', 'map_width', 'map_height',
-                'start_x', 'start_y', 'goal_x', 'goal_y', 'distance'
+                'start_y', 'start_x', 'goal_y', 'goal_x', 'distance'
             ])
 
-            df = df.astype({'start_x': int, 'start_y': int, 'goal_x': int, 'goal_y': int})
+            df = df.astype({'start_y': int, 'start_x': int, 'goal_y': int, 'goal_x': int})
 
             seen_starts = set()
             seen_goals = set()
@@ -29,8 +29,8 @@ def extract_unique_agent_goal_pairs():
                 if map_name is None:
                     map_name = os.path.splitext(row['map'])[0]
 
-                start = (row['start_x'], row['start_y'])
-                goal = (row['goal_x'], row['goal_y'])
+                start = (row['start_y'], row['start_x'])
+                goal = (row['goal_y'], row['goal_x'])
 
                 if start in seen_starts or goal in seen_goals: # avoid duplicate start / goal pairs
                     continue
@@ -41,7 +41,7 @@ def extract_unique_agent_goal_pairs():
 
 
             unique_df = pd.DataFrame(unique_rows)
-            output_df = unique_df[['start_x', 'start_y', 'goal_x', 'goal_y']]
+            output_df = unique_df[['start_y', 'start_x', 'goal_y', 'goal_x']]
 
             output_filename = f"{map_name}__scenario_{(file_index % 25) + 1}.csv"
             output_path = os.path.join(SCENARIOS_FOLDER_PATH, output_filename)

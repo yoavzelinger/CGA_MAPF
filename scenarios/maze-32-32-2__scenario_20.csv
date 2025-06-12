@@ -1,4 +1,4 @@
-start_x,start_y,goal_x,goal_y
+start_y,start_x,goal_y,goal_x
 4,16,3,13
 2,20,13,16
 14,5,31,17
