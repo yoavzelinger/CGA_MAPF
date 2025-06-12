@@ -105,8 +105,8 @@ def run_cga_pure(
                 'i_agent': i_agent,
                 'iteration': iteration,
             }
-            # plot_step_in_env(ax[0], plot_info)
-            # plt.pause(0.001)
+            plot_step_in_env(ax[0], plot_info)
+            plt.pause(0.001)
             # plt.pause(0.5)
             # plt.pause(1)
         # if iteration >= 0:
@@ -133,7 +133,7 @@ args = parser.parse_args()
 @use_profiler(save_dir='./stats/alg_cga_mapf_pure.pstat')
 def main():
 
-    to_render = True
+    to_render = False
     # to_render = False
 
     params = {
