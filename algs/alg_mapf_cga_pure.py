@@ -102,6 +102,7 @@ def run_cga_pure(
                 'img_np': img_np,
                 'agents': agents,
                 'i_agent': i_agent,
+                'iteration': iteration,
             }
             plot_step_in_env(ax[0], plot_info)
             plt.pause(0.001)
@@ -120,7 +121,7 @@ def run_cga_pure(
     return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': iteration}
 
 
-@use_profiler(save_dir='../stats/alg_cga_mapf_pure.pstat')
+@use_profiler(save_dir='./stats/alg_cga_mapf_pure.pstat')
 def main():
 
     to_render = True

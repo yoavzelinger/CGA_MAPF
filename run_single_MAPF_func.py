@@ -42,7 +42,7 @@ def run_mapf_alg(alg, params, final_render: bool = True):
     # n_agents = 40
     # n_agents = 15
     # n_agents = 10
-    # n_agents = 3
+    #n_agents = 3
 
     path_to_maps: str = './maps'
     path_to_heuristics: str = './logs_for_heuristics'
