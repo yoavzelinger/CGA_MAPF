@@ -74,7 +74,6 @@ def run_mapf_alg(alg, params, final_render: bool, map_name: str, total_agents: i
             plot_info = {
                 'img_np': img_np,
                 'agents': agents,
-                'i_agent': i_agent,
                 'iteration': i,
             }
             plot_step_in_env(ax[0], plot_info)
