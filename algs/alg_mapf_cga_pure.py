@@ -125,7 +125,7 @@ def run_cga_pure(
 parser = ArgumentParser(description="Run all tests")
 parser.add_argument("-e", "--environment", type=str, help="The environment - map name", required=True)
 parser.add_argument("-s", "--scenario_index", type=int, help="Scenario index", default=-1)
-parser.add_argument("-p", "--plot", action="store_true", help="Plot the results (default: False)")
+parser.add_argument("-p", "--plot", type=str, help="Plot the results of <scenario_index total_agents inactive_agents>", default="")
 args = parser.parse_args()
 
 map_name = args.environment
@@ -165,8 +165,8 @@ def main():
         'to_render': to_render,
     }
     if args.plot:
-        assert args.scenario_index in range(1, 26), "Scenario index should be provided if plotting is enabled, and it should be in the range 1-25."
-        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=map_name, total_agents=args.total_agents, inactive_agents=args.inactive_agents, scenario_index=args.scenario_index)
+        scenario_index, total_agents, inactive_agents = tuple(args.plot.split())
+        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=map_name, total_agents=total_agents, inactive_agents=inactive_agents, scenario_index=scenario_index)
         return
 
     for total_agents in total_agents_amounts:
