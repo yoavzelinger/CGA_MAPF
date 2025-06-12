@@ -157,7 +157,7 @@ def main():
     # to_render = False
 
     params = {
-        'max_time': 120,
+        'max_time': 30,
         'alg_name': 'CGA-PURE',
         'alt_goal_flag': 'first',
         # 'alt_goal_flag': 'num', 'alt_goal_num': 3,
