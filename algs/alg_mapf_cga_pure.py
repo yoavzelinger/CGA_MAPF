@@ -125,8 +125,8 @@ parser = ArgumentParser(description="Run all tests")
 parser.add_argument("-m", "--map", type=str, help="The map name", required=True)
 parser.add_argument("-t", "--total_agents", type=int, help="Total number of agents", required=True)
 parser.add_argument("-i", "--inactive_agents", type=int, help="Number of inactive agents", required=True)
-parser.add_argument("-p", "--plot", bool, help="Plot the results", default=False)
 parser.add_argument("-s", "--scenario_index", type=int, help="Scenario index", default=-1)
+parser.add_argument("-p", "--plot", action="store_true", help="Plot the results (default: False)")
 args = parser.parse_args()
 
 
