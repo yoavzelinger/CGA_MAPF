@@ -114,13 +114,13 @@ def run_cga_pure(
         #     check_vc_ec_neic_iter(agents, iteration + 1)
         iteration += 1
         if runtime > max_time:
-            return None, {}
+            return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': iteration, "finished": False}
 
     # checks
     # for i in range(len(agents[0].path)):
     #     check_vc_ec_neic_iter(agents, i)
     runtime = time.time() - start_time
-    return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': iteration}
+    return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': iteration, "finished": True}
 
 parser = ArgumentParser(description="Run all tests")
 parser.add_argument("-e", "--environment", type=str, help="The environment - map name", required=True)

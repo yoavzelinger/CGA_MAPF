@@ -48,14 +48,14 @@ def run_mapf_alg(alg, params, final_render: bool, map_name: str, total_agents: i
         start_nodes, goal_nodes, nodes, nodes_dict, h_dict, map_dim, params
     )
 
-    
-    agents: List = info['agents'] if paths_dict else None
-    SOC = sum([len(a.path) for a in agents]) if paths_dict else None
-    makespan = info['makespan'] if paths_dict else None
-    runtime = info['time'] if paths_dict else None
+    finished = info['finished']
+    agents: List = info['agents']
+    SOC = sum([len(a.path) for a in agents])
+    makespan = info['makespan']
+    runtime = info['time']
     
     # plot
-    if final_render and paths_dict is not None:
+    if final_render:
         plt.close()
         fig, ax = plt.subplots(1, 2, figsize=(14, 7))
         plot_rate = 0.001
@@ -81,4 +81,6 @@ def run_mapf_alg(alg, params, final_render: bool, map_name: str, total_agents: i
             plt.pause(plot_rate)
         plt.show()
 
+    if not finished:
+        SOC, makespan, runtime = None, None, None
     return map_name, scenario_index, total_agents - inactive_agents, inactive_agents, density, SOC, makespan, runtime
