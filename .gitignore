@@ -22,3 +22,6 @@ stats
 videos
 algs/stasts
 .DS_Store
+logs/
+/*.sh
+sbatch
