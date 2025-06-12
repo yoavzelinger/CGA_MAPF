@@ -142,7 +142,7 @@ with open(f"Output_files/Output_{map_name}.csv", mode="w", newline="",
     writer = csv.DictWriter(file, fieldnames=columns)
     writer.writeheader()
 
-def addRecordToCsv(*current_values):
+def addRecordToCsv(current_values):
 
     record = list(current_values)
 
