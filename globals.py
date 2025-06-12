@@ -193,7 +193,7 @@ class AgentAlg:
         self.curr_node: Node = start_node
         # self.curr_node_name: str = self.curr_node.xy_name
         self.goal_node: Node | None = goal_node
-        self.goal_node_name: str = self.goal_node.xy_name
+        self.goal_node_name: str = self.goal_node.xy_name if self.goal_node else 'None'
         self.alt_goal_node: Node | None = None
         self.message: str = ''
         self.path: List[Node] | None = [self.start_node]
