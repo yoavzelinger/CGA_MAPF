@@ -23,7 +23,7 @@ def get_start_goal_nodes(node_dict: Dict[str, Node], map_name: str, total_agents
 
     return start_nodes, goal_nodes
 
-def run_mapf_alg(alg, params, final_render: bool, map_name: str, total_agents: int, inactive_agents: int, scenario_index: int, plot_results: bool = False):
+def run_mapf_alg(alg, params, final_render: bool, map_name: str, total_agents: int, inactive_agents: int, scenario_index: int):
     set_seed(random_seed_bool=True)
     img_dir = f'{map_name}.map'
 
@@ -46,9 +46,6 @@ def run_mapf_alg(alg, params, final_render: bool, map_name: str, total_agents: i
     paths_dict, info = alg(
         start_nodes, goal_nodes, nodes, nodes_dict, h_dict, map_dim, params
     )
-
-    if not plot_results:
-        return
 
     # plot
     if final_render and paths_dict is not None:

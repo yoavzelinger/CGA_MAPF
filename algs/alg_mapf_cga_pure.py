@@ -146,11 +146,11 @@ def main():
     }
     if args.plot:
         assert args.scenario_index in range(1, 26), "Scenario index should be provided if plotting is enabled, and it should be in the range 1-25."
-        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=args.environment, total_agents=args.total_agents, inactive_agents=args.inactive_agents, scenario_index=args.scenario_index, plot_results=True)
+        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=args.environment, total_agents=args.total_agents, inactive_agents=args.inactive_agents, scenario_index=args.scenario_index)
         return
 
     for scenario_index in range(1, 26):
-        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=args.environment, total_agents=args.total_agents, inactive_agents=args.inactive_agents, scenario_index=scenario_index)
+        run_mapf_alg(alg=run_cga_pure, params=params, final_render=False, map_name=args.environment, total_agents=args.total_agents, inactive_agents=args.inactive_agents, scenario_index=scenario_index)
 
 if __name__ == '__main__':
     main()
