@@ -5,7 +5,7 @@ SCENARIOS_FOLDER_PATH = 'scenarios'
 RAW_SCENARIOS_FOLDER_PATH = os.path.join(SCENARIOS_FOLDER_PATH, 'raw')
 
 def extract_unique_agent_goal_pairs():
-    for file_index, filename in enumerate(sorted(os.listdir(RAW_SCENARIOS_FOLDER_PATH)), 1):
+    for file_index, filename in enumerate(sorted(os.listdir(RAW_SCENARIOS_FOLDER_PATH))):
         if filename.endswith(".scen"):
             scenario_path = os.path.join(RAW_SCENARIOS_FOLDER_PATH, filename)
             with open(scenario_path, 'r') as file:
@@ -43,7 +43,7 @@ def extract_unique_agent_goal_pairs():
             unique_df = pd.DataFrame(unique_rows)
             output_df = unique_df[['start_x', 'start_y', 'goal_x', 'goal_y']]
 
-            output_filename = f"{map_name}__scenario_{file_index}.csv"
+            output_filename = f"{map_name}__scenario_{(file_index % 25) + 1}.csv"
             output_path = os.path.join(SCENARIOS_FOLDER_PATH, output_filename)
             output_df.to_csv(output_path, index=False)
 
