@@ -165,7 +165,7 @@ def main():
         'to_render': to_render,
     }
     if args.plot:
-        scenario_index, total_agents, inactive_agents = tuple(args.plot.split())
+        scenario_index, total_agents, inactive_agents = tuple(map(int, args.plot.split()))
         run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=map_name, total_agents=total_agents, inactive_agents=inactive_agents, scenario_index=scenario_index)
         return
 
