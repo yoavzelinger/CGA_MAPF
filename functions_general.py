@@ -26,7 +26,7 @@ def save_results(logs_dict: dict):
     return file_dir
 
 
-def set_seed(random_seed_bool, seed=1):
+def set_seed(random_seed_bool, seed=42):
     if random_seed_bool:
         seed = random.randint(0, 10000)
     random.seed(seed)

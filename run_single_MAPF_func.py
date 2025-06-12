@@ -24,7 +24,7 @@ def get_start_goal_nodes(node_dict: Dict[str, Node], map_name: str, total_agents
     return start_nodes, goal_nodes
 
 def run_mapf_alg(alg, params, final_render: bool, map_name: str, total_agents: int, inactive_agents: int, scenario_index: int):
-    set_seed(random_seed_bool=True)
+    set_seed(random_seed_bool=False)
     img_dir = f'{map_name}.map'
 
     path_to_maps: str = './maps'
