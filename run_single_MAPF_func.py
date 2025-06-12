@@ -8,6 +8,7 @@ def run_mapf_alg(alg, params, final_render: bool = True):
     # set_seed(random_seed_bool=False, seed=123)
     # set_seed(random_seed_bool=False, seed=2953)
     set_seed(random_seed_bool=True)
+def get_start_goal_nodes(node_dict: Dict[str, Node], map_name: str, total_agents: int, inactive_agents: int, scenario_index: int) -> Tuple[List[Node], List[Node]]:
 
     # img_dir = '10_10_my_rand.map'
     # img_dir = '15-15-two-rooms.map'
