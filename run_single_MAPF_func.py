@@ -1,49 +1,31 @@
 from globals import *
 from functions_general import *
 from functions_plotting import *
+import pandas as pd
 
+SCENARIOS_FOLDER_PATH = 'scenarios'
 
-def run_mapf_alg(alg, params, final_render: bool = True):
-    # set_seed(random_seed_bool=False, seed=5)
-    # set_seed(random_seed_bool=False, seed=123)
-    # set_seed(random_seed_bool=False, seed=2953)
-    set_seed(random_seed_bool=True)
 def get_start_goal_nodes(node_dict: Dict[str, Node], map_name: str, total_agents: int, inactive_agents: int, scenario_index: int) -> Tuple[List[Node], List[Node]]:
+    scenario_file = f"{map_name}__scenario_{scenario_index}.csv"
+    scenario_path = os.path.join(SCENARIOS_FOLDER_PATH, scenario_file)
+    assert os.path.exists(scenario_path), f"Scenario file {scenario_file} does not exist in {SCENARIOS_FOLDER_PATH}."
 
-    # img_dir = '10_10_my_rand.map'
-    # img_dir = '15-15-two-rooms.map'
-    # img_dir = '15-15-four-rooms.map'
-    # img_dir = '15-15-six-rooms.map'
-    # img_dir = '15-15-eight-rooms.map'
+    # read the top `total_agents` rows from the scenario file
+    df = pd.read_csv(scenario_path, nrows=total_agents)
+    # iterate through the rows and create start and goal nodes
+    start_nodes = []
+    goal_nodes = []
+    for agent_index, (start_x, start_y, goal_x, goal_y) in df.iterrows():
+        start_node = node_dict[f"{start_x}_{start_y}"]
+        goal_node = None if agent_index < inactive_agents else node_dict[f"{goal_x}_{goal_y}"]
+        start_nodes.append(start_node)
+        goal_nodes.append(goal_node)
 
-    # img_dir = '10_10_my_corridor.map'
-    # img_dir = 'empty-32-32.map'
-    # img_dir = 'random-32-32-10.map'
-    img_dir = 'random-32-32-20.map'
-    # img_dir = 'maze-32-32-4.map'
-    # img_dir = 'maze-32-32-2.map'
-    # img_dir = 'room-32-32-4.map'
+    return start_nodes, goal_nodes
 
-    # n_agents = 700
-    # n_agents = 600
-    # n_agents = 550
-    # n_agents = 500
-    # n_agents = 450
-    # n_agents = 400
-    # n_agents = 350
-    # n_agents = 300
-    n_agents = 250
-    # n_agents = 200
-    # n_agents = 170
-    # n_agents = 150
-    # n_agents = 100
-    # n_agents = 80
-    # n_agents = 70
-    # n_agents = 50
-    # n_agents = 40
-    # n_agents = 15
-    # n_agents = 10
-    #n_agents = 3
+def run_mapf_alg(alg, params, final_render: bool, map_name: str, total_agents: int, inactive_agents: int, scenario_index: int, plot_results: bool = False):
+    set_seed(random_seed_bool=True)
+    img_dir = f'{map_name}.map'
 
     path_to_maps: str = './maps'
     path_to_heuristics: str = './logs_for_heuristics'
@@ -56,18 +38,7 @@ def get_start_goal_nodes(node_dict: Dict[str, Node], map_name: str, total_agents
     blocked_sv_map: np.ndarray = get_blocked_sv_map(img_dir, folder_dir=path_to_sv_maps)
     # sv_map: np.ndarray = get_sv_map(img_dir, folder_dir=path_to_sv_maps)
 
-    start_nodes: List[Node] = random.sample(nodes, n_agents)
-    goal_nodes: List[Node] = random.sample(nodes, n_agents)
-    # start_nodes: List[Node] = [nodes_dict['4_8'], nodes_dict['4_4'], nodes_dict['8_8']]
-    # goal_nodes: List[Node] = [nodes_dict['4_2'], nodes_dict['4_4'], nodes_dict['8_8']]
-    # start_nodes: List[Node] = [nodes_dict['4_8'], nodes_dict['4_4']]
-    # goal_nodes: List[Node] = [nodes_dict['4_2'], nodes_dict['4_4']]
-    # goal_nodes: List[Node] = [nodes_dict['4_1'], nodes_dict['4_0']]
-    # start_nodes: List[Node] = [nodes_dict['4_0'], nodes_dict['4_1'], nodes_dict['4_2']]
-    # goal_nodes: List[Node] = [nodes_dict['4_1'], nodes_dict['4_0'], nodes_dict['4_2']]
-
-    # start_nodes: List[Node] = [nodes_dict['4_0'], nodes_dict['4_1'], nodes_dict['4_2'], nodes_dict['4_3']]
-    # goal_nodes: List[Node] = [nodes_dict['4_1'], nodes_dict['4_0'], nodes_dict['4_2'], nodes_dict['4_3']]
+    start_nodes, goal_nodes = get_start_goal_nodes(nodes_dict, map_name, total_agents, inactive_agents, scenario_index)
 
     params['img_np'] = img_np
     # params['sv_map'] = sv_map
@@ -75,6 +46,9 @@ def get_start_goal_nodes(node_dict: Dict[str, Node], map_name: str, total_agents
     paths_dict, info = alg(
         start_nodes, goal_nodes, nodes, nodes_dict, h_dict, map_dim, params
     )
+
+    if not plot_results:
+        return
 
     # plot
     if final_render and paths_dict is not None:
@@ -104,10 +78,3 @@ def get_start_goal_nodes(node_dict: Dict[str, Node], map_name: str, total_agents
             plot_step_in_env(ax[0], plot_info)
             plt.pause(plot_rate)
         plt.show()
-
-
-
-
-
-
-
