@@ -1,4 +1,5 @@
 import heapq
+from argparse import ArgumentParser
 
 from algs.alg_functions_cga import *
 from algs.alg_functions_pibt import run_procedure_pibt
@@ -120,6 +121,12 @@ def run_cga_pure(
     runtime = time.time() - start_time
     return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': iteration}
 
+parser = ArgumentParser(description="Run all tests")
+parser.add_argument("-m", "--map", type=str, help="The map name", required=True)
+parser.add_argument("-t", "--total_agents", type=int, help="Total number of agents", required=True)
+parser.add_argument("-i", "--inactive_agents", type=int, help="Number of inactive agents", required=True)
+args = parser.parse_args()
+
 
 @use_profiler(save_dir='./stats/alg_cga_mapf_pure.pstat')
 def main():
@@ -136,8 +143,9 @@ def main():
         'to_render': to_render,
     }
     # run_mapf_alg(alg=run_cga_pure, params=params, final_render=False)
-    run_mapf_alg(alg=run_cga_pure, params=params, final_render=True)
 
+    for scenario_index in range(1, 26):
+        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=args.map, total_agents=parser.total_agents, inactive_agents=parser.inactive_agents, scenario_index=scenario_index)
 
 if __name__ == '__main__':
     main()
