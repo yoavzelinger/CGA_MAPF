@@ -129,16 +129,15 @@ parser.add_argument("-p", "--plot", type=str, help="Plot the results of <scenari
 args = parser.parse_args()
 
 map_name = args.environment
-
-total_agents_amounts = [60, 120, 180, 240, 300]
-inactive_agents_amounts = [10, 40, 80, 120, 160, 200, 240, 280]
+active_agents_amounts = [25, 50, 75, 100, 125, 150]
+inactive_agents_amounts = [0, 25, 50, 75, 100, 125, 150]
 
 if not os.path.exists("Output_files"):
     os.makedirs("Output_files")
 
 with open(f"Output_files/Output_{map_name}.csv", mode="w", newline="",
           encoding="utf-8") as file:
-    columns = ["map_name", "scenario_index", "active_agents", "inactive_agents", "density", "SOC", "makespan", "runtime"]
+    columns = ["map_name", "scenario_index", "total_agents", "active_agents", "inactive_agents", "density", "SOC", "makespan", "runtime"]
     writer = csv.DictWriter(file, fieldnames=columns)
     writer.writeheader()
 
@@ -165,17 +164,15 @@ def main():
         'to_render': to_render,
     }
     if args.plot:
-        scenario_index, total_agents, inactive_agents = tuple(map(int, args.plot.split()))
-        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=map_name, total_agents=total_agents, inactive_agents=inactive_agents, scenario_index=scenario_index)
+        scenario_index, active_agents, inactive_agents = tuple(map(int, args.plot.split()))
+        run_mapf_alg(alg=run_cga_pure, params=params, final_render=True, map_name=map_name, active_agents=active_agents, inactive_agents=inactive_agents, scenario_index=scenario_index)
         return
 
-    for total_agents in total_agents_amounts:
+    for active_agents in active_agents_amounts:
         for inactive_agents in inactive_agents_amounts:
-            if inactive_agents >= total_agents:
-                continue
-            print(f'\nRunning with {total_agents=} and {inactive_agents=}')
+            print(f'\nRunning with {active_agents=} and {inactive_agents=}')
             for scenario_index in range(1, 26):
-                current_values = run_mapf_alg(alg=run_cga_pure, params=params, final_render=False, map_name=map_name, total_agents=total_agents, inactive_agents=inactive_agents, scenario_index=scenario_index)
+                current_values = run_mapf_alg(alg=run_cga_pure, params=params, final_render=False, map_name=map_name, active_agents=active_agents, inactive_agents=inactive_agents, scenario_index=scenario_index)
                 addRecordToCsv(current_values)
 
 if __name__ == '__main__':
