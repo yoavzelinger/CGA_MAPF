@@ -40,7 +40,7 @@ def run_mapf_alg(alg, params, final_render: bool, map_name: str, active_agents: 
     img_np, (height, width) = get_np_from_dot_map(img_dir, path_to_maps)
     map_dim = (height, width)
     nodes, nodes_dict = build_graph_from_np(img_np, show_map=False)
-    density = ((active_agents + inactive_agents) + (height * width - len(nodes))) / (height * width)
+    density = round((active_agents + inactive_agents) + (height * width - len(nodes)) / (height * width), 3)
     h_dict: Dict[str, np.ndarray] = exctract_h_dict(img_dir, path_to_heuristics)
     blocked_sv_map: np.ndarray = get_blocked_sv_map(img_dir, folder_dir=path_to_sv_maps)
     # sv_map: np.ndarray = get_sv_map(img_dir, folder_dir=path_to_sv_maps)
