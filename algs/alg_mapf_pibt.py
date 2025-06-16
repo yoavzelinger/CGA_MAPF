@@ -67,13 +67,13 @@ def run_pibt(
         iteration += 1
 
         if runtime > max_time:
-            return None, {}
+            return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': iteration, "finished": False}
 
     # checks
     for i in range(len(agents[0].path)):
         check_vc_ec_neic_iter(agents, i, to_count=False)
     runtime = time.time() - start_time
-    return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': iteration}
+    return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': iteration, "finished": True}
 
 parser = ArgumentParser(description="Run all tests")
 parser.add_argument("-e", "--environment", type=str, help="The environment - map name", required=True)
