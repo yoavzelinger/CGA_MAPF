@@ -1,3 +1,6 @@
+from argparse import ArgumentParser
+import csv
+
 from algs.alg_functions_PrP import *
 from algs.alg_sipps import run_sipps
 from algs.alg_temporal_a_star import run_temporal_a_star
@@ -326,68 +329,63 @@ def run_k_prp(
 
     return None, {}
 
+parser = ArgumentParser(description="Run all tests")
+parser.add_argument("-e", "--environment", type=str, help="The environment - map name", required=True)
+parser.add_argument("-s", "--scenario_index", type=int, help="Scenario index", default=-1)
+parser.add_argument("-p", "--plot", type=str, help="Plot the results of <scenario_index active agents inactive_agents>", default="")
+args = parser.parse_args()
 
-@use_profiler(save_dir='../stats/alg_prp.pstat')
+map_name = args.environment
+active_agents_amounts = [25, 50, 75, 100, 125, 150]
+inactive_agents_amounts = [0, 25, 50, 75, 100, 125, 150]
+
+if not os.path.exists("Output_files"):
+    os.makedirs("Output_files")
+
+with open(f"Output_files/Output_{map_name}_PRP.csv", mode="w", newline="",
+          encoding="utf-8") as file:
+    columns = ["map_name", "scenario_index", "total_agents", "active_agents", "inactive_agents", "density", "SOC", "makespan", "runtime"]
+    writer = csv.DictWriter(file, fieldnames=columns)
+    writer.writeheader()
+
+def addRecordToCsv(current_values):
+
+    record = list(current_values)
+
+    with open(f"Output_files/Output_{map_name}_PRP.csv", mode="a", newline="", encoding="utf-8") as file:
+        writerRecord = csv.writer(file)
+        writerRecord.writerow(record)
+
+@use_profiler(save_dir='./stats/alg_prp.pstat')
 def main():
-    # final_render = True
+
     to_render = False
+    # to_render = False
 
-    # --------------------------------------------------------------------- #
-    # PrP-A*
-    # --------------------------------------------------------------------- #
-    # params_prp_a_star = {
-    #     'max_time': 1000,
-    #     'alg_name': f'PrP-A*',
-    #     'constr_type': 'hard',
-    #     'pf_alg': run_temporal_a_star,
-    #     'final_render': final_render,
-    # }
-    # run_mapf_alg(alg=run_prp_a_star, params=params_prp_a_star)
-    # --------------------------------------------------------------------- #
-
-    # --------------------------------------------------------------------- #
-    # PrP-SIPPS
-    # --------------------------------------------------------------------- #
-    # params_prp_sipps = {
-    #     'max_time': 1000,
-    #     'alg_name': f'PrP-SIPPS',
-    #     # 'constr_type': 'soft',
-    #     'constr_type': 'hard',
-    #     'pf_alg': run_sipps,
-    #     'final_render': final_render,
-    # }
-    # run_mapf_alg(alg=run_prp_sipps, params=params_prp_sipps)
-    # --------------------------------------------------------------------- #
-
-    # --------------------------------------------------------------------- #
-    # k-PrP - A*
-    # --------------------------------------------------------------------- #
-    # params_k_prp_a_star = {
-    #     'max_time': 1000,
-    #     'alg_name': f'k-PrP-A*',
-    #     'constr_type': 'hard',
-    #     'k_limit': 5,
-    #     'pf_alg_name': 'a_star',
-    #     'pf_alg': run_temporal_a_star,
-    #     'final_render': final_render,
-    # }
-    # run_mapf_alg(alg=run_k_prp, params=params_k_prp_a_star)
-    # --------------------------------------------------------------------- #
-
-    # --------------------------------------------------------------------- #
-    # k-PrP - SIPPS
-    # --------------------------------------------------------------------- #
-    params_k_prp_sipps = {
-        'max_time': 1000,
-        'alg_name': f'k-PrP-SIPPS',
-        'constr_type': 'hard',
+    params = {
+        'max_time': 30,
+        'alg_name': 'PRP',
+        'alt_goal_flag': 'first',
+        # 'alt_goal_flag': 'num', 'alt_goal_num': 3,
+        # 'alt_goal_flag': 'all',
+        'to_render': to_render,
+        'final_render': to_render,
         'k_limit': 5,
+        'constr_type': 'hard',
         'pf_alg_name': 'sipps',
         'pf_alg': run_sipps,
-        'final_render': to_render,
     }
-    run_mapf_alg(alg=run_k_prp, params=params_k_prp_sipps)
-    # --------------------------------------------------------------------- #
+    if args.plot:
+        scenario_index, active_agents, inactive_agents = tuple(map(int, args.plot.split()))
+        run_mapf_alg(alg=run_prp_a_star, params=params, final_render=True, map_name=map_name, active_agents=active_agents, inactive_agents=inactive_agents, scenario_index=scenario_index)
+        return
+
+    for active_agents in active_agents_amounts:
+        for inactive_agents in inactive_agents_amounts:
+            print(f'\nRunning with {active_agents=} and {inactive_agents=}')
+            for scenario_index in range(1, 26):
+                current_values = run_mapf_alg(alg=run_prp_a_star, params=params, final_render=False, map_name=map_name, active_agents=active_agents, inactive_agents=inactive_agents, scenario_index=scenario_index)
+                addRecordToCsv(current_values)
 
 
 if __name__ == '__main__':
