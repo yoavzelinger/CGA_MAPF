@@ -177,7 +177,7 @@ def run_prp_a_star(
 
             # checks
             runtime = time.time() - start_time
-            print(f'\r[{alg_name}] {r_iter=: <3} | agents: {len(h_priority_agents): <3} / {len(agents)} | {runtime= : .2f} s.')  # , end=''
+            # print(f'\r[{alg_name}] {r_iter=: <3} | agents: {len(h_priority_agents): <3} / {len(agents)} | {runtime= : .2f} s.')  # , end=''
             # collisions: int = 0
             # for i in range(len(h_priority_agents[0].path)):
             #     to_count = False if constr_type == 'hard' else True
