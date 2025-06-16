@@ -88,4 +88,5 @@ def run_mapf_alg(alg, params, final_render: bool, map_name: str, active_agents: 
 
     if not finished:
         SOC, makespan, runtime = None, None, None
+    print(map_name, scenario_index, (active_agents + inactive_agents), active_agents, inactive_agents, density, SOC, makespan, runtime)
     return map_name, scenario_index, (active_agents + inactive_agents), active_agents, inactive_agents, density, SOC, makespan, runtime
