@@ -60,7 +60,7 @@ def run_pibt(
 
         # print + render
         runtime = time.time() - start_time
-        print(f'\r{'*' * 10} | [PIBT] {iteration=: <3} | finished: {len(agents_finished)}/{n_agents: <3} | runtime: {runtime: .2f} seconds | {'*' * 10}', end='')
+        print(f'\r{"*" * 10} | [PIBT] {iteration=: <3} | finished: {len(agents_finished)}/{n_agents: <3} | runtime: {runtime: .2f} seconds | {"*" * 10}', end='')
         iteration += 1
 
         if runtime > max_time:
