@@ -78,7 +78,7 @@ def run_pibt(
 parser = ArgumentParser(description="Run all tests")
 parser.add_argument("-e", "--environment", type=str, help="The environment - map name", required=True)
 parser.add_argument("-s", "--scenario_index", type=int, help="Scenario index", default=-1)
-parser.add_argument("-p", "--plot", type=str, help="Plot the results of <scenario_index total_agents inactive_agents>", default="")
+parser.add_argument("-p", "--plot", type=str, help="Plot the results of <scenario_index active agents inactive_agents>", default="")
 args = parser.parse_args()
 
 map_name = args.environment
