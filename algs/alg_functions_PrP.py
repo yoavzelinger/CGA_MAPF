@@ -98,7 +98,7 @@ def solution_is_found(agents: List[AgentAlg]):
             return False
         if len(agent.path) == 0:
             return False
-        if agent.path[-1] != agent.goal_node:
+        if agent.path[-1] != agent.get_goal_node():
             return False
     return True
 
@@ -106,7 +106,7 @@ def solution_is_found(agents: List[AgentAlg]):
 def get_shuffled_agents(agents: List[AgentAlg]) -> List[AgentAlg]:
     agents_copy = agents[:]
     random.shuffle(agents_copy)
-    unfinished: List[AgentAlg] = [a for a in agents_copy if len(a.path) == 0 or a.path[-1] != a.goal_node]
-    finished: List[AgentAlg] = [a for a in agents_copy if len(a.path) > 0 and a.path[-1] == a.goal_node]
+    unfinished: List[AgentAlg] = [a for a in agents_copy if len(a.path) == 0 or a.path[-1] != a.get_goal_node()]
+    finished: List[AgentAlg] = [a for a in agents_copy if len(a.path) > 0 and a.path[-1] == a.get_goal_node()]
     return [*unfinished, *finished]
 

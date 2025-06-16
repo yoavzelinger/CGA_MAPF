@@ -152,7 +152,7 @@ def run_prp_a_star(
 
         for agent in agents:
             new_path, alg_info = run_temporal_a_star(
-                agent.start_node, agent.goal_node, nodes, nodes_dict, h_dict,
+                agent.start_node, agent.get_goal_node(), nodes, nodes_dict, h_dict,
                 vc_hard_np, ec_hard_np, pc_hard_np, vc_soft_np, ec_soft_np, pc_soft_np,
                 agent=agent,
             )
@@ -311,7 +311,7 @@ def run_k_prp(
 
         # print
         runtime = time.time() - start_time
-        finished: List[AgentAlg] = [a for a in agents if len(a.path) > 0 and a.path[-1] == a.goal_node]
+        finished: List[AgentAlg] = [a for a in agents if len(a.path) > 0 and a.path[-1] == a.get_goal_node()]
         print(f'\r[{alg_name}] {k_iter=: <3} | agents: {len(finished): <3} / {len(agents)} | {runtime=: .2f} s.')  # , end=''
 
         # return check
