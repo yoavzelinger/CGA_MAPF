@@ -158,7 +158,7 @@ def run_prp_a_star(
             )
 
             if time.time() - start_time > max_time:
-                return None, {}
+                return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': r_iter, "finished": False}
 
             if new_path is None:
                 agent.path = None
@@ -189,7 +189,7 @@ def run_prp_a_star(
         if solution_is_found(agents):
             runtime = time.time() - start_time
             makespan: int = max([len(a.path) for a in agents])
-            return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': makespan}
+            return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': makespan, "finished": True}
 
         # reshuffle
         r_iter += 1
@@ -198,7 +198,7 @@ def run_prp_a_star(
         for agent in agents:
             agent.path = []
 
-    return None, {}
+    return {a.name: a.path for a in agents}, {'agents': agents, 'time': runtime, 'makespan': r_iter, "finished": False}
 
 
 def run_k_prp(
